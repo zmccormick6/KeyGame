@@ -15,6 +15,12 @@ public class TempPlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        MovementAnimation();
+        SwingAnimation();
+    }
+
+    public void MovementAnimation()
+    {
         movex = Input.GetAxis("Horizontal");
         movey = Input.GetAxis("Vertical");
 
@@ -22,30 +28,37 @@ public class TempPlayerController : MonoBehaviour
         if (movex < 0)
         {
             anim.SetInteger("Direction", 4);
-            Debug.Log("Direction is West");
         }
         //East
         else if (movex > 0)
         {
             anim.SetInteger("Direction", 2);
-            Debug.Log("Direction is East");
         }
         //North
         else if (movey > 0)
         {
             anim.SetInteger("Direction", 1);
-            Debug.Log("Direction is North");
         }
         //South
         else if (movey < 0)
         {
             anim.SetInteger("Direction", 3);
-            Debug.Log("Direction is South");
         }
         else
         {
             anim.SetInteger("Direction", 0);
-            Debug.Log("Direction is NULL");
+        }
+    }
+
+    public void SwingAnimation()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            anim.SetInteger("Swing", 1);
+        }
+        else
+        {
+            anim.SetInteger("Swing", 0);
         }
     }
 }

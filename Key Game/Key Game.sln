@@ -1,12 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Key Game", "Key Game.csproj", "{182D6616-9403-FB52-7BF8-37A89794ADAA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{182D6616-9403-FB52-7BF8-37A89794ADAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{182D6616-9403-FB52-7BF8-37A89794ADAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{182D6616-9403-FB52-7BF8-37A89794ADAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{182D6616-9403-FB52-7BF8-37A89794ADAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

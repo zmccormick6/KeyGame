@@ -5,6 +5,7 @@ using UnityEngine;
 public class TempPlayerController : MonoBehaviour
 {
     private Animator anim;
+    private float Speed = 2f;
     private float movex = 0f;
     private float movey = 0f;
 
@@ -17,6 +18,12 @@ public class TempPlayerController : MonoBehaviour
     {
         MovementAnimation();
         SwingAnimation();
+        PlayerMovement();
+    }
+
+    public void PlayerMovement()
+    {
+        GetComponent<Rigidbody2D>().velocity = new Vector2(movex * Speed, movey * Speed);
     }
 
     public void MovementAnimation()
@@ -52,7 +59,7 @@ public class TempPlayerController : MonoBehaviour
 
     public void SwingAnimation()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButton("Fire1"))
         {
             anim.SetInteger("Swing", 1);
         }

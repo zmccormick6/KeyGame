@@ -5,13 +5,60 @@ using UnityEngine;
 public class TempPlayerController : MonoBehaviour
 {
     private Animator anim;
-    private float Speed = 2f;
+    private Collider2D PlayerHitbox;
+    SpriteRenderer tempSprite;
+    private float Speed = 3f;
+    private float Health = 5;
     private float movex = 0f;
     private float movey = 0f;
 
     void Start()
     {
         anim = GetComponent<Animator>();
+        PlayerHitbox = GetComponents<Collider2D>()[1];
+        tempSprite = gameObject.GetComponent<SpriteRenderer>();
+    }
+
+    private IEnumerator HitFlashing()
+    {
+        tempSprite.color = new Color(1f, 1f, 1f, 0.5f);
+
+        int flashing = 0;
+
+        for (int i = 0; i < 20; i++)
+        {
+            if (flashing % 2 == 0)
+            {
+                tempSprite.enabled = false;
+            }
+
+            else if (flashing % 2 == 1)
+            {
+                tempSprite.enabled = true;
+            }
+
+            flashing++;
+
+            yield return new WaitForSeconds(0.075f);
+        }
+        tempSprite.color = new Color(1f, 1f, 1f, 1f);
+    }
+
+    private IEnumerator PlayerInvincibility()
+    {
+        PlayerHitbox.enabled = false;
+        yield return new WaitForSeconds(2);
+        PlayerHitbox.enabled = true;
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Keese")
+        {
+            PlayerHealth();
+            StartCoroutine(PlayerInvincibility());
+            StartCoroutine(HitFlashing());
+        }
     }
 
     void FixedUpdate()
@@ -28,8 +75,8 @@ public class TempPlayerController : MonoBehaviour
 
     public void MovementAnimation()
     {
-        movex = Input.GetAxis("Horizontal");
-        movey = Input.GetAxis("Vertical");
+        movex = Input.GetAxisRaw("Horizontal");
+        movey = Input.GetAxisRaw("Vertical");
 
         //West
         if (movex < 0)
@@ -67,5 +114,10 @@ public class TempPlayerController : MonoBehaviour
         {
             anim.SetInteger("Swing", 0);
         }
+    }
+
+    public void PlayerHealth()
+    {
+        Health--;
     }
 }

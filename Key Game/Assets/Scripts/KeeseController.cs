@@ -5,43 +5,49 @@ using UnityEngine;
 public class KeeseController : MonoBehaviour
 {
     [SerializeField] private GameObject Player;
+    private Collider2D PlayerCollider;
+    private Collider2D SwordCollider;
 
     private float Speed = 0.025f;
     private float Health = 3;
     private Vector2 CurrentPosition;
     private Vector2 PlayerPosition;
 
+    void Start()
+    {
+        SwordCollider = Player.GetComponents<BoxCollider2D>()[0];
+        PlayerCollider = Player.GetComponents<BoxCollider2D>()[1];
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Keese Hit");
-        if (CurrentPosition.x < PlayerPosition.x)
+        if (other.tag != "Keese" && other != PlayerCollider)
         {
-            if (CurrentPosition.y > PlayerPosition.y)
-            {
-                Debug.Log("Top Left");
-                transform.position = new Vector2(CurrentPosition.x - 0.75f, CurrentPosition.y + 0.75f);
-            }
-            else
-            {
-                Debug.Log("Bottom Left");
-                transform.position = new Vector2(CurrentPosition.x - 0.75f, CurrentPosition.y - 0.75f);
-            }
-        }
-        else if (CurrentPosition.x > PlayerPosition.x)
-        {
-            if (CurrentPosition.y > PlayerPosition.y)
-            {
-                Debug.Log("Top Right");
-                transform.position = new Vector2(CurrentPosition.x + 0.75f, CurrentPosition.y + 0.75f);
-            }
-            else
-            {
-                Debug.Log("Bottom Right");
-                transform.position = new Vector2(CurrentPosition.x + 0.75f, CurrentPosition.y - 0.75f);
-            }
-        }
+            KeeseHealth();
 
-        KeeseHealth();
+            if (CurrentPosition.x < PlayerPosition.x)
+            {
+                if (CurrentPosition.y > PlayerPosition.y)
+                {
+                    transform.position = new Vector2(CurrentPosition.x - 0.75f, CurrentPosition.y + 0.75f);
+                }
+                else
+                {
+                    transform.position = new Vector2(CurrentPosition.x - 0.75f, CurrentPosition.y - 0.75f);
+                }
+            }
+            else if (CurrentPosition.x > PlayerPosition.x)
+            {
+                if (CurrentPosition.y > PlayerPosition.y)
+                {
+                    transform.position = new Vector2(CurrentPosition.x + 0.75f, CurrentPosition.y + 0.75f);
+                }
+                else
+                {
+                    transform.position = new Vector2(CurrentPosition.x + 0.75f, CurrentPosition.y - 0.75f);
+                }
+            }
+        }
     }
 
     void FixedUpdate()

@@ -22,30 +22,33 @@ public class KeeseController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag != "Keese" && other != PlayerCollider)
+        if (other.tag != "Enemy")
         {
-            KeeseHealth();
+            if (other != PlayerCollider)
+            {
+                KeeseHealth();
 
-            if (CurrentPosition.x < PlayerPosition.x)
-            {
-                if (CurrentPosition.y > PlayerPosition.y)
+                if (CurrentPosition.x < PlayerPosition.x)
                 {
-                    transform.position = new Vector2(CurrentPosition.x - 0.75f, CurrentPosition.y + 0.75f);
+                    if (CurrentPosition.y > PlayerPosition.y)
+                    {
+                        transform.position = new Vector2(CurrentPosition.x - 0.75f, CurrentPosition.y + 0.75f);
+                    }
+                    else
+                    {
+                        transform.position = new Vector2(CurrentPosition.x - 0.75f, CurrentPosition.y - 0.75f);
+                    }
                 }
-                else
+                else if (CurrentPosition.x > PlayerPosition.x)
                 {
-                    transform.position = new Vector2(CurrentPosition.x - 0.75f, CurrentPosition.y - 0.75f);
-                }
-            }
-            else if (CurrentPosition.x > PlayerPosition.x)
-            {
-                if (CurrentPosition.y > PlayerPosition.y)
-                {
-                    transform.position = new Vector2(CurrentPosition.x + 0.75f, CurrentPosition.y + 0.75f);
-                }
-                else
-                {
-                    transform.position = new Vector2(CurrentPosition.x + 0.75f, CurrentPosition.y - 0.75f);
+                    if (CurrentPosition.y > PlayerPosition.y)
+                    {
+                        transform.position = new Vector2(CurrentPosition.x + 0.75f, CurrentPosition.y + 0.75f);
+                    }
+                    else
+                    {
+                        transform.position = new Vector2(CurrentPosition.x + 0.75f, CurrentPosition.y - 0.75f);
+                    }
                 }
             }
         }
@@ -57,15 +60,16 @@ public class KeeseController : MonoBehaviour
         PlayerPosition = new Vector2(Player.transform.position.x, Player.transform.position.y);
 
         transform.position = Vector2.MoveTowards(CurrentPosition, PlayerPosition, Speed);
-
-        if (Health <= 0)
-        {
-            Destroy(gameObject);
-        }
     }
 
     public void KeeseHealth()
     {
         Health--;
+
+        if (Health <= 0)
+        {
+            Destroy(gameObject);
+            GameObject.Find("Game Manager").GetComponent<DoorSpawn>().EnemyCheck();
+        }
     }
 }

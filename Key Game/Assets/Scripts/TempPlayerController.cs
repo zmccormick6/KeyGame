@@ -57,16 +57,22 @@ public class TempPlayerController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other == PlayerHitbox)
+        if (SwordHitbox.enabled == false)
         {
-            PlayerHealth();
-            StartCoroutine(PlayerInvincibility());
-            StartCoroutine(HitFlashing());
+            if (other != PlayerHitbox)
+            {
+                if (other.tag != "Door")
+                {
+                    PlayerHealth();
+                    StartCoroutine(PlayerInvincibility());
+                    StartCoroutine(HitFlashing());
+                }
+            }
         }
 
         if (other.tag == "Door")
         {
-
+            GameManager.GetComponent<DoorSpawn>().CurrentDoor.GetComponent<Collider2D>().enabled = false;
             GameManager.GetComponent<LevelSwitch>().RunNextLevel();
         }
     }
@@ -132,6 +138,14 @@ public class TempPlayerController : MonoBehaviour
         else
         {
             anim.SetInteger("Swing", 0);
+        }
+    }
+
+    public void DodgeAnimation()
+    {
+        if (Input.GetButton("Fire2"))
+        {
+
         }
     }
 

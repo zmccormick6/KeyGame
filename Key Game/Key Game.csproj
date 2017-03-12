@@ -75,6 +75,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\DoorIdentification.cs" />
+    <Compile Include="Assets\Scripts\DoorSpawn.cs" />
+    <Compile Include="Assets\Scripts\EnemyCount.cs" />
     <Compile Include="Assets\Scripts\KeeseController.cs" />
     <Compile Include="Assets\Scripts\LevelSwitch.cs" />
     <Compile Include="Assets\Scripts\TempPlayerController.cs" />

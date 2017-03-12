@@ -5,9 +5,13 @@ using System.Linq;
 
 public class LevelSwitch : MonoBehaviour
 {
+    [SerializeField] private GameObject Player;
+
     private GameObject[] Levels;
-    private GameObject currentLevel;
+    public GameObject currentLevel;
     private GameObject nextLevel;
+    private Vector2 playerPosition;
+    private Vector2 playerDoorStart = new Vector2(0, -3.25f);
     private Vector2 upperPosition = new Vector2(0, 10);
     private Vector2 middlePosition = new Vector2(0, 0);
     private Vector2 lowerPosition = new Vector2(0, -10);
@@ -19,14 +23,15 @@ public class LevelSwitch : MonoBehaviour
     void Start()
     {
         Levels = Resources.LoadAll("Levels", typeof(GameObject)).Cast<GameObject>().ToArray();
-
-        currentLevel = Instantiate(Levels[level], new Vector2(0, 0), Quaternion.identity);
+        StartCoroutine(NextLevel());
+        GetComponent<DoorSpawn>().EnemyCount(currentLevel);
     }
 
     void FixedUpdate()
     {
         if (movement == true)
         {
+            Player.transform.position = Vector2.Lerp(playerPosition, playerDoorStart, (Time.time - startTime) / 2);
             currentLevel.transform.position = Vector2.Lerp(middlePosition, lowerPosition, (Time.time - startTime) / 2);
             nextLevel.transform.position = Vector2.Lerp(upperPosition, middlePosition, (Time.time - startTime) / 2);
         }
@@ -39,18 +44,38 @@ public class LevelSwitch : MonoBehaviour
 
     private IEnumerator NextLevel()
     {
-        level++;
-        nextLevel = Instantiate(Levels[level], new Vector2(0, 10), Quaternion.identity);
+        if (level == 0)
+        {
+            currentLevel = Instantiate(Levels[level], new Vector2(0, 0), Quaternion.identity);
+            currentLevel.transform.SetSiblingIndex(2);
+            currentLevel.tag = "Current";
+        }
+        else
+        {
+            currentLevel = GameObject.FindGameObjectWithTag("Current");
+            nextLevel = Instantiate(Levels[level], new Vector2(0, 10), Quaternion.identity);
+            nextLevel.transform.SetSiblingIndex(2);
+            nextLevel.tag = "Next";
 
-        StartCoroutine(MoveLevel());
-        yield return new WaitForSeconds(2);
+            GetComponent<DoorSpawn>().EnemyCount(currentLevel);
+
+            StartCoroutine(MoveLevel());
+            yield return new WaitForSeconds(2);
+        }
+
+        level++;
     }
 
     private IEnumerator MoveLevel()
     {
         startTime = Time.time;
         movement = true;
+        playerPosition = new Vector2(Player.transform.position.x, Player.transform.position.y);
         yield return new WaitForSeconds(2);
         movement = false;
+            
+        Destroy(GameObject.FindGameObjectWithTag("Current"));
+        currentLevel = GameObject.FindGameObjectWithTag("Next");
+        currentLevel.tag = "Current";
     }
 }

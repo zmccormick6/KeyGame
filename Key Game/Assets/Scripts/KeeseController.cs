@@ -8,13 +8,14 @@ public class KeeseController : MonoBehaviour
     private Collider2D PlayerCollider;
     private Collider2D SwordCollider;
 
-    private float Speed = 0.025f;
+    private float Speed = 0.035f;
     private float Health = 3;
     private Vector2 CurrentPosition;
     private Vector2 PlayerPosition;
 
     void Start()
     {
+        Player = GameObject.Find("TempPlayer");
         SwordCollider = Player.GetComponents<BoxCollider2D>()[0];
         PlayerCollider = Player.GetComponents<BoxCollider2D>()[1];
     }

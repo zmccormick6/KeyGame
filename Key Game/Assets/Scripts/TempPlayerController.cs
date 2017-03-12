@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class TempPlayerController : MonoBehaviour
 {
+    [SerializeField] private GameObject GameManager;
+
     private Animator anim;
+    private Collider2D SwordHitbox;
     private Collider2D PlayerHitbox;
     SpriteRenderer tempSprite;
     private float Speed = 3f;
@@ -15,6 +18,7 @@ public class TempPlayerController : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
+        SwordHitbox = GetComponents<Collider2D>()[0];
         PlayerHitbox = GetComponents<Collider2D>()[1];
         tempSprite = gameObject.GetComponent<SpriteRenderer>();
     }
@@ -53,11 +57,17 @@ public class TempPlayerController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Keese")
+        if (other == PlayerHitbox)
         {
             PlayerHealth();
             StartCoroutine(PlayerInvincibility());
             StartCoroutine(HitFlashing());
+        }
+
+        if (other.tag == "Door")
+        {
+
+            GameManager.GetComponent<LevelSwitch>().RunNextLevel();
         }
     }
 
@@ -70,6 +80,15 @@ public class TempPlayerController : MonoBehaviour
 
     public void PlayerMovement()
     {
+        if (anim.GetInteger("Swing") == 0)
+        {
+            Speed = 3f;
+        }
+        else if (anim.GetInteger("Swing") == 1)
+        {
+            Speed = 0f;
+        }
+
         GetComponent<Rigidbody2D>().velocity = new Vector2(movex * Speed, movey * Speed);
     }
 

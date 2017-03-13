@@ -81,6 +81,7 @@ public class TempPlayerController : MonoBehaviour
     {
         MovementAnimation();
         SwingAnimation();
+        DodgeAnimation();
         PlayerMovement();
     }
 
@@ -103,29 +104,32 @@ public class TempPlayerController : MonoBehaviour
         movex = Input.GetAxisRaw("Horizontal");
         movey = Input.GetAxisRaw("Vertical");
 
-        //West
-        if (movex < 0)
+        if (anim.GetInteger("Dodge") != 1)
         {
-            anim.SetInteger("Direction", 4);
-        }
-        //East
-        else if (movex > 0)
-        {
-            anim.SetInteger("Direction", 2);
-        }
-        //North
-        else if (movey > 0)
-        {
-            anim.SetInteger("Direction", 1);
-        }
-        //South
-        else if (movey < 0)
-        {
-            anim.SetInteger("Direction", 3);
-        }
-        else
-        {
-            anim.SetInteger("Direction", 0);
+            //West
+            if (movex < 0)
+            {
+                anim.SetInteger("Direction", 4);
+            }
+            //East
+            else if (movex > 0)
+            {
+                anim.SetInteger("Direction", 2);
+            }
+            //North
+            else if (movey > 0)
+            {
+                anim.SetInteger("Direction", 1);
+            }
+            //South
+            else if (movey < 0)
+            {
+                anim.SetInteger("Direction", 3);
+            }
+            else
+            {
+                anim.SetInteger("Direction", 0);
+            }
         }
     }
 
@@ -145,7 +149,11 @@ public class TempPlayerController : MonoBehaviour
     {
         if (Input.GetButton("Fire2"))
         {
-
+            anim.SetInteger("Dodge", 1);
+        }
+        else
+        {
+            anim.SetInteger("Dodge", 0);
         }
     }
 

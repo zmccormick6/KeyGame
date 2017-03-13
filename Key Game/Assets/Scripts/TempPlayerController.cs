@@ -5,6 +5,7 @@ using UnityEngine;
 public class TempPlayerController : MonoBehaviour
 {
     [SerializeField] private GameObject GameManager;
+    [SerializeField] private AnimationClip Dodge;
 
     private Animator anim;
     private Collider2D SwordHitbox;
@@ -96,7 +97,10 @@ public class TempPlayerController : MonoBehaviour
             Speed = 0f;
         }
 
-        GetComponent<Rigidbody2D>().velocity = new Vector2(movex * Speed, movey * Speed);
+        if (GameManager.GetComponent<LevelSwitch>().pause != true)
+        {
+            GetComponent<Rigidbody2D>().velocity = new Vector2(movex * Speed, movey * Speed);
+        }
     }
 
     public void MovementAnimation()

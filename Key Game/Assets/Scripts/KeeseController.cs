@@ -59,7 +59,10 @@ public class KeeseController : MonoBehaviour
         CurrentPosition = new Vector2(transform.position.x, transform.position.y);
         PlayerPosition = new Vector2(Player.transform.position.x, Player.transform.position.y);
 
-        transform.position = Vector2.MoveTowards(CurrentPosition, PlayerPosition, Speed);
+        if (GameObject.Find("Game Manager").GetComponent<LevelSwitch>().pause != true)
+        {
+            transform.position = Vector2.MoveTowards(CurrentPosition, PlayerPosition, Speed);
+        }
     }
 
     public void KeeseHealth()

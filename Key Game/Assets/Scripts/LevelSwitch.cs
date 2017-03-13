@@ -16,6 +16,7 @@ public class LevelSwitch : MonoBehaviour
     private Vector2 middlePosition = new Vector2(0, 0);
     private Vector2 lowerPosition = new Vector2(0, -10);
     public int level = 0;
+    public bool pause = false;
 
     private bool movement = false;
     float startTime;
@@ -52,6 +53,7 @@ public class LevelSwitch : MonoBehaviour
         }
         else
         {
+            pause = true;
             currentLevel = GameObject.FindGameObjectWithTag("Current");
             nextLevel = Instantiate(Levels[level], new Vector2(0, 10), Quaternion.identity);
             nextLevel.transform.SetSiblingIndex(2);
@@ -61,6 +63,7 @@ public class LevelSwitch : MonoBehaviour
 
             StartCoroutine(MoveLevel());
             yield return new WaitForSeconds(2);
+            pause = false;
         }
 
         level++;

@@ -11,7 +11,7 @@ public class TempPlayerController : MonoBehaviour
     private Collider2D SwordHitbox;
     private Collider2D PlayerHitbox;
     SpriteRenderer tempSprite;
-    private float Speed = 3f;
+    public float Speed;
     private float Health = 5;
     private float movex = 0f;
     private float movey = 0f;
@@ -154,11 +154,20 @@ public class TempPlayerController : MonoBehaviour
         if (Input.GetButton("Fire2"))
         {
             anim.SetInteger("Dodge", 1);
+            StartCoroutine(DodgeMovementIncrease());
         }
         else
         {
             anim.SetInteger("Dodge", 0);
         }
+    }
+
+    private IEnumerator DodgeMovementIncrease()
+    {
+        Debug.Log("Stuff and Things");
+        Speed = 6f;
+        yield return new WaitForSeconds(0.5f);
+        Speed = 3f;
     }
 
     public void PlayerHealth()

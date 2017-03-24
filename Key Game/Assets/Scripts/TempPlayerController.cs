@@ -15,6 +15,9 @@ public class TempPlayerController : MonoBehaviour
     private float Health = 5;
     private float movex = 0f;
     private float movey = 0f;
+    private float anglex = 0f;
+    private float angley = 0f;
+    private float angle = 0f;
 
     void Start()
     {
@@ -108,6 +111,13 @@ public class TempPlayerController : MonoBehaviour
         movex = Input.GetAxisRaw("Horizontal");
         movey = Input.GetAxisRaw("Vertical");
 
+        anglex = Input.GetAxisRaw("Horizontal");
+        angley = Input.GetAxisRaw("Vertical");
+
+        angle = Mathf.Atan2(anglex, angley) * Mathf.Rad2Deg;
+
+        Debug.Log(angle);
+
         if (anim.GetInteger("Dodge") != 1)
         {
             //West
@@ -164,10 +174,7 @@ public class TempPlayerController : MonoBehaviour
 
     private IEnumerator DodgeMovementIncrease()
     {
-        Debug.Log("Stuff and Things");
-        Speed = 6f;
         yield return new WaitForSeconds(0.5f);
-        Speed = 3f;
     }
 
     public void PlayerHealth()

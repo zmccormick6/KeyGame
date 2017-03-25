@@ -19,6 +19,8 @@ public class TempPlayerController : MonoBehaviour
     private float angley = 0f;
     private float angle = 0f;
 
+    public bool dodgeCooldown = false;
+
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -87,6 +89,8 @@ public class TempPlayerController : MonoBehaviour
         SwingAnimation();
         DodgeAnimation();
         PlayerMovement();
+
+        Debug.Log(dodgeCooldown);
     }
 
     public void PlayerMovement()
@@ -98,6 +102,17 @@ public class TempPlayerController : MonoBehaviour
         else if (anim.GetInteger("Swing") == 1)
         {
             Speed = 0f;
+        }
+
+        if (Input.GetButton("Fire2"))
+        {
+            anim.SetInteger("Dodge", 1);
+            Speed = 15f;
+            StartCoroutine(DodgeMovementIncrease());
+        }
+        else
+        {
+            anim.SetInteger("Dodge", 0);
         }
 
         if (GameManager.GetComponent<LevelSwitch>().pause != true)
@@ -164,7 +179,6 @@ public class TempPlayerController : MonoBehaviour
         if (Input.GetButton("Fire2"))
         {
             anim.SetInteger("Dodge", 1);
-            StartCoroutine(DodgeMovementIncrease());
         }
         else
         {
@@ -174,7 +188,9 @@ public class TempPlayerController : MonoBehaviour
 
     private IEnumerator DodgeMovementIncrease()
     {
-        yield return new WaitForSeconds(0.5f);
+        PlayerHitbox.enabled = false;
+        yield return new WaitForSeconds(1f);
+        PlayerHitbox.enabled = true;
     }
 
     public void PlayerHealth()

@@ -107,7 +107,7 @@ public class TempPlayerController : MonoBehaviour
         if (Input.GetButton("Fire2"))
         {
             anim.SetInteger("Dodge", 1);
-            Speed = 15f;
+            //Speed = 15f;
             StartCoroutine(DodgeMovementIncrease());
         }
         else
@@ -189,6 +189,7 @@ public class TempPlayerController : MonoBehaviour
     private IEnumerator DodgeMovementIncrease()
     {
         PlayerHitbox.enabled = false;
+        Speed = 15f;
         yield return new WaitForSeconds(1f);
         PlayerHitbox.enabled = true;
     }

@@ -80,6 +80,7 @@
     <Compile Include="Assets\Scripts\EnemyCount.cs" />
     <Compile Include="Assets\Scripts\KeeseController.cs" />
     <Compile Include="Assets\Scripts\LevelSwitch.cs" />
+    <Compile Include="Assets\Scripts\PlayerWallHitbox.cs" />
     <Compile Include="Assets\Scripts\TempPlayerController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

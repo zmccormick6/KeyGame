@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
 
 public class LevelSwitch : MonoBehaviour
 {
     [SerializeField] private GameObject Player;
+    [SerializeField] private Image LevelTransition;
 
     private GameObject[] Levels;
     public GameObject currentLevel;
@@ -19,6 +21,8 @@ public class LevelSwitch : MonoBehaviour
     public bool pause = false;
 
     private bool movement = false;
+    private bool transition = false;
+    Color alpha;
     float startTime;
 
     void Start()
@@ -26,6 +30,9 @@ public class LevelSwitch : MonoBehaviour
         Levels = Resources.LoadAll("Levels", typeof(GameObject)).Cast<GameObject>().ToArray();
         StartCoroutine(NextLevel());
         GetComponent<DoorSpawn>().EnemyCount(currentLevel);
+        LevelTransition.enabled = true;
+        alpha.a = 0f;
+        LevelTransition.color = alpha;
     }
 
     void FixedUpdate()
@@ -35,6 +42,24 @@ public class LevelSwitch : MonoBehaviour
             Player.transform.position = Vector2.Lerp(playerPosition, playerDoorStart, (Time.time - startTime) / 2);
             currentLevel.transform.position = Vector2.Lerp(middlePosition, lowerPosition, (Time.time - startTime) / 2);
             nextLevel.transform.position = Vector2.Lerp(upperPosition, middlePosition, (Time.time - startTime) / 2);
+        }
+
+        if (transition == true)
+        {
+            LevelTransition.color = alpha;
+
+            if (alpha.a < 1f)
+            {
+                alpha.a += 1.25f * Time.deltaTime;
+            }
+        }
+        else
+        {
+            if (alpha.a > 0f)
+            {
+                LevelTransition.color = alpha;
+                alpha.a -= 1f * Time.deltaTime;
+            }
         }
     }
 
@@ -68,12 +93,20 @@ public class LevelSwitch : MonoBehaviour
 
         level++;
     }
+    private IEnumerator LevelTransitionEffects()
+    {
+        transition = true;
+        yield return new WaitForSeconds(1.5f);
+        transition = false;
+    }
+
 
     private IEnumerator MoveLevel()
     {
         startTime = Time.time;
         movement = true;
         playerPosition = new Vector2(Player.transform.position.x, Player.transform.position.y);
+        StartCoroutine(LevelTransitionEffects());
         yield return new WaitForSeconds(2);
         movement = false;
             

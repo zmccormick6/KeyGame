@@ -22,32 +22,35 @@ public class KeeseController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag != "Enemy")
+        if (other.tag != "Enemy" && other.tag != "Wall")
         {
-            if (other != PlayerCollider)
+            if (other.tag != "Hitbox")
             {
-                KeeseHealth();
+                if (other != PlayerCollider)
+                {
+                    KeeseHealth();
 
-                if (CurrentPosition.x < PlayerPosition.x)
-                {
-                    if (CurrentPosition.y > PlayerPosition.y)
+                    if (CurrentPosition.x < PlayerPosition.x)
                     {
-                        transform.position = new Vector2(CurrentPosition.x - 0.75f, CurrentPosition.y + 0.75f);
+                        if (CurrentPosition.y > PlayerPosition.y)
+                        {
+                            transform.position = new Vector2(CurrentPosition.x - 0.75f, CurrentPosition.y + 0.75f);
+                        }
+                        else
+                        {
+                            transform.position = new Vector2(CurrentPosition.x - 0.75f, CurrentPosition.y - 0.75f);
+                        }
                     }
-                    else
+                    else if (CurrentPosition.x > PlayerPosition.x)
                     {
-                        transform.position = new Vector2(CurrentPosition.x - 0.75f, CurrentPosition.y - 0.75f);
-                    }
-                }
-                else if (CurrentPosition.x > PlayerPosition.x)
-                {
-                    if (CurrentPosition.y > PlayerPosition.y)
-                    {
-                        transform.position = new Vector2(CurrentPosition.x + 0.75f, CurrentPosition.y + 0.75f);
-                    }
-                    else
-                    {
-                        transform.position = new Vector2(CurrentPosition.x + 0.75f, CurrentPosition.y - 0.75f);
+                        if (CurrentPosition.y > PlayerPosition.y)
+                        {
+                            transform.position = new Vector2(CurrentPosition.x + 0.75f, CurrentPosition.y + 0.75f);
+                        }
+                        else
+                        {
+                            transform.position = new Vector2(CurrentPosition.x + 0.75f, CurrentPosition.y - 0.75f);
+                        }
                     }
                 }
             }

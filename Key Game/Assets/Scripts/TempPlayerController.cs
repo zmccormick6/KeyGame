@@ -10,14 +10,18 @@ public class TempPlayerController : MonoBehaviour
     private Animator anim;
     private Collider2D SwordHitbox;
     private Collider2D PlayerHitbox;
+    private Collider2D Hitbox;
     SpriteRenderer tempSprite;
     public float Speed;
-    private float Health = 5;
+    private float Health = 6;
     private float movex = 0f;
     private float movey = 0f;
     private float anglex = 0f;
     private float angley = 0f;
     private float angle = 0f;
+    float currentTime, previousTime;
+    int dodge = 0;
+    bool dodgeReady = false;
 
     public bool dodgeCooldown = false;
 
@@ -87,10 +91,8 @@ public class TempPlayerController : MonoBehaviour
     {
         MovementAnimation();
         SwingAnimation();
-        DodgeAnimation();
         PlayerMovement();
-
-        Debug.Log(dodgeCooldown);
+        DodgeTime();
     }
 
     public void PlayerMovement()
@@ -106,19 +108,43 @@ public class TempPlayerController : MonoBehaviour
 
         if (Input.GetButton("Fire2"))
         {
-            anim.SetInteger("Dodge", 1);
-            //Speed = 15f;
-            StartCoroutine(DodgeMovementIncrease());
+            if (dodgeReady == true)
+            {
+                anim.SetInteger("Dodge", 1);
+                StartCoroutine(DodgeMovementIncrease());
+            }
         }
         else
         {
             anim.SetInteger("Dodge", 0);
         }
+        Debug.Log("Time before the next dodge is: " + (currentTime - (previousTime + 2f)));
 
         if (GameManager.GetComponent<LevelSwitch>().pause != true)
         {
             GetComponent<Rigidbody2D>().velocity = new Vector2(movex * Speed, movey * Speed);
         }
+    }
+
+    public void DodgeTime()
+    {
+        currentTime = Time.time;
+
+        if (currentTime >= previousTime + 2f)
+        {
+            dodgeReady = true;
+        }
+        else if (dodge == 0)
+        {
+            dodgeReady = true;
+            //dodge = 1;
+        }
+        else
+        {
+            dodgeReady = false;
+        }
+
+        Debug.Log(dodge);
     }
 
     public void MovementAnimation()
@@ -130,8 +156,6 @@ public class TempPlayerController : MonoBehaviour
         angley = Input.GetAxisRaw("Vertical");
 
         angle = Mathf.Atan2(anglex, angley) * Mathf.Rad2Deg;
-
-        Debug.Log(angle);
 
         if (anim.GetInteger("Dodge") != 1)
         {
@@ -174,23 +198,13 @@ public class TempPlayerController : MonoBehaviour
         }
     }
 
-    public void DodgeAnimation()
-    {
-        if (Input.GetButton("Fire2"))
-        {
-            anim.SetInteger("Dodge", 1);
-        }
-        else
-        {
-            anim.SetInteger("Dodge", 0);
-        }
-    }
-
     private IEnumerator DodgeMovementIncrease()
     {
         PlayerHitbox.enabled = false;
         Speed = 15f;
         yield return new WaitForSeconds(1f);
+        previousTime = currentTime;
+        dodge = 1;
         PlayerHitbox.enabled = true;
     }
 

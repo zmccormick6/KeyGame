@@ -50,7 +50,7 @@ public class LevelSwitch : MonoBehaviour
 
             if (alpha.a < 1f)
             {
-                alpha.a += 1.25f * Time.deltaTime;
+                alpha.a += 1.5f * Time.deltaTime;
             }
         }
         else
@@ -109,7 +109,7 @@ public class LevelSwitch : MonoBehaviour
         StartCoroutine(LevelTransitionEffects());
         yield return new WaitForSeconds(2);
         movement = false;
-            
+
         Destroy(GameObject.FindGameObjectWithTag("Current"));
         currentLevel = GameObject.FindGameObjectWithTag("Next");
         currentLevel.tag = "Current";

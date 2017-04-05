@@ -22,6 +22,7 @@ public class TempPlayerController : MonoBehaviour
     float currentTime, previousTime;
     int dodge = 0;
     bool dodgeReady = false;
+    bool because = false, please = false;
 
     public bool dodgeCooldown = false;
 
@@ -111,6 +112,7 @@ public class TempPlayerController : MonoBehaviour
             if (dodgeReady == true)
             {
                 anim.SetInteger("Dodge", 1);
+                //because = true;
                 StartCoroutine(DodgeMovementIncrease());
             }
         }
@@ -118,10 +120,43 @@ public class TempPlayerController : MonoBehaviour
         {
             anim.SetInteger("Dodge", 0);
         }
-        Debug.Log("Time before the next dodge is: " + (currentTime - (previousTime + 2f)));
 
         if (GameManager.GetComponent<LevelSwitch>().pause != true)
         {
+            if (transform.position.x < -6.5)
+            {
+                GetComponent<Rigidbody2D>().position = new Vector2(-6.49f, transform.position.y);
+            }
+            else if (transform.position.x > 6.5)
+            {
+                GetComponent<Rigidbody2D>().position = new Vector2(6.49f, transform.position.y);
+            }
+            if (transform.position.y < -3.95)
+            {
+                GetComponent<Rigidbody2D>().position = new Vector2(transform.position.x, -3.94f);
+            }
+            else if (transform.position.y > 1.25)
+            {
+                GetComponent<Rigidbody2D>().position = new Vector2(transform.position.x, 1.24f);
+            }
+
+            if (transform.position.x > 6.5 && transform.position.y > 1.25)
+            {
+                GetComponent<Rigidbody2D>().position = new Vector2(6.49f, 1.24f);
+            }
+            if (transform.position.x > 6.5 && transform.position.y < -3.95)
+            {
+                GetComponent<Rigidbody2D>().position = new Vector2(6.49f, -3.94f);
+            }
+            if (transform.position.x < -6.5 && transform.position.y < -3.95)
+            {
+                GetComponent<Rigidbody2D>().position = new Vector2(-6.49f, -3.94f);
+            }
+            if (transform.position.x < -6.5 && transform.position.y > 1.25)
+            {
+                GetComponent<Rigidbody2D>().position = new Vector2(-6.49f, 1.24f);
+            }
+
             GetComponent<Rigidbody2D>().velocity = new Vector2(movex * Speed, movey * Speed);
         }
     }
@@ -133,11 +168,11 @@ public class TempPlayerController : MonoBehaviour
         if (currentTime >= previousTime + 2f)
         {
             dodgeReady = true;
+            previousTime = currentTime;
         }
         else if (dodge == 0)
         {
             dodgeReady = true;
-            //dodge = 1;
         }
         else
         {
@@ -200,12 +235,16 @@ public class TempPlayerController : MonoBehaviour
 
     private IEnumerator DodgeMovementIncrease()
     {
+        //if (because == true)
+        //{
         PlayerHitbox.enabled = false;
         Speed = 15f;
-        yield return new WaitForSeconds(1f);
-        previousTime = currentTime;
         dodge = 1;
+        //because = false;
+        yield return new WaitForSeconds(1f);
+        //previousTime = currentTime;
         PlayerHitbox.enabled = true;
+        //}
     }
 
     public void PlayerHealth()

@@ -75,6 +75,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\ColliderDisable.cs" />
     <Compile Include="Assets\Scripts\DoorIdentification.cs" />
     <Compile Include="Assets\Scripts\DoorSpawn.cs" />
     <Compile Include="Assets\Scripts\EnemyCount.cs" />

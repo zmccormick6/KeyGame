@@ -9,13 +9,25 @@ public class TextController : MonoBehaviour
     [SerializeField] private Text DisplayMessage;
     [SerializeField] private GameObject NextButton;
     [SerializeField] private GameObject EndButton;
+    [SerializeField] private GameObject Keyvi;
+    private Animator KeyviAnim;
 
     string[] message = 
-        {"Hey...?  Who are you?",
-         "I don't know you, get away!",
-         "Stuff about dungeons and things",
-         "Just testing the clicking really"};
+        {"Hiya!  My name's Keyvi!",
+         "Do you just no talk or...ok?",
+         "Oh man, I'm blushing so the Dev's can show off the sprite.",
+         "How rude of them.",
+         "I don't know you, get away from me.",
+         "Dont' make me call the dungeon Police.",
+         "Some say that there's a secret at the end of this dungeon.",
+         "Totally not a boss that's missing or anything."};
+    int[] emotion = {0, 0, 1, 1, 2, 2, 3, 3};
     int counter = 0;
+
+    void Start()
+    {
+        KeyviAnim = Keyvi.GetComponent<Animator>();
+    }
 
     public void StartTalking()
     {
@@ -26,6 +38,8 @@ public class TextController : MonoBehaviour
 
     private IEnumerator TypingOverTime(string[] message, int counter)
     {
+        KeyviAnim.SetInteger("Emotion", emotion[counter]);
+
         NextButton.SetActive(false);
         EndButton.SetActive(false);
 
@@ -43,6 +57,7 @@ public class TextController : MonoBehaviour
 
         GetComponent<TextController>().counter++;
         GameObject.Find("Keyvi").GetComponent<KeyviController>().stop = false;
+
         if (counter % 2 == 0)
         {
             NextButton.SetActive(true);

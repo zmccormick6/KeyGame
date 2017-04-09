@@ -1,33 +1,33 @@
 fileFormatVersion: 2
-guid: ca68a9564ae74404495a96182757e078
-timeCreated: 1491694004
+guid: 2ac3b195238de0544a0c5b20456269f4
+timeCreated: 1491706872
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: mainchar_anim_v2 (1)_0
-    21300002: mainchar_anim_v2 (1)_1
-    21300004: mainchar_anim_v2 (1)_2
-    21300006: mainchar_anim_v2 (1)_3
-    21300008: mainchar_anim_v2 (1)_4
-    21300010: mainchar_anim_v2 (1)_5
-    21300012: mainchar_anim_v2 (1)_6
-    21300014: mainchar_anim_v2 (1)_7
-    21300016: mainchar_anim_v2 (1)_8
-    21300018: mainchar_anim_v2 (1)_9
-    21300020: mainchar_anim_v2 (1)_10
-    21300022: mainchar_anim_v2 (1)_11
-    21300024: mainchar_anim_v2 (1)_12
-    21300026: mainchar_anim_v2 (1)_13
-    21300028: mainchar_anim_v2 (1)_14
-    21300030: mainchar_anim_v2 (1)_15
-    21300032: mainchar_anim_v2 (1)_16
-    21300034: mainchar_anim_v2 (1)_17
-    21300036: mainchar_anim_v2 (1)_18
-    21300038: mainchar_anim_v2 (1)_19
-    21300040: mainchar_anim_v2 (1)_20
-    21300042: mainchar_anim_v2 (1)_21
-    21300044: mainchar_anim_v2 (1)_22
-    21300046: mainchar_anim_v2 (1)_23
+    21300000: mainchar_anim_v5_0
+    21300002: mainchar_anim_v5_1
+    21300004: mainchar_anim_v5_2
+    21300006: mainchar_anim_v5_3
+    21300008: mainchar_anim_v5_4
+    21300010: mainchar_anim_v5_5
+    21300012: mainchar_anim_v5_6
+    21300014: mainchar_anim_v5_7
+    21300016: mainchar_anim_v5_8
+    21300018: mainchar_anim_v5_9
+    21300020: mainchar_anim_v5_10
+    21300022: mainchar_anim_v5_11
+    21300024: mainchar_anim_v5_12
+    21300026: mainchar_anim_v5_13
+    21300028: mainchar_anim_v5_14
+    21300030: mainchar_anim_v5_15
+    21300032: mainchar_anim_v5_16
+    21300034: mainchar_anim_v5_17
+    21300036: mainchar_anim_v5_18
+    21300038: mainchar_anim_v5_19
+    21300040: mainchar_anim_v5_20
+    21300042: mainchar_anim_v5_21
+    21300044: mainchar_anim_v5_22
+    21300046: mainchar_anim_v5_23
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -94,7 +94,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mainchar_anim_v2 (1)_0
+      name: mainchar_anim_v5_0
       rect:
         serializedVersion: 2
         x: 0
@@ -107,7 +107,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v2 (1)_1
+      name: mainchar_anim_v5_1
       rect:
         serializedVersion: 2
         x: 128
@@ -120,7 +120,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v2 (1)_2
+      name: mainchar_anim_v5_2
       rect:
         serializedVersion: 2
         x: 256
@@ -133,7 +133,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v2 (1)_3
+      name: mainchar_anim_v5_3
       rect:
         serializedVersion: 2
         x: 384
@@ -146,7 +146,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v2 (1)_4
+      name: mainchar_anim_v5_4
       rect:
         serializedVersion: 2
         x: 512
@@ -159,7 +159,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v2 (1)_5
+      name: mainchar_anim_v5_5
       rect:
         serializedVersion: 2
         x: 640
@@ -172,7 +172,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v2 (1)_6
+      name: mainchar_anim_v5_6
       rect:
         serializedVersion: 2
         x: 0
@@ -185,7 +185,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v2 (1)_7
+      name: mainchar_anim_v5_7
       rect:
         serializedVersion: 2
         x: 128
@@ -198,7 +198,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v2 (1)_8
+      name: mainchar_anim_v5_8
       rect:
         serializedVersion: 2
         x: 256
@@ -211,7 +211,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v2 (1)_9
+      name: mainchar_anim_v5_9
       rect:
         serializedVersion: 2
         x: 384
@@ -224,7 +224,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v2 (1)_10
+      name: mainchar_anim_v5_10
       rect:
         serializedVersion: 2
         x: 512
@@ -237,7 +237,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v2 (1)_11
+      name: mainchar_anim_v5_11
       rect:
         serializedVersion: 2
         x: 640
@@ -250,7 +250,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v2 (1)_12
+      name: mainchar_anim_v5_12
       rect:
         serializedVersion: 2
         x: 0
@@ -263,7 +263,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v2 (1)_13
+      name: mainchar_anim_v5_13
       rect:
         serializedVersion: 2
         x: 128
@@ -276,7 +276,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v2 (1)_14
+      name: mainchar_anim_v5_14
       rect:
         serializedVersion: 2
         x: 256
@@ -289,7 +289,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v2 (1)_15
+      name: mainchar_anim_v5_15
       rect:
         serializedVersion: 2
         x: 384
@@ -302,7 +302,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v2 (1)_16
+      name: mainchar_anim_v5_16
       rect:
         serializedVersion: 2
         x: 512
@@ -315,7 +315,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v2 (1)_17
+      name: mainchar_anim_v5_17
       rect:
         serializedVersion: 2
         x: 640
@@ -328,7 +328,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v2 (1)_18
+      name: mainchar_anim_v5_18
       rect:
         serializedVersion: 2
         x: 0
@@ -341,7 +341,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v2 (1)_19
+      name: mainchar_anim_v5_19
       rect:
         serializedVersion: 2
         x: 128
@@ -354,7 +354,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v2 (1)_20
+      name: mainchar_anim_v5_20
       rect:
         serializedVersion: 2
         x: 256
@@ -367,7 +367,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v2 (1)_21
+      name: mainchar_anim_v5_21
       rect:
         serializedVersion: 2
         x: 384
@@ -380,7 +380,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v2 (1)_22
+      name: mainchar_anim_v5_22
       rect:
         serializedVersion: 2
         x: 512
@@ -393,7 +393,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v2 (1)_23
+      name: mainchar_anim_v5_23
       rect:
         serializedVersion: 2
         x: 640

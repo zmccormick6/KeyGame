@@ -22,7 +22,7 @@ public class KeeseController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag != "Enemy" && other.tag != "Wall")
+        if (other.tag != "Enemy" && other.tag != "Wall" && other.tag != "Keyvi")
         {
             if (other.tag != "Hitbox")
             {

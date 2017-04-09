@@ -7,13 +7,14 @@ public class TempPlayerController : MonoBehaviour
     [SerializeField] private GameObject GameManager;
     [SerializeField] private AnimationClip Dodge;
 
+    private Animator Heart;
     private Animator anim;
     private Collider2D SwordHitbox;
     private Collider2D PlayerHitbox;
     private Collider2D Hitbox;
     SpriteRenderer tempSprite;
     public float Speed;
-    private float Health = 6;
+    private int Health = 6;
     private float movex = 0f;
     private float movey = 0f;
     private float anglex = 0f;
@@ -21,13 +22,14 @@ public class TempPlayerController : MonoBehaviour
     private float angle = 0f;
     float currentTime, previousTime;
     int dodge = 0;
-    bool dodgeReady = false;
+    bool dodgeReady = true;
     bool because = false, please = false;
 
     public bool dodgeCooldown = false;
 
     void Start()
     {
+        Heart = GameObject.Find("Hearts").GetComponent<Animator>();
         anim = GetComponent<Animator>();
         SwordHitbox = GetComponents<Collider2D>()[0];
         PlayerHitbox = GetComponents<Collider2D>()[1];
@@ -72,7 +74,7 @@ public class TempPlayerController : MonoBehaviour
         {
             if (other != PlayerHitbox)
             {
-                if (other.tag != "Door")
+                if (other.tag != "Door" && other.tag != "Keyvi")
                 {
                     PlayerHealth();
                     StartCoroutine(PlayerInvincibility());
@@ -93,6 +95,7 @@ public class TempPlayerController : MonoBehaviour
         MovementAnimation();
         SwingAnimation();
         PlayerMovement();
+        DodgeAnimation();
         DodgeTime();
     }
 
@@ -107,18 +110,14 @@ public class TempPlayerController : MonoBehaviour
             Speed = 0f;
         }
 
-        if (Input.GetButton("Fire2"))
+        if (anim.GetInteger("Dodge") == 1)
         {
-            if (dodgeReady == true)
-            {
-                anim.SetInteger("Dodge", 1);
-                //because = true;
-                StartCoroutine(DodgeMovementIncrease());
-            }
+            Speed = 15f;
+            StartCoroutine(DodgeMovementIncrease());
         }
-        else
+        else if (anim.GetInteger("Dodge") == 0)
         {
-            anim.SetInteger("Dodge", 0);
+            Speed = 3f;
         }
 
         if (GameManager.GetComponent<LevelSwitch>().pause != true)
@@ -159,27 +158,8 @@ public class TempPlayerController : MonoBehaviour
 
             GetComponent<Rigidbody2D>().velocity = new Vector2(movex * Speed, movey * Speed);
         }
-    }
-
-    public void DodgeTime()
-    {
-        currentTime = Time.time;
-
-        if (currentTime >= previousTime + 2f)
-        {
-            dodgeReady = true;
-            previousTime = currentTime;
-        }
-        else if (dodge == 0)
-        {
-            dodgeReady = true;
-        }
         else
-        {
-            dodgeReady = false;
-        }
-
-        Debug.Log(dodge);
+            GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
     }
 
     public void MovementAnimation()
@@ -233,22 +213,49 @@ public class TempPlayerController : MonoBehaviour
         }
     }
 
+    public void DodgeTime()
+    {
+        if (currentTime > 0)
+        {
+            currentTime -= Time.deltaTime;
+            dodgeReady = false;
+        }
+        else if (currentTime <= 0)
+        {
+            dodgeReady = true;
+
+            if (anim.GetInteger("Dodge") == 1)
+            {
+                currentTime = 2f;
+            }
+        }
+    }
+
+    public void DodgeAnimation()
+    {
+        if (Input.GetButton("Fire2"))
+        {
+            if (dodgeReady == true)
+            {
+                anim.SetInteger("Dodge", 1);
+            }
+        }
+        else
+        {
+            anim.SetInteger("Dodge", 0);
+        }
+    }
+
     private IEnumerator DodgeMovementIncrease()
     {
-        //if (because == true)
-        //{
         PlayerHitbox.enabled = false;
-        Speed = 15f;
-        dodge = 1;
-        //because = false;
         yield return new WaitForSeconds(1f);
-        //previousTime = currentTime;
         PlayerHitbox.enabled = true;
-        //}
     }
 
     public void PlayerHealth()
     {
         Health--;
+        Heart.SetInteger("Heart", Health);
     }
 }

@@ -16,6 +16,7 @@ public class TextController : MonoBehaviour
     private Animator KeyviAnim;
     bool move = false;
     float startTime;
+    Color KeyviAlpha;
 
     string[] message = 
         {"Hiya!  My name's Keyvi!",
@@ -39,6 +40,9 @@ public class TextController : MonoBehaviour
         if (move == true)
         {
             InGameKeyvi.transform.position = Vector2.Lerp(KeyviPosition, WhereToGo, ((Time.time - startTime) / 4));
+
+            KeyviAlpha.a -= Time.deltaTime / 1.25f;
+            GameObject.Find("Keyvi").GetComponent<SpriteRenderer>().color = KeyviAlpha;
         }
     }
 
@@ -54,6 +58,7 @@ public class TextController : MonoBehaviour
         InGameKeyvi = GameObject.Find("Keyvi");
 
         KeyviAnim.SetInteger("Emotion", emotion[counter]);
+        GameObject.Find("Keyvi").GetComponent<Animator>().SetInteger("Emotion", emotion[counter]);
 
         NextButton.SetActive(false);
         EndButton.SetActive(false);
@@ -83,7 +88,9 @@ public class TextController : MonoBehaviour
 
     private IEnumerator MoveKeyvi()
     {
-        yield return new WaitForSeconds(3f);
+        GameObject.Find("Keyvi").GetComponent<Collider2D>().enabled = false;
+        yield return new WaitForSeconds(1f);
+        KeyviAlpha = GameObject.Find("Keyvi").GetComponent<SpriteRenderer>().color;
         startTime = Time.time;
         move = true;
 

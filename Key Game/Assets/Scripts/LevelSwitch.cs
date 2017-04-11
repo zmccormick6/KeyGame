@@ -73,7 +73,7 @@ public class LevelSwitch : MonoBehaviour
         if (level == 0)
         {
             currentLevel = Instantiate(Levels[level], new Vector2(0, 0), Quaternion.identity);
-            currentLevel.transform.SetSiblingIndex(2);
+            currentLevel.transform.SetSiblingIndex(3);
             currentLevel.tag = "Current";
         }
         else
@@ -81,7 +81,7 @@ public class LevelSwitch : MonoBehaviour
             pause = true;
             currentLevel = GameObject.FindGameObjectWithTag("Current");
             nextLevel = Instantiate(Levels[level], new Vector2(0, 10), Quaternion.identity);
-            nextLevel.transform.SetSiblingIndex(2);
+            nextLevel.transform.SetSiblingIndex(3);
             nextLevel.tag = "Next";
 
             GetComponent<DoorSpawn>().EnemyCount(currentLevel);

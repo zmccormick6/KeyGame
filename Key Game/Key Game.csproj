@@ -82,6 +82,7 @@
     <Compile Include="Assets\Scripts\KeeseController.cs" />
     <Compile Include="Assets\Scripts\KeyviController.cs" />
     <Compile Include="Assets\Scripts\LevelSwitch.cs" />
+    <Compile Include="Assets\Scripts\MageController.cs" />
     <Compile Include="Assets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\Scripts\PauseController.cs" />
     <Compile Include="Assets\Scripts\PlayerWallHitbox.cs" />

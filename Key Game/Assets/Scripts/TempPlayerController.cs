@@ -74,11 +74,12 @@ public class TempPlayerController : MonoBehaviour
         {
             if (other != PlayerHitbox)
             {
-                if (other.tag != "Door" && other.tag != "Keyvi")
+                if (other.tag != "Door" && other.tag != "Keyvi" && other.tag != "Obstacle")
                 {
                     PlayerHealth();
                     StartCoroutine(PlayerInvincibility());
                     StartCoroutine(HitFlashing());
+                    other.gameObject.GetComponent<KeeseController>().RunHitPlayer();
                 }
             }
         }

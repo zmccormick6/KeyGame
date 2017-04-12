@@ -5,6 +5,12 @@ using UnityEngine;
 public class KeeseController : MonoBehaviour
 {
     [SerializeField] private GameObject Player;
+
+    private Vector2 TopRight = new Vector2(6.5f, 0.75f);
+    private Vector2 BottomRight = new Vector2(6.5f, -4.25f);
+    private Vector2 TopLeft = new Vector2(-6.5f, 0.75f);
+    private Vector2 BottomLeft = new Vector2(-6.5f, -4.25f);
+
     private Collider2D PlayerCollider;
     private Collider2D SwordCollider;
     private Collider2D KeeseCollider;
@@ -16,6 +22,8 @@ public class KeeseController : MonoBehaviour
     private Animator animator;
 
     public bool hitPlayer = false;
+    bool KeesePassive = false;
+    float attackTime;
 
     private IEnumerator RandomFrame()
     {
@@ -36,6 +44,9 @@ public class KeeseController : MonoBehaviour
         StartCoroutine(RandomFrame());
 
         Speed = Random.Range(0.03f, 0.05f);
+        attackTime = Random.Range(1f, 4f);
+
+        StartCoroutine(PassiveRun());
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -82,10 +93,19 @@ public class KeeseController : MonoBehaviour
 
         if (GameObject.Find("Game Manager").GetComponent<LevelSwitch>().pause != true)
         {
-            if (hitPlayer == false)
-                transform.position = Vector2.MoveTowards(CurrentPosition, PlayerPosition, Speed);
-            else if (hitPlayer == true)
-                transform.position = Vector2.MoveTowards(CurrentPosition, PlayerPosition, -Speed * 2);
+            if (KeesePassive == true)
+            {
+                if (hitPlayer == false)
+                    transform.position = Vector2.MoveTowards(CurrentPosition, PlayerPosition, Speed);
+                else if (hitPlayer == true)
+                {
+                    transform.position = Vector2.MoveTowards(CurrentPosition, PlayerPosition, -Speed * 2);
+                    KeesePassive = false;
+                    StartCoroutine(PassiveRun());
+                }
+            }
+            else
+                Passive();
         }
     }
 
@@ -118,5 +138,35 @@ public class KeeseController : MonoBehaviour
         hitPlayer = true;
         yield return new WaitForSeconds(0.25f);
         hitPlayer = false;
+    }
+
+    public void Passive()
+    {
+        if (CurrentPosition == TopLeft)
+        {
+            transform.position = Vector2.MoveTowards(CurrentPosition, BottomLeft, Speed);
+
+            if (CurrentPosition == BottomLeft)
+            {
+                transform.position = Vector2.MoveTowards(CurrentPosition, BottomRight, Speed);
+
+                if (CurrentPosition == BottomRight)
+                {
+                    transform.position = Vector2.MoveTowards(CurrentPosition, TopRight, Speed);
+
+                    if (CurrentPosition == TopRight)
+                    {
+                        transform.position = Vector2.MoveTowards(CurrentPosition, TopLeft, Speed);
+                    }
+                }
+            }
+        }
+    }
+
+    private IEnumerator PassiveRun()
+    {
+        KeesePassive = false;
+        yield return new WaitForSeconds(attackTime);
+        KeesePassive = true;
     }
 }

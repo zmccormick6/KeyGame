@@ -6,10 +6,12 @@ public class KeeseController : MonoBehaviour
 {
     [SerializeField] private GameObject Player;
 
-    private Vector2 TopRight = new Vector2(6.5f, 0.75f);
-    private Vector2 BottomRight = new Vector2(6.5f, -4.25f);
-    private Vector2 TopLeft = new Vector2(-6.5f, 0.75f);
-    private Vector2 BottomLeft = new Vector2(-6.5f, -4.25f);
+    private Vector2 TopRight = new Vector2(5.5f, 0f);
+    private Vector2 BottomRight = new Vector2(5.5f, -3.5f);
+    private Vector2 TopLeft = new Vector2(-5.5f, 0f);
+    private Vector2 BottomLeft = new Vector2(-5.5f, -3.5f);
+
+    private Vector2[] KeesePositions = { new Vector2(-5.5f, 0f), new Vector2(-5.5f, -3.5f), new Vector2(5.5f, -3.5f), new Vector2(5.5f, 0f)};
 
     private Collider2D PlayerCollider;
     private Collider2D SwordCollider;
@@ -22,8 +24,9 @@ public class KeeseController : MonoBehaviour
     private Animator animator;
 
     public bool hitPlayer = false;
-    bool KeesePassive = false;
+    bool KeesePassive = false, topRight, bottomRight, bottomLeft, topLeft, passiveLimit = true;
     float attackTime;
+    int location;
 
     private IEnumerator RandomFrame()
     {
@@ -99,13 +102,14 @@ public class KeeseController : MonoBehaviour
                     transform.position = Vector2.MoveTowards(CurrentPosition, PlayerPosition, Speed);
                 else if (hitPlayer == true)
                 {
-                    transform.position = Vector2.MoveTowards(CurrentPosition, PlayerPosition, -Speed * 2);
-                    KeesePassive = false;
+                    transform.position = Vector2.MoveTowards(CurrentPosition, PlayerPosition, -Speed * 3);
                     StartCoroutine(PassiveRun());
                 }
             }
-            else
+            else if (KeesePassive == false)
+            {
                 Passive();
+            }
         }
     }
 
@@ -142,29 +146,11 @@ public class KeeseController : MonoBehaviour
 
     public void Passive()
     {
-        if (CurrentPosition == TopLeft)
-        {
-            transform.position = Vector2.MoveTowards(CurrentPosition, BottomLeft, Speed);
-
-            if (CurrentPosition == BottomLeft)
-            {
-                transform.position = Vector2.MoveTowards(CurrentPosition, BottomRight, Speed);
-
-                if (CurrentPosition == BottomRight)
-                {
-                    transform.position = Vector2.MoveTowards(CurrentPosition, TopRight, Speed);
-
-                    if (CurrentPosition == TopRight)
-                    {
-                        transform.position = Vector2.MoveTowards(CurrentPosition, TopLeft, Speed);
-                    }
-                }
-            }
-        }
     }
 
     private IEnumerator PassiveRun()
     {
+        yield return new WaitForSeconds(0.25f);
         KeesePassive = false;
         yield return new WaitForSeconds(attackTime);
         KeesePassive = true;

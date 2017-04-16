@@ -47,7 +47,7 @@ public class KeeseController : MonoBehaviour
         StartCoroutine(RandomFrame());
 
         Speed = Random.Range(0.03f, 0.05f);
-        attackTime = Random.Range(1f, 4f);
+        attackTime = Random.Range(1f, 3f);
 
         StartCoroutine(PassiveRun());
     }

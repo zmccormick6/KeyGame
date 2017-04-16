@@ -204,9 +204,10 @@ public class TempPlayerController : MonoBehaviour
 
     public void SwingAnimation()
     {
-        if (Input.GetButton("Fire1"))
+        if (Mathf.Round(Input.GetAxisRaw("Fire1")) < 0)
         {
             anim.SetInteger("Swing", 1);
+            Debug.Log("Swing");
         }
         else
         {

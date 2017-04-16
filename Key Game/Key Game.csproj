@@ -79,6 +79,7 @@
     <Compile Include="Assets\Scripts\DoorIdentification.cs" />
     <Compile Include="Assets\Scripts\DoorSpawn.cs" />
     <Compile Include="Assets\Scripts\EnemyCount.cs" />
+    <Compile Include="Assets\Scripts\InWater.cs" />
     <Compile Include="Assets\Scripts\KeeseController.cs" />
     <Compile Include="Assets\Scripts\KeyviController.cs" />
     <Compile Include="Assets\Scripts\LevelSwitch.cs" />

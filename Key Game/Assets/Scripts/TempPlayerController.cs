@@ -13,7 +13,7 @@ public class TempPlayerController : MonoBehaviour
     private Collider2D PlayerHitbox;
     private Collider2D Hitbox;
     SpriteRenderer tempSprite;
-    public float Speed;
+    public float Speed = 3f;
     private int Health = 6;
     private float movex = 0f;
     private float movey = 0f;
@@ -22,7 +22,7 @@ public class TempPlayerController : MonoBehaviour
     private float angle = 0f;
     float currentTime, previousTime;
     int dodge = 0;
-    bool dodgeReady = true;
+    bool dodgeReady = true, water = false;
     bool because = false, please = false;
 
     public bool dodgeCooldown = false;
@@ -74,7 +74,7 @@ public class TempPlayerController : MonoBehaviour
         {
             if (other != PlayerHitbox)
             {
-                if (other.tag != "Door" && other.tag != "Keyvi" && other.tag != "Obstacle")
+                if (other.tag != "Door" && other.tag != "Keyvi" && other.tag != "Obstacle" && other.tag != "Water")
                 {
                     PlayerHealth();
                     StartCoroutine(PlayerInvincibility());
@@ -89,6 +89,27 @@ public class TempPlayerController : MonoBehaviour
             GameManager.GetComponent<DoorSpawn>().CurrentDoor.GetComponent<Collider2D>().enabled = false;
             GameManager.GetComponent<LevelSwitch>().RunNextLevel();
         }
+
+        if (other.tag == "Water")
+        {
+            water = true;
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.tag == "Water")
+        {
+            GetComponent<TempPlayerController>().Speed = 1.5f;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.tag == "Water")
+        {
+            GetComponent<TempPlayerController>().Speed = 3f;
+        }
     }
 
     void FixedUpdate()
@@ -102,23 +123,15 @@ public class TempPlayerController : MonoBehaviour
 
     public void PlayerMovement()
     {
-        if (anim.GetInteger("Swing") == 0)
+        if (anim.GetInteger("Swing") == 1)
         {
-            Speed = 3f;
-        }
-        else if (anim.GetInteger("Swing") == 1)
-        {
-            Speed = 0f;
+            StartCoroutine(SwingStop());
         }
 
         if (anim.GetInteger("Dodge") == 1)
         {
-            Speed = 15f;
+            StartCoroutine(DodgeHitbox());
             StartCoroutine(DodgeMovementIncrease());
-        }
-        else if (anim.GetInteger("Dodge") == 0)
-        {
-            Speed = 3f;
         }
 
         if (GameManager.GetComponent<LevelSwitch>().pause != true)
@@ -207,7 +220,6 @@ public class TempPlayerController : MonoBehaviour
         if (Mathf.Round(Input.GetAxisRaw("Fire1")) < 0)
         {
             anim.SetInteger("Swing", 1);
-            Debug.Log("Swing");
         }
         else
         {
@@ -235,7 +247,7 @@ public class TempPlayerController : MonoBehaviour
 
     public void DodgeAnimation()
     {
-        if (Input.GetButton("Fire2"))
+        if (Input.GetButtonDown("Fire2"))
         {
             if (dodgeReady == true)
             {
@@ -248,11 +260,25 @@ public class TempPlayerController : MonoBehaviour
         }
     }
 
-    private IEnumerator DodgeMovementIncrease()
+    private IEnumerator SwingStop()
+    {
+        GetComponent<TempPlayerController>().Speed = 0;
+        yield return new WaitForSeconds(0.15f);
+        GetComponent<TempPlayerController>().Speed = 3;
+    }
+
+    private IEnumerator DodgeHitbox()
     {
         PlayerHitbox.enabled = false;
         yield return new WaitForSeconds(1f);
         PlayerHitbox.enabled = true;
+    }
+
+    private IEnumerator DodgeMovementIncrease()
+    {
+        GetComponent<TempPlayerController>().Speed = 15;
+        yield return new WaitForSeconds(0.15f);
+        GetComponent<TempPlayerController>().Speed = 3;
     }
 
     public void PlayerHealth()

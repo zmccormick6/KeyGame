@@ -10,12 +10,15 @@ public class TextController : MonoBehaviour
     [SerializeField] private GameObject NextButton;
     [SerializeField] private GameObject EndButton;
     [SerializeField] private GameObject Keyvi;
-    [SerializeField] private GameObject InGameKeyvi;
+    [SerializeField] private AudioSource Typing;
+
+    public GameObject InGameKeyvi;
 
     Vector2 KeyviPosition, WhereToGo;
     private Animator KeyviAnim;
-    bool move = false;
+    bool move = false, talking = false;
     float startTime;
+    int talkingTime = 0;
     Color KeyviAlpha;
 
     string[] message = 
@@ -33,6 +36,7 @@ public class TextController : MonoBehaviour
     void Start()
     {
         KeyviAnim = Keyvi.GetComponent<Animator>();
+        InGameKeyvi = GameObject.Find("Keyvi");
     }
 
     void FixedUpdate()
@@ -44,6 +48,29 @@ public class TextController : MonoBehaviour
             KeyviAlpha.a -= Time.deltaTime / 1.25f;
             GameObject.Find("Keyvi").GetComponent<SpriteRenderer>().color = KeyviAlpha;
         }
+
+        //if (InGameKeyvi.GetComponent<KeyviController>().inRange == true)
+        if (GameObject.Find("Keyvi").GetComponent<KeyviController>().inRange == true)
+        {
+            if (talking == false)
+            {
+                if (Input.GetButton("Fire3"))
+                {
+                    GameObject.Find("Game Manager").GetComponent<LevelSwitch>().pause = true;
+
+                    if (talkingTime < 2)
+                    {
+                        StartTalking();
+                    }
+                    else
+                        EndTalking();
+
+                    talking = true;
+                }
+            }
+        }
+
+        Debug.Log(talking);
     }
 
     public void StartTalking()
@@ -55,22 +82,21 @@ public class TextController : MonoBehaviour
 
     private IEnumerator TypingOverTime(string[] message, int counter)
     {
-        InGameKeyvi = GameObject.Find("Keyvi");
-
         KeyviAnim.SetInteger("Emotion", emotion[counter]);
         GameObject.Find("Keyvi").GetComponent<Animator>().SetInteger("Emotion", emotion[counter]);
 
         NextButton.SetActive(false);
         EndButton.SetActive(false);
 
+        Typing.Play();
+        GameObject.Find("Music").GetComponent<AudioSource>().volume = 0.6f;
+
         for (int i = 0; i < message[counter].Length; i++)
         {
             DisplayMessage.text += message[counter][i];
 
             if (message[counter][i] == '.')
-            {
                 yield return new WaitForSeconds(0.5f);
-            }
             else
                 yield return new WaitForSeconds(0.075f);
         }
@@ -84,6 +110,11 @@ public class TextController : MonoBehaviour
         }
         else
             EndButton.SetActive(true);
+
+        talking = false;
+        talkingTime++;
+        Typing.Stop();
+        GameObject.Find("Music").GetComponent<AudioSource>().volume = 1f;
     }
 
     private IEnumerator MoveKeyvi()
@@ -98,6 +129,7 @@ public class TextController : MonoBehaviour
         WhereToGo = new Vector2(InGameKeyvi.transform.position.x, 20);
         yield return new WaitForSeconds(2f);
         move = false;
+        talking = false;
     }
 
     public void EndTalking()
@@ -105,6 +137,8 @@ public class TextController : MonoBehaviour
         StartCoroutine(MoveKeyvi());
         MessageHolder.SetActive(false);
         DisplayMessage.text = null;
+        talking = false;
         GameObject.Find("Game Manager").GetComponent<LevelSwitch>().pause = false;
+        talkingTime = 0;
     }
 }

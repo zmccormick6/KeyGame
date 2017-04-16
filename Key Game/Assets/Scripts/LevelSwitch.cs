@@ -8,6 +8,7 @@ public class LevelSwitch : MonoBehaviour
 {
     [SerializeField] private GameObject Player;
     [SerializeField] private Image LevelTransition;
+    [SerializeField] private AudioSource MainMusic;
 
     private GameObject[] Levels;
     public GameObject currentLevel;
@@ -52,6 +53,11 @@ public class LevelSwitch : MonoBehaviour
             {
                 alpha.a += 1.5f * Time.deltaTime;
             }
+
+            if (MainMusic.volume > 0.6f)
+            {
+                MainMusic.volume -= 0.05f;
+            }
         }
         else
         {
@@ -59,6 +65,11 @@ public class LevelSwitch : MonoBehaviour
             {
                 LevelTransition.color = alpha;
                 alpha.a -= 1f * Time.deltaTime;
+            }
+
+            if (MainMusic.volume < 1f)
+            {
+                //MainMusic.volume += 0.025f;
             }
         }
     }

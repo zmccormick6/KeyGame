@@ -4,17 +4,22 @@ using UnityEngine;
 
 public class KeyviController : MonoBehaviour
 {
-    public bool stop = false;
+    public bool stop = false, inRange = false;
 
     void OnTriggerStay2D(Collider2D other)
     {
         if (other.tag == "Player")
         {
-            if (Input.GetButton("Fire3"))
-            {
-                Talking();
-            }
+            inRange = true;
+            GameObject.Find("Game Manager").GetComponent<TextController>().InGameKeyvi = GameObject.Find("Keyvi");
         }
+        else
+            inRange = false;
+    }
+
+    void Start()
+    {
+        //GameObject.Find("Game Manager").GetComponent<TextController>().InGameKeyvi = gameObject;
     }
 
     public void Talking()

@@ -23,6 +23,8 @@ public class KeeseController : MonoBehaviour
     private Vector2 PlayerPosition;
     private Animator animator;
 
+    AudioSource Attack;
+
     public bool hitPlayer = false;
     bool KeesePassive = false, topRight, bottomRight, bottomLeft, topLeft, passiveLimit = true;
     float attackTime;
@@ -49,6 +51,8 @@ public class KeeseController : MonoBehaviour
         Speed = Random.Range(0.03f, 0.05f);
         attackTime = Random.Range(1f, 3f);
 
+        Attack = GameObject.Find("Attack").GetComponent<AudioSource>();
+
         StartCoroutine(PassiveRun());
     }
 
@@ -60,6 +64,7 @@ public class KeeseController : MonoBehaviour
             {
                 if (other != PlayerCollider)
                 {
+                    Attack.Play();
                     KeeseHealth();
 
                     if (CurrentPosition.x < PlayerPosition.x)

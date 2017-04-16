@@ -7,6 +7,8 @@ public class TempPlayerController : MonoBehaviour
     [SerializeField] private GameObject GameManager;
     [SerializeField] private AnimationClip Dodge;
 
+    AudioSource Damage;
+
     private Animator Heart;
     private Animator anim;
     private Collider2D SwordHitbox;
@@ -34,6 +36,7 @@ public class TempPlayerController : MonoBehaviour
         SwordHitbox = GetComponents<Collider2D>()[0];
         PlayerHitbox = GetComponents<Collider2D>()[1];
         tempSprite = gameObject.GetComponent<SpriteRenderer>();
+        Damage = GetComponent<AudioSource>();
     }
 
     private IEnumerator HitFlashing()
@@ -76,6 +79,7 @@ public class TempPlayerController : MonoBehaviour
             {
                 if (other.tag != "Door" && other.tag != "Keyvi" && other.tag != "Obstacle" && other.tag != "Water")
                 {
+                    Damage.Play();
                     PlayerHealth();
                     StartCoroutine(PlayerInvincibility());
                     StartCoroutine(HitFlashing());

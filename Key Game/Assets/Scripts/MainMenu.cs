@@ -9,6 +9,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject QuitButton;
     [SerializeField] private string Game;
 
+    AsyncOperation async;
+
     public void PlayGame()
     {
         SceneManager.LoadScene(Game);
@@ -17,5 +19,25 @@ public class MainMenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    void Start()
+    {
+        StartCoroutine(Preload());
+    }
+
+    private IEnumerator Preload()
+    {
+        yield return new WaitForSeconds(0.1f);
+        async = Application.LoadLevelAsync(Game);
+        async.allowSceneActivation = false;
+    }
+
+    void Update()
+    {
+        if (Input.GetButtonDown("Submit"))
+        {
+            async.allowSceneActivation = true;
+        }
     }
 }

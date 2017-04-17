@@ -54,7 +54,7 @@ public class LevelSwitch : MonoBehaviour
                 alpha.a += 1.5f * Time.deltaTime;
             }
 
-            if (MainMusic.volume > 0.6f)
+            if (MainMusic.volume > 0.3f)
             {
                 MainMusic.volume -= 0.05f;
             }
@@ -67,7 +67,7 @@ public class LevelSwitch : MonoBehaviour
                 alpha.a -= 1f * Time.deltaTime;
             }
 
-            if (MainMusic.volume < 1f && pause == false)
+            if (MainMusic.volume < 0.6f && pause == false)
             {
                 MainMusic.volume += 0.025f;
             }

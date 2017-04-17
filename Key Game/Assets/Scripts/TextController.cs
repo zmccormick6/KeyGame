@@ -49,7 +49,6 @@ public class TextController : MonoBehaviour
             GameObject.Find("Keyvi").GetComponent<SpriteRenderer>().color = KeyviAlpha;
         }
 
-        //if (InGameKeyvi.GetComponent<KeyviController>().inRange == true)
         if (GameObject.Find("Keyvi").GetComponent<KeyviController>().inRange == true)
         {
             if (talking == false)
@@ -89,7 +88,7 @@ public class TextController : MonoBehaviour
         EndButton.SetActive(false);
 
         Typing.Play();
-        GameObject.Find("Music").GetComponent<AudioSource>().volume = 0.6f;
+        GameObject.Find("Music").GetComponent<AudioSource>().volume = 0.2f;
 
         for (int i = 0; i < message[counter].Length; i++)
         {
@@ -114,7 +113,7 @@ public class TextController : MonoBehaviour
         talking = false;
         talkingTime++;
         Typing.Stop();
-        GameObject.Find("Music").GetComponent<AudioSource>().volume = 1f;
+        GameObject.Find("Music").GetComponent<AudioSource>().volume = 0.6f;
     }
 
     private IEnumerator MoveKeyvi()

@@ -6,33 +6,40 @@ public class TempPlayerController : MonoBehaviour
 {
     [SerializeField] private GameObject GameManager;
     [SerializeField] private AnimationClip Dodge;
+    [SerializeField] private GameObject DeathScreen;
 
     AudioSource Damage;
 
     private Animator Heart;
     private Animator anim;
+    private Animator DodgeUI;
+
     private Collider2D SwordHitbox;
     private Collider2D PlayerHitbox;
     private Collider2D Hitbox;
-    SpriteRenderer tempSprite;
-    public float Speed = 3f;
+
     private int Health = 6;
     private float movex = 0f;
     private float movey = 0f;
     private float anglex = 0f;
     private float angley = 0f;
     private float angle = 0f;
+
+    SpriteRenderer tempSprite;
+
+    public bool dodgeCooldown = false;
+    public float Speed = 3f;
+
     float currentTime, previousTime;
     int dodge = 0;
     bool dodgeReady = true, water = false;
     bool because = false, please = false;
 
-    public bool dodgeCooldown = false;
-
     void Start()
     {
         Heart = GameObject.Find("Hearts").GetComponent<Animator>();
         anim = GetComponent<Animator>();
+        DodgeUI = GameObject.Find("DodgeCooldown").GetComponent<Animator>();
         SwordHitbox = GetComponents<Collider2D>()[0];
         PlayerHitbox = GetComponents<Collider2D>()[1];
         tempSprite = gameObject.GetComponent<SpriteRenderer>();
@@ -83,7 +90,11 @@ public class TempPlayerController : MonoBehaviour
                     PlayerHealth();
                     StartCoroutine(PlayerInvincibility());
                     StartCoroutine(HitFlashing());
-                    other.gameObject.GetComponent<KeeseController>().RunHitPlayer();
+
+                    if (other.tag != "Right" && other.tag != "Left")
+                    {
+                        other.gameObject.GetComponent<KeeseController>().RunHitPlayer();
+                    }
                 }
             }
         }
@@ -237,6 +248,7 @@ public class TempPlayerController : MonoBehaviour
         {
             currentTime -= Time.deltaTime;
             dodgeReady = false;
+            DodgeUI.SetFloat("DodgeUI", currentTime);
         }
         else if (currentTime <= 0)
         {
@@ -244,6 +256,7 @@ public class TempPlayerController : MonoBehaviour
 
             if (anim.GetInteger("Dodge") == 1)
             {
+                DodgeUI.SetFloat("DodgeUI", -1);
                 currentTime = 2f;
             }
         }
@@ -289,5 +302,10 @@ public class TempPlayerController : MonoBehaviour
     {
         Health--;
         Heart.SetInteger("Heart", Health);
+
+        if (Health <= 0)
+        {
+            DeathScreen.SetActive(true);
+        }
     }
 }

@@ -6,12 +6,21 @@ using System.Linq;
 public class DoorSpawn : MonoBehaviour
 {
     public GameObject CurrentDoor;
-    int enemyCount;
+    public int enemyCount;
 
     public void DoorFind(GameObject Door)
     {
         CurrentDoor = Door;
-        Door.SetActive(false);
+
+        if (enemyCount != 0)
+        {
+            Door.SetActive(false);
+        }
+
+        if (GameObject.Find("Game Manager").GetComponent<TextController>().talkingDone == false)
+        {
+            Door.SetActive(false);
+        }
     }
 
     public void EnemyCount(GameObject currentLevel)
@@ -25,7 +34,11 @@ public class DoorSpawn : MonoBehaviour
 
         if (enemyCount <= 0)
         {
-            CurrentDoor.SetActive(true);
+            if (GameObject.Find("Game Manager").GetComponent<TextController>().talkingDone == true)
+            {
+                CurrentDoor.SetActive(true);
+                GameObject.Find("Game Manager").GetComponent<TextController>().talkingDone = false;
+            }
         }
     }
 }

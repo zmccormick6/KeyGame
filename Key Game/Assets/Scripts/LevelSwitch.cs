@@ -30,7 +30,7 @@ public class LevelSwitch : MonoBehaviour
     {
         Levels = Resources.LoadAll("Levels", typeof(GameObject)).Cast<GameObject>().ToArray();
         StartCoroutine(NextLevel());
-        GetComponent<DoorSpawn>().EnemyCount(currentLevel);
+        GameObject.Find("Game Manager").GetComponent<DoorSpawn>().EnemyCount(currentLevel);
         LevelTransition.enabled = true;
         alpha.a = 0f;
         LevelTransition.color = alpha;
@@ -95,8 +95,6 @@ public class LevelSwitch : MonoBehaviour
             nextLevel.transform.SetSiblingIndex(3);
             nextLevel.tag = "Next";
 
-            GetComponent<DoorSpawn>().EnemyCount(currentLevel);
-
             StartCoroutine(MoveLevel());
             yield return new WaitForSeconds(2);
             pause = false;
@@ -109,6 +107,7 @@ public class LevelSwitch : MonoBehaviour
         transition = true;
         yield return new WaitForSeconds(1.5f);
         transition = false;
+        GameObject.Find("Game Manager").GetComponent<TextController>().InGameKeyvi = GameObject.Find("Keyvi");
     }
 
 
@@ -124,5 +123,7 @@ public class LevelSwitch : MonoBehaviour
         Destroy(GameObject.FindGameObjectWithTag("Current"));
         currentLevel = GameObject.FindGameObjectWithTag("Next");
         currentLevel.tag = "Current";
+        GameObject.Find("Game Manager").GetComponent<DoorSpawn>().enemyCount = 0;
+        GameObject.Find("Game Manager").GetComponent<DoorSpawn>().EnemyCount(currentLevel);
     }
 }

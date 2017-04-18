@@ -13,30 +13,38 @@ public class TextController : MonoBehaviour
     [SerializeField] private AudioSource Typing;
 
     public GameObject InGameKeyvi;
+    public bool talkingDone = false;
 
     Vector2 KeyviPosition, WhereToGo;
     private Animator KeyviAnim;
-    bool move = false, talking = false;
-    float startTime;
+    bool move = false, talking = false, speedUp = false;
+    float startTime, dots, text;
     int talkingTime = 0;
     Color KeyviAlpha;
 
+    //0 Normal, 1 Blush, 2 Shifty, 3 Derp, 4 Flustered Blush
     string[] message = 
-        {"Hiya!  My name's Keyvi!",
-         "Do you just not talk or...?",
-         "Oh man, I'm blushing so the Dev's can show off the sprite.",
-         "How rude of them.",
-         "I don't know you, get away from me.",
-         "Don't make me call the Dungeon Police.",
-         "Some say that there's a secret at the end of this dungeon.",
-         "Totally not a boss that's missing or anything."};
-    int[] emotion = {0, 0, 1, 1, 2, 3, 2, 3};
+        {"Hiya!  My name's Keyvi!", "You should probably be careful, the next room has a Keyse in it.", "But you'll probably just hit it using the Right Trigger or some tutorial garbage.",
+         "Do you just not talk or...?", "I don't know you, get away from me!", "Don't make me call the Dungeon Police.",
+         "The water in this dungeon will slow you down if you walk through it.", "Also it'll get a lot of water in your boots, so probably don't do that.", "...also you can't walk into lava because death and stuff.",
+         "That you just fought there was a Keyni.", "It will fire magic from the left or right of the dungeon at you.", "Don't get hit by them or you'll take damage and probably die, but whatever right?",
+         "Tutorial Garbage #3: Use B to dodge over enemies, magic, and obstacles!", "Or you could even...dodge your way into my heart...", "Wait, forget that....bye!",
+         "Hey...I've totally never met you before!", "From your lack of response I can only assume that you spoke with my evil twin!", "Yeah, totally...that!  Don't talk to him anymore!"};
+    int[] emotion = {0, 0, 0,
+                     0, 2, 3,
+                     0, 2, 0,
+                     0, 0, 3,
+                     0, 1, 4,
+                     2, 0, 4};
     int counter = 0;
 
     void Start()
     {
         KeyviAnim = Keyvi.GetComponent<Animator>();
         InGameKeyvi = GameObject.Find("Keyvi");
+
+        dots = 0.5f;
+        text = 0.05f;
     }
 
     void FixedUpdate()
@@ -53,11 +61,11 @@ public class TextController : MonoBehaviour
         {
             if (talking == false)
             {
-                if (Input.GetButton("Fire3"))
+                if (Input.GetButtonDown("Fire3"))
                 {
                     GameObject.Find("Game Manager").GetComponent<LevelSwitch>().pause = true;
 
-                    if (talkingTime < 2)
+                    if (talkingTime < 3)
                     {
                         StartTalking();
                     }
@@ -69,7 +77,19 @@ public class TextController : MonoBehaviour
             }
         }
 
-        Debug.Log(talking);
+        if (speedUp == true)
+        {
+            if (Input.GetButtonDown("Fire3"))
+            {
+                dots = 0.01f;
+                text = 0.01f;
+            }
+            else if (Input.GetButtonUp("Fire3"))
+            {
+                dots = 0.5f;
+                text = 0.05f;
+            }
+        }
     }
 
     public void StartTalking()
@@ -92,18 +112,20 @@ public class TextController : MonoBehaviour
 
         for (int i = 0; i < message[counter].Length; i++)
         {
+            speedUp = true;
+
             DisplayMessage.text += message[counter][i];
 
             if (message[counter][i] == '.')
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(dots);
             else
-                yield return new WaitForSeconds(0.075f);
+                yield return new WaitForSeconds(text);
         }
 
         GetComponent<TextController>().counter++;
         GameObject.Find("Keyvi").GetComponent<KeyviController>().stop = false;
 
-        if (counter % 2 == 0)
+        if (counter % 3 == 0)
         {
             NextButton.SetActive(true);
         }
@@ -114,6 +136,9 @@ public class TextController : MonoBehaviour
         talkingTime++;
         Typing.Stop();
         GameObject.Find("Music").GetComponent<AudioSource>().volume = 0.6f;
+        speedUp = false;
+        dots = 0.5f;
+        text = 0.05f;
     }
 
     private IEnumerator MoveKeyvi()
@@ -139,5 +164,7 @@ public class TextController : MonoBehaviour
         talking = false;
         GameObject.Find("Game Manager").GetComponent<LevelSwitch>().pause = false;
         talkingTime = 0;
+        talkingDone = true;
+        GameObject.Find("Game Manager").GetComponent<DoorSpawn>().EnemyCheck();
     }
 }

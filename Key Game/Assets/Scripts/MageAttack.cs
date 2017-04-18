@@ -16,8 +16,22 @@ public class MageAttack : MonoBehaviour
         if (gameObject.tag == "Right")
         {
             moveX += 0.1f;
+
+            if (transform.position.x > 9f)
+            {
+                Destroy(gameObject);
+            }
+        }
+        else if (gameObject.tag == "Left")
+        {
+            moveX -= 0.1f;
+
+            if (transform.position.x < -9f)
+            {
+                Destroy(gameObject);
+            }
         }
 
-        transform.localPosition = new Vector2(moveX, transform.position.y);
+        transform.localPosition = new Vector3(moveX, transform.position.y, -1);
     }
 }

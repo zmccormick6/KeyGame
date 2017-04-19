@@ -1,33 +1,33 @@
 fileFormatVersion: 2
-guid: 2ac3b195238de0544a0c5b20456269f4
-timeCreated: 1491706872
+guid: d17d342a91cd5b947ab9fc9e5623f19d
+timeCreated: 1492557447
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: mainchar_anim_v5_0
-    21300002: mainchar_anim_v5_1
-    21300004: mainchar_anim_v5_2
-    21300006: mainchar_anim_v5_3
-    21300008: mainchar_anim_v5_4
-    21300010: mainchar_anim_v5_5
-    21300012: mainchar_anim_v5_6
-    21300014: mainchar_anim_v5_7
-    21300016: mainchar_anim_v5_8
-    21300018: mainchar_anim_v5_9
-    21300020: mainchar_anim_v5_10
-    21300022: mainchar_anim_v5_11
-    21300024: mainchar_anim_v5_12
-    21300026: mainchar_anim_v5_13
-    21300028: mainchar_anim_v5_14
-    21300030: mainchar_anim_v5_15
-    21300032: mainchar_anim_v5_16
-    21300034: mainchar_anim_v5_17
-    21300036: mainchar_anim_v5_18
-    21300038: mainchar_anim_v5_19
-    21300040: mainchar_anim_v5_20
-    21300042: mainchar_anim_v5_21
-    21300044: mainchar_anim_v5_22
-    21300046: mainchar_anim_v5_23
+    21300000: mainchar_anim_v6_0
+    21300002: mainchar_anim_v6_1
+    21300004: mainchar_anim_v6_2
+    21300006: mainchar_anim_v6_3
+    21300008: mainchar_anim_v6_4
+    21300010: mainchar_anim_v6_5
+    21300012: mainchar_anim_v6_6
+    21300014: mainchar_anim_v6_7
+    21300016: mainchar_anim_v6_8
+    21300018: mainchar_anim_v6_9
+    21300020: mainchar_anim_v6_10
+    21300022: mainchar_anim_v6_11
+    21300024: mainchar_anim_v6_12
+    21300026: mainchar_anim_v6_13
+    21300028: mainchar_anim_v6_14
+    21300030: mainchar_anim_v6_15
+    21300032: mainchar_anim_v6_16
+    21300034: mainchar_anim_v6_17
+    21300036: mainchar_anim_v6_18
+    21300038: mainchar_anim_v6_19
+    21300040: mainchar_anim_v6_20
+    21300042: mainchar_anim_v6_21
+    21300044: mainchar_anim_v6_22
+    21300046: mainchar_anim_v6_23
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -94,314 +94,314 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mainchar_anim_v5_0
+      name: mainchar_anim_v6_0
       rect:
         serializedVersion: 2
         x: 0
         y: 240
         width: 128
         height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.53, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v5_1
+      name: mainchar_anim_v6_1
       rect:
         serializedVersion: 2
         x: 128
         y: 240
         width: 128
         height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.53, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v5_2
+      name: mainchar_anim_v6_2
       rect:
         serializedVersion: 2
         x: 256
         y: 240
         width: 128
         height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.53, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v5_3
+      name: mainchar_anim_v6_3
       rect:
         serializedVersion: 2
         x: 384
         y: 240
         width: 128
         height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.53, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v5_4
+      name: mainchar_anim_v6_4
       rect:
         serializedVersion: 2
         x: 512
         y: 240
         width: 128
         height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.53, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v5_5
+      name: mainchar_anim_v6_5
       rect:
         serializedVersion: 2
         x: 640
         y: 240
         width: 128
         height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.53, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v5_6
+      name: mainchar_anim_v6_6
       rect:
         serializedVersion: 2
         x: 0
         y: 160
         width: 128
         height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.53, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v5_7
+      name: mainchar_anim_v6_7
       rect:
         serializedVersion: 2
         x: 128
         y: 160
         width: 128
         height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.53, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v5_8
+      name: mainchar_anim_v6_8
       rect:
         serializedVersion: 2
         x: 256
         y: 160
         width: 128
         height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.53, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v5_9
+      name: mainchar_anim_v6_9
       rect:
         serializedVersion: 2
         x: 384
         y: 160
         width: 128
         height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.53, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v5_10
+      name: mainchar_anim_v6_10
       rect:
         serializedVersion: 2
         x: 512
         y: 160
         width: 128
         height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.53, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v5_11
+      name: mainchar_anim_v6_11
       rect:
         serializedVersion: 2
         x: 640
         y: 160
         width: 128
         height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.53, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v5_12
+      name: mainchar_anim_v6_12
       rect:
         serializedVersion: 2
         x: 0
         y: 80
         width: 128
         height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.53, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v5_13
+      name: mainchar_anim_v6_13
       rect:
         serializedVersion: 2
         x: 128
         y: 80
         width: 128
         height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.53, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v5_14
+      name: mainchar_anim_v6_14
       rect:
         serializedVersion: 2
         x: 256
         y: 80
         width: 128
         height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.53, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v5_15
+      name: mainchar_anim_v6_15
       rect:
         serializedVersion: 2
         x: 384
         y: 80
         width: 128
         height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.53, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v5_16
+      name: mainchar_anim_v6_16
       rect:
         serializedVersion: 2
         x: 512
         y: 80
         width: 128
         height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.53, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v5_17
+      name: mainchar_anim_v6_17
       rect:
         serializedVersion: 2
         x: 640
         y: 80
         width: 128
         height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.53, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v5_18
+      name: mainchar_anim_v6_18
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 128
         height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.53, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v5_19
+      name: mainchar_anim_v6_19
       rect:
         serializedVersion: 2
         x: 128
         y: 0
         width: 128
         height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.53, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v5_20
+      name: mainchar_anim_v6_20
       rect:
         serializedVersion: 2
         x: 256
         y: 0
         width: 128
         height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.53, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v5_21
+      name: mainchar_anim_v6_21
       rect:
         serializedVersion: 2
         x: 384
         y: 0
         width: 128
         height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.53, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v5_22
+      name: mainchar_anim_v6_22
       rect:
         serializedVersion: 2
         x: 512
         y: 0
         width: 128
         height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.53, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mainchar_anim_v5_23
+      name: mainchar_anim_v6_23
       rect:
         serializedVersion: 2
         x: 640
         y: 0
         width: 128
         height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.53, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0

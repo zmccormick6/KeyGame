@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: e5a87816db0c7454b9cd6bc7fa0513b0
-timeCreated: 1491948356
+guid: 9b852b34bbf625d42b48808c4d7a625a
+timeCreated: 1492555053
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: titlescreen_v2_0
-    21300002: titlescreen_v2_1
-    21300004: titlescreen_v2_2
-    21300006: titlescreen_v2_3
+    21300000: title__finished_v1_0
+    21300002: title__finished_v1_1
+    21300004: title__finished_v1_2
+    21300006: title__finished_v1_3
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -74,52 +74,52 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: titlescreen_v2_0
+      name: title__finished_v1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 612
-        height: 344
+        width: 925
+        height: 520
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: titlescreen_v2_1
+      name: title__finished_v1_1
       rect:
         serializedVersion: 2
-        x: 612
+        x: 925
         y: 0
-        width: 612
-        height: 344
+        width: 925
+        height: 520
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: titlescreen_v2_2
+      name: title__finished_v1_2
       rect:
         serializedVersion: 2
-        x: 1224
+        x: 1850
         y: 0
-        width: 612
-        height: 344
+        width: 925
+        height: 520
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: titlescreen_v2_3
+      name: title__finished_v1_3
       rect:
         serializedVersion: 2
-        x: 1836
+        x: 2775
         y: 0
-        width: 612
-        height: 344
+        width: 925
+        height: 520
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

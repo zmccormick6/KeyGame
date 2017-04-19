@@ -20,7 +20,7 @@ public class MageController : MonoBehaviour
     Vector2 PlayerPosition;
 
     int attackCount;
-    float attackTime, moveY;
+    float attackTime, moveX, moveY;
     bool attackReady = false;
 
     void Start()
@@ -124,8 +124,10 @@ public class MageController : MonoBehaviour
     private IEnumerator Spawn()
     {
         animator.SetInteger("Mage", 0);
+        moveX = Random.Range(-6.5f, 6.5f);
         moveY = Random.Range(-3.5f, 1f);
-        transform.position = new Vector2(transform.position.x, moveY);
+
+        transform.localPosition = new Vector2(moveX, moveY);
         yield return new WaitForSeconds(1.5f);
         attackCount = 0;
 

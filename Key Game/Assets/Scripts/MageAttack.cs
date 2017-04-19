@@ -4,34 +4,23 @@ using UnityEngine;
 
 public class MageAttack : MonoBehaviour
 {
-    float moveX;
+    GameObject Player;
+
+    Vector2 CurrentPosition, PlayerPosition, NextPlayerPosition;
 
     void Start()
     {
-        moveX = transform.position.x;
+        Player = GameObject.Find("TempPlayer");
+        PlayerPosition =  new Vector2(Player.transform.position.x, Player.transform.position.y);
+        NextPlayerPosition = new Vector2(Player.transform.position.x * 3, Player.transform.position.y * 3);
+
+        Debug.Log(PlayerPosition + ", " + NextPlayerPosition);
     }
 
     void FixedUpdate()
     {
-        if (gameObject.tag == "Right")
-        {
-            moveX += 0.1f;
+        CurrentPosition = new Vector2(transform.position.x, transform.position.y);
 
-            if (transform.position.x > 9f)
-            {
-                Destroy(gameObject);
-            }
-        }
-        else if (gameObject.tag == "Left")
-        {
-            moveX -= 0.1f;
-
-            if (transform.position.x < -9f)
-            {
-                Destroy(gameObject);
-            }
-        }
-
-        transform.localPosition = new Vector3(moveX, transform.position.y, -1);
+        transform.position = Vector2.MoveTowards(CurrentPosition, NextPlayerPosition, 0.1f);
     }
 }

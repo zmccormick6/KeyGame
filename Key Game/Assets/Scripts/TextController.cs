@@ -79,12 +79,12 @@ public class TextController : MonoBehaviour
 
         if (speedUp == true)
         {
-            if (Input.GetButtonDown("Fire3"))
+            if (Input.GetButtonDown("Speed"))
             {
                 dots = 0.01f;
                 text = 0.01f;
             }
-            else if (Input.GetButtonUp("Fire3"))
+            else if (Input.GetButtonUp("Speed"))
             {
                 dots = 0.5f;
                 text = 0.05f;

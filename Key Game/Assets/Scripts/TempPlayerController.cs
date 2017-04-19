@@ -159,30 +159,30 @@ public class TempPlayerController : MonoBehaviour
             {
                 GetComponent<Rigidbody2D>().position = new Vector2(6.49f, transform.position.y);
             }
-            if (transform.position.y < -3.95)
+            if (transform.position.y < -4.35)
             {
-                GetComponent<Rigidbody2D>().position = new Vector2(transform.position.x, -3.94f);
+                GetComponent<Rigidbody2D>().position = new Vector2(transform.position.x, -4.34f);
             }
-            else if (transform.position.y > 1.25)
+            else if (transform.position.y > 0.97f)
             {
-                GetComponent<Rigidbody2D>().position = new Vector2(transform.position.x, 1.24f);
+                GetComponent<Rigidbody2D>().position = new Vector2(transform.position.x, 0.96f);
             }
 
-            if (transform.position.x > 6.5 && transform.position.y > 1.25)
+            if (transform.position.x > 6.5 && transform.position.y > 0.97f)
             {
-                GetComponent<Rigidbody2D>().position = new Vector2(6.49f, 1.24f);
+                GetComponent<Rigidbody2D>().position = new Vector2(6.49f, 0.96f);
             }
-            if (transform.position.x > 6.5 && transform.position.y < -3.95)
+            if (transform.position.x > 6.5 && transform.position.y < -4.35)
             {
-                GetComponent<Rigidbody2D>().position = new Vector2(6.49f, -3.94f);
+                GetComponent<Rigidbody2D>().position = new Vector2(6.49f, -4.34f);
             }
-            if (transform.position.x < -6.5 && transform.position.y < -3.95)
+            if (transform.position.x < -6.5 && transform.position.y < -4.35)
             {
-                GetComponent<Rigidbody2D>().position = new Vector2(-6.49f, -3.94f);
+                GetComponent<Rigidbody2D>().position = new Vector2(-6.49f, -4.34f);
             }
-            if (transform.position.x < -6.5 && transform.position.y > 1.25)
+            if (transform.position.x < -6.5 && transform.position.y > 0.97f)
             {
-                GetComponent<Rigidbody2D>().position = new Vector2(-6.49f, 1.24f);
+                GetComponent<Rigidbody2D>().position = new Vector2(-6.49f, 0.96f);
             }
 
             GetComponent<Rigidbody2D>().velocity = new Vector2(movex * Speed, movey * Speed);
@@ -232,9 +232,11 @@ public class TempPlayerController : MonoBehaviour
 
     public void SwingAnimation()
     {
-        if (Mathf.Round(Input.GetAxisRaw("Fire1")) < 0)
+        if (Input.GetButtonDown("Fire1"))
+        //if (Mathf.Round(Input.GetAxisRaw("Fire1")) < 0)
         {
             anim.SetInteger("Swing", 1);
+            StartCoroutine(SwingStop());
         }
         else
         {
@@ -280,7 +282,7 @@ public class TempPlayerController : MonoBehaviour
     private IEnumerator SwingStop()
     {
         GetComponent<TempPlayerController>().Speed = 0;
-        yield return new WaitForSeconds(0.15f);
+        yield return new WaitForSeconds(0.5f);
         GetComponent<TempPlayerController>().Speed = 3;
     }
 

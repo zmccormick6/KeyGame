@@ -6,12 +6,13 @@ public class MageController : MonoBehaviour
 {
     [SerializeField] private GameObject MageAttack;
     [SerializeField] private GameObject Player;
+    [SerializeField] private Collider2D MageCollider;
 
     AudioSource AttackSound;
     SpriteRenderer tempSprite;
 
     private Collider2D PlayerCollider;
-    private Collider2D MageCollider;
+    //private Collider2D MageCollider;
     private Animator animator;
 
     private int Health = 5;
@@ -27,7 +28,7 @@ public class MageController : MonoBehaviour
     {
         Player = GameObject.Find("TempPlayer");
 
-        MageCollider = GetComponent<Collider2D>();
+        //MageCollider = gameObject.GetComponent<Collider2D>();
         PlayerCollider = Player.GetComponents<BoxCollider2D>()[1];
         animator = GetComponent<Animator>();
         tempSprite = gameObject.GetComponent<SpriteRenderer>();
@@ -36,6 +37,8 @@ public class MageController : MonoBehaviour
 
         attackTime = Random.Range(1f, 3f);
         StartCoroutine(StartSpawn());
+
+        MageCollider.enabled = false;
     }
 
     void FixedUpdate()
@@ -58,7 +61,8 @@ public class MageController : MonoBehaviour
             {
                 if (other != PlayerCollider)
                 {
-                    MageCollider.enabled = false;
+                    //StartCoroutine(SlightInvincibility());
+                    //MageCollider.enabled = false;
 
                     if (CurrentPosition.y > PlayerPosition.y)
                     {
@@ -69,7 +73,7 @@ public class MageController : MonoBehaviour
                         transform.position = new Vector2(CurrentPosition.x, CurrentPosition.y - 0.75f);
                     }
 
-                    StartCoroutine(SlightInvincibility());
+                    //StartCoroutine(SlightInvincibility());
                     AttackSound.Play();
                     MageHealth();
                 }
@@ -117,7 +121,7 @@ public class MageController : MonoBehaviour
     private IEnumerator SlightInvincibility()
     {
         MageCollider.enabled = false;
-        yield return new WaitForSeconds(0.35f);
+        yield return new WaitForSeconds(5f);
         MageCollider.enabled = true;
     }
 

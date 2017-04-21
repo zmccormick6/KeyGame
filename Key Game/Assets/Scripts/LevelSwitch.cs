@@ -79,6 +79,11 @@ public class LevelSwitch : MonoBehaviour
         StartCoroutine(NextLevel());
     }
 
+    public void TryAgainLevel()
+    {
+        StartCoroutine(NextLevel());
+    }
+
     private IEnumerator NextLevel()
     {
         if (level == 0)

@@ -35,7 +35,7 @@ public class MainMenu : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Submit"))
+        if (Input.GetButtonDown("Speed"))
         {
             async.allowSceneActivation = true;
         }

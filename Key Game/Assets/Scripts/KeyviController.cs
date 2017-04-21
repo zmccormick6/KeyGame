@@ -17,7 +17,12 @@ public class KeyviController : MonoBehaviour
             inRange = false;
     }
 
-    void Start()
+    void OnTriggerExit2D(Collider2D other)
+    {
+        inRange = false;
+    }
+
+        void Start()
     {
         //GameObject.Find("Game Manager").GetComponent<TextController>().InGameKeyvi = gameObject;
     }

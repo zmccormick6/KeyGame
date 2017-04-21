@@ -51,6 +51,8 @@ public class MageController : MonoBehaviour
             GameObject.Find("Game Manager").GetComponent<DoorSpawn>().EnemyCheck();
             Destroy(gameObject);
         }
+
+        transform.position = Vector2.MoveTowards(transform.position, new Vector2(moveX, moveY), 0.05f);
     }
 
     void OnTriggerEnter2D(Collider2D other)

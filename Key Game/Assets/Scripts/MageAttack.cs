@@ -21,6 +21,6 @@ public class MageAttack : MonoBehaviour
     {
         CurrentPosition = new Vector2(transform.position.x, transform.position.y);
 
-        transform.position = Vector2.MoveTowards(CurrentPosition, NextPlayerPosition, 0.1f);
+        transform.position = Vector2.MoveTowards(CurrentPosition, PlayerPosition, 0.1f);
     }
 }

@@ -23,6 +23,7 @@ public class KeeseController : MonoBehaviour
     private Vector2 PlayerPosition;
     private Animator animator;
 
+    SpriteRenderer tempSprite;
     AudioSource Attack;
 
     public bool hitPlayer = false;
@@ -46,6 +47,7 @@ public class KeeseController : MonoBehaviour
         KeeseCollider = GetComponent<Collider2D>();
 
         animator = GetComponent<Animator>();
+        tempSprite = gameObject.GetComponent<SpriteRenderer>();
         StartCoroutine(RandomFrame());
 
         Speed = Random.Range(0.03f, 0.05f);
@@ -58,7 +60,39 @@ public class KeeseController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag != "Enemy" && other.tag != "Wall" && other.tag != "Keyvi" && other.tag != "Obstacle" && other.tag != "Water" && other.tag != "Right" && other.tag != "Left")
+        if (other.tag == "MageAttack")
+        {
+            if (other.GetComponent<MageAttack>().reverse == true)
+            {
+                Attack.Play();
+                KeeseHealth();
+
+                if (CurrentPosition.x < PlayerPosition.x)
+                {
+                    if (CurrentPosition.y > PlayerPosition.y)
+                    {
+                        transform.position = new Vector2(CurrentPosition.x - 1.25f, CurrentPosition.y + 1.25f);
+                    }
+                    else
+                    {
+                        transform.position = new Vector2(CurrentPosition.x - 1.25f, CurrentPosition.y - 1.25f);
+                    }
+                }
+                else if (CurrentPosition.x > PlayerPosition.x)
+                {
+                    if (CurrentPosition.y > PlayerPosition.y)
+                    {
+                        transform.position = new Vector2(CurrentPosition.x + 1.25f, CurrentPosition.y + 1.25f);
+                    }
+                    else
+                    {
+                        transform.position = new Vector2(CurrentPosition.x + 1.25f, CurrentPosition.y - 1.25f);
+                    }
+                }
+            }
+        }
+
+        if (other.tag != "Enemy" && other.tag != "Wall" && other.tag != "Keyvi" && other.tag != "Obstacle" && other.tag != "Water" && other.tag != "Right" && other.tag != "Left"  && other.tag != "MageAttack")
         {
             if (other.tag != "Hitbox")
             {
@@ -71,22 +105,22 @@ public class KeeseController : MonoBehaviour
                     {
                         if (CurrentPosition.y > PlayerPosition.y)
                         {
-                            transform.position = new Vector2(CurrentPosition.x - 0.75f, CurrentPosition.y + 0.75f);
+                            transform.position = new Vector2(CurrentPosition.x - 1.25f, CurrentPosition.y + 1.25f);
                         }
                         else
                         {
-                            transform.position = new Vector2(CurrentPosition.x - 0.75f, CurrentPosition.y - 0.75f);
+                            transform.position = new Vector2(CurrentPosition.x - 1.25f, CurrentPosition.y - 1.25f);
                         }
                     }
                     else if (CurrentPosition.x > PlayerPosition.x)
                     {
                         if (CurrentPosition.y > PlayerPosition.y)
                         {
-                            transform.position = new Vector2(CurrentPosition.x + 0.75f, CurrentPosition.y + 0.75f);
+                            transform.position = new Vector2(CurrentPosition.x + 1.25f, CurrentPosition.y + 1.25f);
                         }
                         else
                         {
-                            transform.position = new Vector2(CurrentPosition.x + 0.75f, CurrentPosition.y - 0.75f);
+                            transform.position = new Vector2(CurrentPosition.x + 1.25f, CurrentPosition.y - 1.25f);
                         }
                     }
                 }
@@ -121,6 +155,7 @@ public class KeeseController : MonoBehaviour
     public void KeeseHealth()
     {
         Health--;
+        StartCoroutine(HitFlashing());
         StartCoroutine(SlightInvincibility());
 
         if (Health <= 0)
@@ -128,6 +163,31 @@ public class KeeseController : MonoBehaviour
             Destroy(gameObject);
             GameObject.Find("Game Manager").GetComponent<DoorSpawn>().EnemyCheck();
         }
+    }
+
+    private IEnumerator HitFlashing()
+    {
+        tempSprite.color = new Color(1f, 1f, 1f, 0.5f);
+
+        int flashing = 0;
+
+        for (int i = 0; i < 10; i++)
+        {
+            if (flashing % 2 == 0)
+            {
+                tempSprite.enabled = false;
+            }
+
+            else if (flashing % 2 == 1)
+            {
+                tempSprite.enabled = true;
+            }
+
+            flashing++;
+
+            yield return new WaitForSeconds(0.075f);
+        }
+        tempSprite.color = new Color(1f, 1f, 1f, 1f);
     }
 
     private IEnumerator SlightInvincibility()

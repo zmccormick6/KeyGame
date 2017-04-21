@@ -91,7 +91,7 @@ public class TempPlayerController : MonoBehaviour
                     StartCoroutine(PlayerInvincibility());
                     StartCoroutine(HitFlashing());
 
-                    if (other.tag != "Right" && other.tag != "Left")
+                    if (other.tag != "MageAttack")
                     {
                         other.gameObject.GetComponent<KeeseController>().RunHitPlayer();
                     }
@@ -115,7 +115,7 @@ public class TempPlayerController : MonoBehaviour
     {
         if (other.tag == "Water")
         {
-            GetComponent<TempPlayerController>().Speed = 3f;
+            GetComponent<TempPlayerController>().Speed = 2f;
         }
     }
 
@@ -193,8 +193,13 @@ public class TempPlayerController : MonoBehaviour
 
     public void MovementAnimation()
     {
-        movex = Input.GetAxisRaw("Horizontal");
-        movey = Input.GetAxisRaw("Vertical");
+        movex = Mathf.Round(Input.GetAxisRaw("Horizontal"));
+        movey = Mathf.Round(Input.GetAxisRaw("Vertical"));
+
+        /*if (movex != 0 && movey != 0)
+            GetComponent<TempPlayerController>().Speed = 2.5f;
+        else if (movex == 0 || movey == 0)
+            GetComponent<TempPlayerController>().Speed = 4;*/
 
         anglex = Input.GetAxisRaw("Horizontal");
         angley = Input.GetAxisRaw("Vertical");

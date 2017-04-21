@@ -22,11 +22,6 @@ public class KeyviController : MonoBehaviour
         inRange = false;
     }
 
-        void Start()
-    {
-        //GameObject.Find("Game Manager").GetComponent<TextController>().InGameKeyvi = gameObject;
-    }
-
     public void Talking()
     {
         if (stop == false)

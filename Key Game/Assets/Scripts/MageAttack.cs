@@ -22,5 +22,10 @@ public class MageAttack : MonoBehaviour
         CurrentPosition = new Vector2(transform.position.x, transform.position.y);
 
         transform.position = Vector2.MoveTowards(CurrentPosition, PlayerPosition, 0.1f);
+
+        if (CurrentPosition == PlayerPosition)
+        {
+            Destroy(gameObject);
+        }
     }
 }

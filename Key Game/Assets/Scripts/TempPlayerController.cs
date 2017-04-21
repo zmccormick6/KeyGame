@@ -28,7 +28,7 @@ public class TempPlayerController : MonoBehaviour
     SpriteRenderer tempSprite;
 
     public bool dodgeCooldown = false;
-    public float Speed = 3f;
+    public float Speed = 4f;
 
     float currentTime, previousTime;
     int dodge = 0;
@@ -115,7 +115,7 @@ public class TempPlayerController : MonoBehaviour
     {
         if (other.tag == "Water")
         {
-            GetComponent<TempPlayerController>().Speed = 1.5f;
+            GetComponent<TempPlayerController>().Speed = 3f;
         }
     }
 
@@ -123,7 +123,7 @@ public class TempPlayerController : MonoBehaviour
     {
         if (other.tag == "Water")
         {
-            GetComponent<TempPlayerController>().Speed = 3f;
+            GetComponent<TempPlayerController>().Speed = 4f;
         }
     }
 
@@ -233,8 +233,6 @@ public class TempPlayerController : MonoBehaviour
     public void SwingAnimation()
     {
         //if (Input.GetButton("Fire1"))
-        Debug.Log(Mathf.Round(Input.GetAxisRaw("Fire1")));
-
         if (Mathf.Round(Input.GetAxisRaw("Fire1")) < 0)
         {
             anim.SetInteger("Swing", 1);
@@ -285,7 +283,7 @@ public class TempPlayerController : MonoBehaviour
     {
         GetComponent<TempPlayerController>().Speed = 0;
         yield return new WaitForSeconds(0.5f);
-        GetComponent<TempPlayerController>().Speed = 3;
+        GetComponent<TempPlayerController>().Speed = 4;
     }
 
     private IEnumerator DodgeHitbox()
@@ -299,7 +297,7 @@ public class TempPlayerController : MonoBehaviour
     {
         GetComponent<TempPlayerController>().Speed = 15;
         yield return new WaitForSeconds(0.15f);
-        GetComponent<TempPlayerController>().Speed = 3;
+        GetComponent<TempPlayerController>().Speed = 4;
     }
 
     public void PlayerHealth()

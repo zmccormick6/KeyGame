@@ -52,7 +52,7 @@ public class MageController : MonoBehaviour
             Destroy(gameObject);
         }
 
-        transform.position = Vector2.MoveTowards(transform.position, new Vector2(moveX, moveY), 0.05f);
+        transform.position = Vector3.MoveTowards(transform.position, new Vector3(moveX, moveY, -2), 0.05f);
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -151,14 +151,14 @@ public class MageController : MonoBehaviour
         moveX = Random.Range(-6.5f, 6.5f);
         moveY = Random.Range(-3.5f, 1f);
 
-        transform.localPosition = new Vector2(moveX, moveY);
+        transform.position = new Vector3(moveX, moveY, -2);
         yield return new WaitForSeconds(1.5f);
         attackCount = 0;
 
         for (int i = 0; i < 3; i++)
         {
             animator.SetInteger("Mage", 2);
-            Instantiate(MageAttack, new Vector3(transform.position.x, transform.position.y, -1), Quaternion.identity);
+            Instantiate(MageAttack, new Vector3(transform.position.x, transform.position.y, -2), Quaternion.identity);
             animator.SetInteger("Mage", 1);
             yield return new WaitForSeconds(attackTime);
         }
@@ -177,7 +177,7 @@ public class MageController : MonoBehaviour
     private IEnumerator Attack()
     {
         animator.SetInteger("Mage", 2);
-        Instantiate(MageAttack, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
+        Instantiate(MageAttack, new Vector3(transform.position.x, transform.position.y, -2), Quaternion.identity);
         attackCount++;
         animator.SetInteger("Mage", 1);
         attackReady = false;

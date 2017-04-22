@@ -1,15 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DeathController : MonoBehaviour
 {
+    [SerializeField] private string LoadTryAgainLevel;
+    [SerializeField] private string LoadMainMenu;
+
     public void TryAgain()
     {
-        GameObject.Find("Game Manager").GetComponent<LevelSwitch>().level--;
-
-        GameObject.Find("Game Manager").GetComponent<LevelSwitch>().TryAgainLevel();
+        SceneManager.LoadScene(LoadTryAgainLevel);
     }
 
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(LoadMainMenu);
+    }
 }

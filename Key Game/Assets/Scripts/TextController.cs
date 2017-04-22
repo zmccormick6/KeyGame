@@ -11,6 +11,7 @@ public class TextController : MonoBehaviour
     [SerializeField] private GameObject EndButton;
     [SerializeField] private GameObject Keyvi;
     [SerializeField] private AudioSource Typing;
+    [SerializeField] private AudioSource OneTyping;
 
     public GameObject InGameKeyvi;
     public bool talkingDone = false;
@@ -26,14 +27,14 @@ public class TextController : MonoBehaviour
     string[] message = 
         {"Hiya!  My name's Keyvi!", "You should probably be careful, the next room has a Keyse in it.", "But you'll probably just hit it using the Right Trigger or some tutorial garbage.",
          "Do you just not talk or...?", "I don't know you, get away from me!", "Don't make me call the Dungeon Police.",
+         "In the next room will be...well...a book honestly.", "It will fire magic at you rapidly, so make sure to alway sbe moving.", "Don't get hit by them or you'll die or something probably.  Maybe if you're good enough you can hit it back at them?",
          "The water in this dungeon will slow you down if you walk through it.", "Also it'll get a lot of water in your boots, so probably don't do that.", "...also you can't walk into lava because death and stuff.",
-         "That you just fought there was a Keyni.", "It will fire magic from the left or right of the dungeon at you.", "Don't get hit by them or you'll take damage and probably die, but whatever right?",
-         "Tutorial Garbage #3: Use B to dodge over enemies, magic, and obstacles!", "Or you could even...dodge your way into my heart...", "Wait, forget that....bye!",
+         "Tutorial Garbage #3: Use B to dodge over enemies, magic, and obstacles!", "Or you could even...dodge your way into my heart...", "Wait! Um...forget that...uh...bye!",
          "Hey...I've totally never met you before!", "From your lack of response I can only assume that you spoke with my evil twin!", "Yeah, totally...that!  Don't talk to him anymore!"};
     int[] emotion = {0, 0, 0,
                      0, 2, 3,
-                     0, 2, 0,
                      0, 0, 3,
+                     0, 2, 3,
                      0, 1, 4,
                      2, 0, 4};
     int counter = 0;
@@ -107,7 +108,6 @@ public class TextController : MonoBehaviour
         NextButton.SetActive(false);
         EndButton.SetActive(false);
 
-        Typing.Play();
         GameObject.Find("Music").GetComponent<AudioSource>().volume = 0.2f;
 
         for (int i = 0; i < message[counter].Length; i++)
@@ -116,6 +116,7 @@ public class TextController : MonoBehaviour
 
             DisplayMessage.text += message[counter][i];
 
+            OneTyping.Play();
             if (message[counter][i] == '.')
                 yield return new WaitForSeconds(dots);
             else
@@ -144,7 +145,7 @@ public class TextController : MonoBehaviour
     private IEnumerator MoveKeyvi()
     {
         GameObject.Find("Keyvi").GetComponent<Collider2D>().enabled = false;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.75f);
         KeyviAlpha = GameObject.Find("Keyvi").GetComponent<SpriteRenderer>().color;
         startTime = Time.time;
         move = true;

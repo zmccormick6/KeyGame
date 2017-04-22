@@ -81,6 +81,8 @@ public class LevelSwitch : MonoBehaviour
 
     public void TryAgainLevel()
     {
+        level--;
+
         StartCoroutine(NextLevel());
     }
 

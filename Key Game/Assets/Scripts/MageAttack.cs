@@ -14,8 +14,8 @@ public class MageAttack : MonoBehaviour
     void Start()
     {
         Player = GameObject.Find("TempPlayer");
-        PlayerPosition =  new Vector2(Player.transform.position.x, Player.transform.position.y);
-        StartPosition = new Vector2(transform.position.x, transform.position.y);
+        PlayerPosition =  new Vector3(Player.transform.position.x, Player.transform.position.y, -2);
+        StartPosition = new Vector3(transform.position.x, transform.position.y, -2);
 
         SwordHitbox = Player.GetComponents<Collider2D>()[0];
 

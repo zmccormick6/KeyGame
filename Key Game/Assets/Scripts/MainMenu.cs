@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    [SerializeField] private GameObject PlayButton;
-    [SerializeField] private GameObject QuitButton;
+    [SerializeField] private GameObject PlayPointer;
     [SerializeField] private string Game;
 
     AsyncOperation async;
@@ -37,7 +37,12 @@ public class MainMenu : MonoBehaviour
     {
         if (Input.GetButtonDown("Speed"))
         {
-            async.allowSceneActivation = true;
+            if (PlayPointer.activeSelf == true)
+            {
+                async.allowSceneActivation = true;
+            }
+            else
+                QuitGame();
         }
     }
 }

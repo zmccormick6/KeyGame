@@ -33,7 +33,7 @@ public class TempPlayerController : MonoBehaviour
     float currentTime, previousTime;
     int dodge = 0;
     bool dodgeReady = true, water = false;
-    bool because = false, please = false;
+    bool because = false, please = false, stopSwing = false;
 
     void Start()
     {
@@ -237,11 +237,32 @@ public class TempPlayerController : MonoBehaviour
 
     public void SwingAnimation()
     {
-        //if (Input.GetButton("Fire1"))
-        if (Mathf.Round(Input.GetAxisRaw("Fire1")) < 0)
+        Debug.Log(stopSwing);
+
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Swing_East"))
         {
-            anim.SetInteger("Swing", 1);
-            StartCoroutine(SwingStop());
+            Debug.Log(anim.GetCurrentAnimatorStateInfo(0).length);
+        }
+
+
+        //if (Input.GetButton("Fire1"))
+        if (Input.GetAxisRaw("Fire1") < 0)
+        {
+            if (stopSwing == false)
+            {
+                stopSwing = true;
+                anim.SetInteger("Swing", 1);
+                StartCoroutine(SwingStop());
+            }
+        }
+        else if (Input.GetButton("Fire1"))
+        {
+            if (stopSwing == false)
+            {
+                stopSwing = true;
+                anim.SetInteger("Swing", 1);
+                StartCoroutine(SwingStop());
+            }
         }
         else
         {
@@ -271,24 +292,28 @@ public class TempPlayerController : MonoBehaviour
 
     public void DodgeAnimation()
     {
-        if (Input.GetButtonDown("Fire2"))
+        if (GetComponent<Rigidbody2D>().velocity != new Vector2(0, 0))
         {
-            if (dodgeReady == true)
+            if (Input.GetButtonDown("Fire2"))
             {
-                anim.SetInteger("Dodge", 1);
+                if (dodgeReady == true)
+                {
+                    anim.SetInteger("Dodge", 1);
+                }
             }
-        }
-        else
-        {
-            anim.SetInteger("Dodge", 0);
+            else
+            {
+                anim.SetInteger("Dodge", 0);
+            }
         }
     }
 
     private IEnumerator SwingStop()
     {
-        GetComponent<TempPlayerController>().Speed = 0;
+        GetComponent<TempPlayerController>().Speed = 1.5f;
         yield return new WaitForSeconds(0.5f);
         GetComponent<TempPlayerController>().Speed = 4;
+        stopSwing = false;
     }
 
     private IEnumerator DodgeHitbox()

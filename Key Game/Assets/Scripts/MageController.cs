@@ -15,7 +15,7 @@ public class MageController : MonoBehaviour
     //private Collider2D MageCollider;
     private Animator animator;
 
-    private int Health = 5;
+    private int Health = 3;
 
     Vector2 CurrentPosition;
     Vector2 PlayerPosition;
@@ -81,6 +81,8 @@ public class MageController : MonoBehaviour
             {
                 if (other != PlayerCollider)
                 {
+                    StopAllCoroutines();
+
                     //StartCoroutine(SlightInvincibility());
                     //MageCollider.enabled = false;
 
@@ -96,6 +98,8 @@ public class MageController : MonoBehaviour
                     //StartCoroutine(SlightInvincibility());
                     AttackSound.Play();
                     MageHealth();
+
+                    StartCoroutine(HitSpawn());
                 }
             }
         }
@@ -164,6 +168,13 @@ public class MageController : MonoBehaviour
         }
 
         StartCoroutine(DeSpawn());
+    }
+
+    private IEnumerator HitSpawn()
+    {
+        animator.SetInteger("Mage", 3);
+        yield return new WaitForSeconds(1.5f);
+        StartCoroutine(Spawn());
     }
 
     private IEnumerator DeSpawn()

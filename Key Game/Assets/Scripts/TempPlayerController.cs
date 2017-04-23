@@ -237,8 +237,6 @@ public class TempPlayerController : MonoBehaviour
 
     public void SwingAnimation()
     {
-        Debug.Log(stopSwing);
-
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Swing_East"))
         {
             Debug.Log(anim.GetCurrentAnimatorStateInfo(0).length);
@@ -246,7 +244,8 @@ public class TempPlayerController : MonoBehaviour
 
 
         //if (Input.GetButton("Fire1"))
-        if (Input.GetAxisRaw("Fire1") < 0)
+        //if (Input.GetAxisRaw("Fire1") < 0)
+        if (Input.GetButtonDown("Fire1"))
         {
             if (stopSwing == false)
             {
@@ -255,7 +254,7 @@ public class TempPlayerController : MonoBehaviour
                 StartCoroutine(SwingStop());
             }
         }
-        else if (Input.GetButton("Fire1"))
+        /*else if (Input.GetButton("Fire1"))
         {
             if (stopSwing == false)
             {
@@ -263,7 +262,7 @@ public class TempPlayerController : MonoBehaviour
                 anim.SetInteger("Swing", 1);
                 StartCoroutine(SwingStop());
             }
-        }
+        }*/
         else
         {
             anim.SetInteger("Swing", 0);
@@ -299,12 +298,17 @@ public class TempPlayerController : MonoBehaviour
                 if (dodgeReady == true)
                 {
                     anim.SetInteger("Dodge", 1);
+                    //anim.CrossFade("Player_Dodge");
                 }
             }
             else
             {
                 anim.SetInteger("Dodge", 0);
             }
+        }
+        else
+        {
+            anim.SetInteger("Dodge", 0);
         }
     }
 
@@ -325,6 +329,8 @@ public class TempPlayerController : MonoBehaviour
 
     private IEnumerator DodgeMovementIncrease()
     {
+        //GetComponent<TempPlayerController>().Speed = 0;
+        yield return new WaitForSeconds(0.5f);
         GetComponent<TempPlayerController>().Speed = 15;
         yield return new WaitForSeconds(0.15f);
         GetComponent<TempPlayerController>().Speed = 4;

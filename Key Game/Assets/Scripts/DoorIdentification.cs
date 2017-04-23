@@ -6,9 +6,12 @@ public class DoorIdentification : MonoBehaviour
 {
     public GameObject Door;
 
+    Animator DoorAnim;
+
     void Start()
     {
         Door = gameObject;
-        GameObject.Find("Game Manager").GetComponent<DoorSpawn>().DoorFind(Door);
+        DoorAnim = Door.GetComponent<Animator>();
+        GameObject.Find("Game Manager").GetComponent<DoorSpawn>().DoorFind(Door, DoorAnim);
     }
 }

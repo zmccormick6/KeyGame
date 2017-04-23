@@ -54,7 +54,6 @@ public class TempPlayerController : MonoBehaviour
 
         for (int i = 0; i < 20; i++)
         {
-            Debug.Log("WHy");
             if (flashing % 2 == 0)
             {
                 tempSprite.enabled = false;
@@ -238,12 +237,6 @@ public class TempPlayerController : MonoBehaviour
 
     public void SwingAnimation()
     {
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Swing_East"))
-        {
-            Debug.Log(anim.GetCurrentAnimatorStateInfo(0).length);
-        }
-
-
         //if (Input.GetButton("Fire1"))
         //if (Input.GetAxisRaw("Fire1") < 0)
         if (Input.GetButton("Fire1"))

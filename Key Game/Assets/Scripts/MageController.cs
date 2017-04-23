@@ -151,19 +151,21 @@ public class MageController : MonoBehaviour
 
     private IEnumerator Spawn()
     {
-        animator.SetInteger("Mage", 0);
         moveX = Random.Range(-6.5f, 6.5f);
         moveY = Random.Range(-3.5f, 1f);
 
         transform.position = new Vector3(moveX, moveY, -2);
-        yield return new WaitForSeconds(1.5f);
+        animator.SetInteger("Mage", 0);
+        yield return new WaitForSeconds(0.5f);
+        animator.SetInteger("Mage", 1);
+        yield return new WaitForSeconds(1f + attackTime);
         attackCount = 0;
 
         for (int i = 0; i < 3; i++)
         {
-            animator.SetInteger("Mage", 2);
-            Instantiate(MageAttack, new Vector3(transform.position.x, transform.position.y, -2), Quaternion.identity);
-            animator.SetInteger("Mage", 1);
+            var missile = Instantiate(MageAttack, new Vector3(transform.position.x, transform.position.y + 0.5f, -2), Quaternion.identity);
+            missile.GetComponent<MageAttack>().MageX = transform.position.x;
+            missile.GetComponent<MageAttack>().MageY = transform.position.y - 0.5f;
             yield return new WaitForSeconds(attackTime);
         }
 
@@ -172,7 +174,7 @@ public class MageController : MonoBehaviour
 
     private IEnumerator HitSpawn()
     {
-        animator.SetInteger("Mage", 3);
+        animator.SetInteger("Mage", 2);
         yield return new WaitForSeconds(1.5f);
         StartCoroutine(Spawn());
     }
@@ -180,17 +182,16 @@ public class MageController : MonoBehaviour
     private IEnumerator DeSpawn()
     {
         yield return new WaitForSeconds(2f);
-        animator.SetInteger("Mage", 3);
+        animator.SetInteger("Mage", 2);
         yield return new WaitForSeconds(1.5f);
+        animator.SetInteger("Mage", 0);
         StartCoroutine(Spawn());
     }
 
-    private IEnumerator Attack()
+    /*private IEnumerator Attack()
     {
-        animator.SetInteger("Mage", 2);
         Instantiate(MageAttack, new Vector3(transform.position.x, transform.position.y, -2), Quaternion.identity);
         attackCount++;
-        animator.SetInteger("Mage", 1);
         attackReady = false;
         yield return new WaitForSeconds(attackTime);
 
@@ -200,5 +201,5 @@ public class MageController : MonoBehaviour
         }
         else
             attackReady = true;
-    }
+    }*/
 }

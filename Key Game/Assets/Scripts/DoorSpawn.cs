@@ -8,18 +8,18 @@ public class DoorSpawn : MonoBehaviour
     public GameObject CurrentDoor;
     public int enemyCount;
 
-    public void DoorFind(GameObject Door)
+    public void DoorFind(GameObject Door, Animator DoorAnim)
     {
         CurrentDoor = Door;
 
         if (enemyCount != 0)
         {
-            Door.SetActive(false);
+            Door.GetComponent<Collider2D>().enabled = false;
         }
 
         if (GameObject.Find("Game Manager").GetComponent<TextController>().talkingDone == false)
         {
-            Door.SetActive(false);
+            Door.GetComponent<Collider2D>().enabled = false;
         }
     }
 
@@ -36,7 +36,9 @@ public class DoorSpawn : MonoBehaviour
         {
             if (GameObject.Find("Game Manager").GetComponent<TextController>().talkingDone == true)
             {
-                CurrentDoor.SetActive(true);
+                CurrentDoor.GetComponent<Collider2D>().enabled = true;
+                CurrentDoor.GetComponent<Animator>().SetInteger("DoorOpen", 1);
+
                 GameObject.Find("Game Manager").GetComponent<TextController>().talkingDone = false;
             }
         }

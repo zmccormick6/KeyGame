@@ -7,9 +7,11 @@ public class MageAttack : MonoBehaviour
     GameObject Player;
     Collider2D SwordHitbox;
 
-    Vector2 CurrentPosition, PlayerPosition, StartPosition;
+    Vector2 CurrentPosition, PlayerPosition, StartPosition, ReversePosition;
 
+    public float MageX, MageY;
     public bool reverse = false;
+    bool attack = false;
 
     void Start()
     {
@@ -20,6 +22,7 @@ public class MageAttack : MonoBehaviour
         SwordHitbox = Player.GetComponents<Collider2D>()[0];
 
         StartCoroutine(Destroy());
+        StartCoroutine(WaitAttack());
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -39,17 +42,31 @@ public class MageAttack : MonoBehaviour
 
     void FixedUpdate()
     {
-        CurrentPosition = new Vector2(transform.position.x, transform.position.y);
-
-        if (reverse == false)
-            transform.position = Vector2.MoveTowards(CurrentPosition, PlayerPosition, 0.15f);
-        else if (reverse == true)
-            transform.position = Vector2.MoveTowards(CurrentPosition, PlayerPosition, -0.25f);
-
-        if (CurrentPosition == PlayerPosition)
+        if (attack == true)
         {
-            Destroy(gameObject);
+            ReversePosition = new Vector2(MageX, MageY);
+            CurrentPosition = new Vector2(transform.position.x, transform.position.y);
+
+            if (reverse == false)
+                transform.position = Vector2.MoveTowards(CurrentPosition, PlayerPosition, 0.15f);
+            else if (reverse == true)
+                transform.position = Vector2.MoveTowards(CurrentPosition, ReversePosition, 0.25f);
+
+            if (CurrentPosition == PlayerPosition)
+            {
+                Destroy(gameObject);
+            }
+            else if (CurrentPosition == ReversePosition)
+            {
+                Destroy(gameObject);
+            }
         }
+    }
+
+    private IEnumerator WaitAttack()
+    {
+        yield return new WaitForSeconds(0.5f);
+        attack = true;
     }
 
     private IEnumerator Destroy()

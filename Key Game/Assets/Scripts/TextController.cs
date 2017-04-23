@@ -30,7 +30,7 @@ public class TextController : MonoBehaviour
          "In the next room will be...well...a\nbook honestly.", "It will fire magic at you rapidly, so\nmake sure to always be moving.", "Maybe if you're good enough you can\nhit it back at them?",
          "The water in this dungeon will slow\nyou down if you walk through it.", "Also it'll get a lot of water in your boots,\nso probably don't do that.", "...also you can't walk into lava because\ndeath and stuff.",
          "Tutorial Garbage #3: Use B to dodge\nover enemies, magic, and obstacles!", "Or you could even...dodge your way\ninto my heart...", "Wait! Um...forget that...uh...bye!",
-         "Hey...I've totally never met you before!", "From your lack of response I can only\nassume that you spoke with my evil twin!", "Yeah, totally...that!  Don't talk to him\nanymore!"};
+         "This is the end of the Demo!", "Thank you for playing, we are\nstill working on the rest of the game.", "This will include more levels and\na boss fight!"};
     int[] emotion = {0, 0, 0,
                      0, 2, 3,
                      0, 0, 3,

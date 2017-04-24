@@ -7,12 +7,12 @@ public class MageController : MonoBehaviour
     [SerializeField] private GameObject MageAttack;
     [SerializeField] private GameObject Player;
     [SerializeField] private Collider2D MageCollider;
+    [SerializeField] private GameObject DropShadow;
 
     AudioSource AttackSound;
     SpriteRenderer tempSprite;
 
     private Collider2D PlayerCollider;
-    //private Collider2D MageCollider;
     private Animator animator;
 
     private int Health = 3;
@@ -28,11 +28,9 @@ public class MageController : MonoBehaviour
     {
         Player = GameObject.Find("TempPlayer");
 
-        //MageCollider = gameObject.GetComponent<Collider2D>();
         PlayerCollider = Player.GetComponents<BoxCollider2D>()[1];
         animator = GetComponent<Animator>();
         tempSprite = gameObject.GetComponent<SpriteRenderer>();
-
         AttackSound = GameObject.Find("Attack").GetComponent<AudioSource>();
 
         attackTime = Random.Range(1f, 1.5f);
@@ -88,9 +86,6 @@ public class MageController : MonoBehaviour
                 {
                     StopAllCoroutines();
 
-                    //StartCoroutine(SlightInvincibility());
-                    //MageCollider.enabled = false;
-
                     if (CurrentPosition.y > PlayerPosition.y)
                     {
                         transform.position = new Vector2(CurrentPosition.x, CurrentPosition.y + 0.75f);
@@ -100,7 +95,6 @@ public class MageController : MonoBehaviour
                         transform.position = new Vector2(CurrentPosition.x, CurrentPosition.y - 0.75f);
                     }
 
-                    //StartCoroutine(SlightInvincibility());
                     AttackSound.Play();
                     MageHealth();
 
@@ -163,6 +157,7 @@ public class MageController : MonoBehaviour
         animator.SetInteger("Mage", 0);
         yield return new WaitForSeconds(0.5f);
         animator.SetInteger("Mage", 1);
+        DropShadow.SetActive(true);
         yield return new WaitForSeconds(1f + attackTime);
         attackCount = 0;
 
@@ -181,6 +176,7 @@ public class MageController : MonoBehaviour
     {
         animator.SetInteger("Mage", 2);
         yield return new WaitForSeconds(1.5f);
+        DropShadow.SetActive(false);
         StartCoroutine(Spawn());
     }
 
@@ -189,22 +185,8 @@ public class MageController : MonoBehaviour
         yield return new WaitForSeconds(2f);
         animator.SetInteger("Mage", 2);
         yield return new WaitForSeconds(1.5f);
+        DropShadow.SetActive(false);
         animator.SetInteger("Mage", 0);
         StartCoroutine(Spawn());
     }
-
-    /*private IEnumerator Attack()
-    {
-        Instantiate(MageAttack, new Vector3(transform.position.x, transform.position.y, -2), Quaternion.identity);
-        attackCount++;
-        attackReady = false;
-        yield return new WaitForSeconds(attackTime);
-
-        if (attackCount >= 3)
-        {
-            StartCoroutine(DeSpawn());
-        }
-        else
-            attackReady = true;
-    }*/
 }

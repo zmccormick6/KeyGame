@@ -13,6 +13,8 @@ public class TextController : MonoBehaviour
     [SerializeField] private AudioSource Typing;
     [SerializeField] private AudioSource OneTyping;
 
+    GameObject aButton;
+
     public GameObject InGameKeyvi;
     public bool talkingDone = false;
 
@@ -53,9 +55,11 @@ public class TextController : MonoBehaviour
         if (move == true)
         {
             InGameKeyvi.transform.position = Vector2.Lerp(KeyviPosition, WhereToGo, ((Time.time - startTime) / 4));
+            aButton = GameObject.Find("A Button");
 
             KeyviAlpha.a -= Time.deltaTime / 1.25f;
             GameObject.Find("Keyvi").GetComponent<SpriteRenderer>().color = KeyviAlpha;
+            aButton.GetComponent<SpriteRenderer>().color = KeyviAlpha;
         }
 
         if (GameObject.Find("Keyvi").GetComponent<KeyviController>().inRange == true)

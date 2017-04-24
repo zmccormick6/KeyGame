@@ -57,6 +57,11 @@ public class MageController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.tag == "Obstacle")
+        {
+            Physics2D.IgnoreCollision(other.GetComponent<Collider2D>(), MageCollider);
+        }
+
         if (other.tag == "MageAttack")
         {
             if (other.GetComponent<MageAttack>().reverse == true)

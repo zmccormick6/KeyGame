@@ -8,7 +8,6 @@ public class PureKeyvilController : MonoBehaviour
     [SerializeField] private GameObject SecondBossAttack;
     [SerializeField] private GameObject ThirdBossAttack;
     [SerializeField] private GameObject Player;
-    [SerializeField] private GameObject PureKeyvil;
     [SerializeField] private Collider2D BossCollider;
 
     GameObject GameManager;
@@ -18,7 +17,7 @@ public class PureKeyvilController : MonoBehaviour
 
     private Collider2D PlayerCollider;
     private Animator animator;
-    private int Health = 50;
+    public int Health = 50;
 
     Vector2 CurrentPosition;
     Vector2 PlayerPosition;
@@ -31,7 +30,9 @@ public class PureKeyvilController : MonoBehaviour
     Vector2 BottomLeft = new Vector2(-6, -4);
     Vector2 Middle = new Vector2(0, -1.5f);
 
-    bool phaseChangeCheck = false;
+    public bool attackThree = false;
+
+    bool phaseChangeCheck = false, sharedHealth = false;
     int temp = 7, lastTemp, attackChoose, lastChoice;
     float attackSwitch = 3f;
 
@@ -92,9 +93,15 @@ public class PureKeyvilController : MonoBehaviour
         {
             if (Health <= 20)
             {
+                Debug.Log("Phase Change");
                 StartCoroutine(PhaseChange());
                 phaseChangeCheck = true;
             }
+        }
+
+        if (Health <= 0)
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -168,7 +175,17 @@ public class PureKeyvilController : MonoBehaviour
                 temp += 1;
         }
 
+        if (temp == 4)
+        {
+            temp = 5;
+        }
+
         lastTemp = temp;
+    }
+
+    public void ChooseAttackPublic()
+    {
+        StartCoroutine(ChooseAttack());
     }
 
     private IEnumerator ChooseAttack()
@@ -182,7 +199,7 @@ public class PureKeyvilController : MonoBehaviour
             attackChoose = Random.Range(1, 3);
         }
         lastChoice = attackChoose;
-        //attackChoose = 2;
+        //attackChoose = 3;
 
         if (attackChoose == 1)
         {
@@ -244,42 +261,25 @@ public class PureKeyvilController : MonoBehaviour
 
     private IEnumerator ThirdAttack()
     {
-        //temp = Random.Range(0, 7);
+        //attackThree = false;
+
         temp = 4;
 
         yield return new WaitForSeconds(attackSwitch);
 
         GameObject Missile;
-        float xPos = 0, yPos = 0, posScale = 0.3f;
 
-
-        for (int i = 1; i < 13; i++)
+        for (int i = 1; i < 8; i++)
         {
-            if (i % 4 == 0)
-            {
-                //North
-                yPos = posScale * i;
-            }
-            else if (i % 4 == 1)
-            {
-                //East
-                xPos = posScale * i;
-            }
-            else if (i % 4 == 2)
-            {
-                //South
-                yPos = -posScale * i;
-            }
-            else if (i % 4 == 3)
-            {
-                //West
-                xPos = -posScale * i;
-            }
+            Missile = Instantiate(ThirdBossAttack, new Vector3(transform.position.x, transform.position.y + i, 0), Quaternion.identity);
+            Missile.GetComponent<ThirdBossAttack>().ChooseRadius(i);
 
-            Missile = Instantiate(ThirdBossAttack, new Vector3(transform.position.x + xPos, transform.position.y + yPos, 0), Quaternion.identity);
-
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.45f);
         }
+
+        attackThree = true;
+
+        yield return new WaitForSeconds(2f);
 
         StartCoroutine(ChooseAttack());
     }
@@ -289,12 +289,9 @@ public class PureKeyvilController : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         StopAllCoroutines();
-        GameManager.GetComponent<LevelSwitch>().pause = true;
         tempSprite.enabled = true;
         tempSprite.color = new Color(1f, 1f, 1f, 1f);
 
-        Instantiate(PureKeyvil, new Vector3(transform.position.x + 1f, transform.position.y, 0), Quaternion.identity);
-        yield return new WaitForSeconds(1.5f);
-        GameManager.GetComponent<LevelSwitch>().pause = false;
+        temp = 4;
     }
 }

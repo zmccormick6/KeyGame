@@ -4,43 +4,63 @@ using UnityEngine;
 
 public class ThirdBossAttack : MonoBehaviour
 {
-    bool move = false;
-    float moveX, moveY;
+    //Circle code from http://answers.unity3d.com/questions/1164022/move-a-2d-item-in-a-circle-around-a-fixed-point.html
+
+    private float RotateSpeed = 2f;
+    private float Radius;
+
+    private Vector2 _centre;
+    private float _angle;
+
+    GameObject PureKeyvil;
+
+    bool move = false, stop = false;
 
     void Start()
     {
-        StartCoroutine(Move());
+        PureKeyvil = GameObject.Find("Pure Keyvil");
+        _centre = new Vector2(0, -1.5f);
+        //StartCoroutine(Move());
         StartCoroutine(Destroy());
     }
 
     void FixedUpdate()
     {
-        if (move == true)
-            transform.position = new Vector2(transform.position.x + moveX, transform.position.y + moveY);
+        /*if (PureKeyvil.GetComponent<PureKeyvilController>().attackThree == true)
+        {
+            move = true;
+
+            if (stop == false)
+            {
+                StartCoroutine(Destroy());
+                stop = true;
+            }
+        }*/
+
+        //if (move == true)
+        {
+            _angle += RotateSpeed * Time.deltaTime;
+
+            var offset = new Vector2(Mathf.Sin(_angle), Mathf.Cos(_angle)) * Radius;
+            transform.position = _centre + offset;
+        }
+    }
+
+    public void ChooseRadius(int i)
+    {
+        Radius = i;
     }
 
     private IEnumerator Move()
     {
         yield return new WaitForSeconds(0.75f);
-
-        moveX = Random.Range(-0.25f, 0.25f);
-        moveY = Random.Range(-0.25f, 0.25f);
-
-        if (moveX > -0.05f && moveX < 0.05f)
-        {
-            moveX += 0.1f;
-        }
-        if (moveY > -0.05f && moveY < 0.05f)
-        {
-            moveY += 0.1f;
-        }
-
         move = true;
+
     }
 
     private IEnumerator Destroy()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
         Destroy(gameObject);
     }
 }

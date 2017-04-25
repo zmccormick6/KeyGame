@@ -6,6 +6,7 @@ public class SecondBossAttack : MonoBehaviour
 {
     GameObject Player;
     float moveX, moveY, attackSpeed = 0.1f;
+    bool yPos = false;
 
     void Start()
     {
@@ -15,7 +16,18 @@ public class SecondBossAttack : MonoBehaviour
 
     void FixedUpdate()
     {
-        transform.position = new Vector2(transform.position.x - attackSpeed, -1.5f);
+        if (yPos == true)
+            transform.position = new Vector2(transform.position.x - attackSpeed, -3.5f);
+        else
+            transform.position = new Vector2(transform.position.x - attackSpeed, -1.5f);
+    }
+
+    public void yPosition(int i)
+    {
+        if (i % 2 == 0)
+            yPos = true;
+        else
+            yPos = false;
     }
 
     public void Direction(int direction)

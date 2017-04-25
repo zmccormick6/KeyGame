@@ -75,24 +75,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\BossAttack.cs" />
+    <Compile Include="Assets\Scripts\Boss\BossAttack.cs" />
+    <Compile Include="Assets\Scripts\Boss\PureKeyvilController.cs" />
+    <Compile Include="Assets\Scripts\Boss\SecondBossAttack.cs" />
+    <Compile Include="Assets\Scripts\Boss\ThirdBossAttack.cs" />
     <Compile Include="Assets\Scripts\ColliderDisable.cs" />
     <Compile Include="Assets\Scripts\DeathController.cs" />
     <Compile Include="Assets\Scripts\DoorIdentification.cs" />
     <Compile Include="Assets\Scripts\DoorSpawn.cs" />
+    <Compile Include="Assets\Scripts\Enemies\KeeseController.cs" />
+    <Compile Include="Assets\Scripts\Enemies\MageAttack.cs" />
+    <Compile Include="Assets\Scripts\Enemies\MageController.cs" />
     <Compile Include="Assets\Scripts\EnemyCount.cs" />
     <Compile Include="Assets\Scripts\InWater.cs" />
-    <Compile Include="Assets\Scripts\KeeseController.cs" />
     <Compile Include="Assets\Scripts\KeyviController.cs" />
     <Compile Include="Assets\Scripts\LevelSwitch.cs" />
-    <Compile Include="Assets\Scripts\MageAttack.cs" />
-    <Compile Include="Assets\Scripts\MageController.cs" />
     <Compile Include="Assets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\Scripts\MenuCursor.cs" />
     <Compile Include="Assets\Scripts\PauseController.cs" />
     <Compile Include="Assets\Scripts\PlayerWallHitbox.cs" />
-    <Compile Include="Assets\Scripts\PureKeyvilController.cs" />
-    <Compile Include="Assets\Scripts\SecondBossAttack.cs" />
     <Compile Include="Assets\Scripts\TempPlayerController.cs" />
     <Compile Include="Assets\Scripts\TextController.cs" />
   </ItemGroup>

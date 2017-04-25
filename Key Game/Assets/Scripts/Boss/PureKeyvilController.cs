@@ -8,14 +8,17 @@ public class PureKeyvilController : MonoBehaviour
     [SerializeField] private GameObject SecondBossAttack;
     [SerializeField] private GameObject ThirdBossAttack;
     [SerializeField] private GameObject Player;
+    [SerializeField] private GameObject PureKeyvil;
     [SerializeField] private Collider2D BossCollider;
+
+    GameObject GameManager;
 
     AudioSource AttackSound;
     SpriteRenderer tempSprite;
 
     private Collider2D PlayerCollider;
     private Animator animator;
-    private int Health = 5;
+    private int Health = 50;
 
     Vector2 CurrentPosition;
     Vector2 PlayerPosition;
@@ -28,7 +31,9 @@ public class PureKeyvilController : MonoBehaviour
     Vector2 BottomLeft = new Vector2(-6, -4);
     Vector2 Middle = new Vector2(0, -1.5f);
 
-    int temp = 7, lastTemp, attackChoose;
+    bool phaseChangeCheck = false;
+    int temp = 7, lastTemp, attackChoose, lastChoice;
+    float attackSwitch = 3f;
 
     void Start()
     {
@@ -37,6 +42,7 @@ public class PureKeyvilController : MonoBehaviour
         PlayerCollider = Player.GetComponents<BoxCollider2D>()[1];
         animator = GetComponent<Animator>();
         tempSprite = gameObject.GetComponent<SpriteRenderer>();
+        GameManager = GameObject.Find("Game Manager");
 
         AttackSound = GameObject.Find("Attack").GetComponent<AudioSource>();
         StartCoroutine(ChooseAttack());
@@ -80,6 +86,15 @@ public class PureKeyvilController : MonoBehaviour
         else if (temp == 6)
         {
             transform.position = Vector2.MoveTowards(transform.position, MiddleRight, 0.1f);
+        }
+
+        if (phaseChangeCheck == false)
+        {
+            if (Health <= 20)
+            {
+                StartCoroutine(PhaseChange());
+                phaseChangeCheck = true;
+            }
         }
     }
 
@@ -145,9 +160,9 @@ public class PureKeyvilController : MonoBehaviour
 
         if (lastTemp == temp)
         {
-            if (temp == 0 || temp == 7)
+            if (temp == 0 || temp == 6)
             {
-                temp = Random.Range(1, 6);
+                temp = Random.Range(1, 5);
             }
             else
                 temp += 1;
@@ -160,8 +175,14 @@ public class PureKeyvilController : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
 
-        //int temp = Random.Range(1, 3);
-        attackChoose = 2;
+        int attackChoose = Random.Range(1, 4);
+
+        while (lastChoice == attackChoose)
+        {
+            attackChoose = Random.Range(1, 3);
+        }
+        lastChoice = attackChoose;
+        //attackChoose = 2;
 
         if (attackChoose == 1)
         {
@@ -181,12 +202,12 @@ public class PureKeyvilController : MonoBehaviour
     {
         ChangePositions();
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(attackSwitch);
 
         for (int i = 0; i < 24; i++)
         {
             var Missile = Instantiate(BossAttack, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
-            Missile.GetComponent<BossAttack>().AttackDirection(i % 4);
+            Missile.GetComponent<BossAttack>().AttackDirection(i % 8);
             yield return new WaitForSeconds(0.1f);
         }
 
@@ -197,19 +218,25 @@ public class PureKeyvilController : MonoBehaviour
     {
         temp = Random.Range(5, 7);
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(attackSwitch);
 
         GameObject Missile;
 
         for (int i = 0; i < 4; i++)
         {
             if (i % 2 == 0)
-                Missile = Instantiate(SecondBossAttack, new Vector3(transform.position.x, transform.position.y - 2f, 0), Quaternion.identity);
+            {
+                Missile = Instantiate(SecondBossAttack, new Vector3(transform.position.x, transform.position.y - 2, 0), Quaternion.identity);
+                Missile.GetComponent<SecondBossAttack>().yPosition(i);
+            }
             else
+            {
                 Missile = Instantiate(SecondBossAttack, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
+                Missile.GetComponent<SecondBossAttack>().yPosition(i);
+            }
 
             Missile.GetComponent<SecondBossAttack>().Direction(temp);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1.5f);
         }
 
         StartCoroutine(ChooseAttack());
@@ -217,7 +244,57 @@ public class PureKeyvilController : MonoBehaviour
 
     private IEnumerator ThirdAttack()
     {
+        //temp = Random.Range(0, 7);
+        temp = 4;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(attackSwitch);
+
+        GameObject Missile;
+        float xPos = 0, yPos = 0, posScale = 0.3f;
+
+
+        for (int i = 1; i < 13; i++)
+        {
+            if (i % 4 == 0)
+            {
+                //North
+                yPos = posScale * i;
+            }
+            else if (i % 4 == 1)
+            {
+                //East
+                xPos = posScale * i;
+            }
+            else if (i % 4 == 2)
+            {
+                //South
+                yPos = -posScale * i;
+            }
+            else if (i % 4 == 3)
+            {
+                //West
+                xPos = -posScale * i;
+            }
+
+            Missile = Instantiate(ThirdBossAttack, new Vector3(transform.position.x + xPos, transform.position.y + yPos, 0), Quaternion.identity);
+
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        StartCoroutine(ChooseAttack());
+    }
+
+    private IEnumerator PhaseChange()
+    {
+        yield return new WaitForSeconds(1f);
+
+        StopAllCoroutines();
+        GameManager.GetComponent<LevelSwitch>().pause = true;
+        tempSprite.enabled = true;
+        tempSprite.color = new Color(1f, 1f, 1f, 1f);
+
+        Instantiate(PureKeyvil, new Vector3(transform.position.x + 1f, transform.position.y, 0), Quaternion.identity);
+        yield return new WaitForSeconds(1.5f);
+        GameManager.GetComponent<LevelSwitch>().pause = false;
     }
 }

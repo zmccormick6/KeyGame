@@ -40,6 +40,30 @@ public class BossAttack : MonoBehaviour
             moveY = -attackSpeed;
             //Down
         }
+        else if (direction == 4)
+        {
+            moveX = attackSpeed;
+            moveY = attackSpeed;
+            //Up-Right
+        }
+        else if (direction == 5)
+        {
+            moveX = -attackSpeed;
+            moveY = attackSpeed;
+            //Up-Left
+        }
+        else if (direction == 6)
+        {
+            moveX = attackSpeed;
+            moveY = -attackSpeed;
+            //Down-Right
+        }
+        else if (direction == 7)
+        {
+            moveX = -attackSpeed;
+            moveY = -attackSpeed;
+            //Down-Left
+        }
     }
 
     private IEnumerator DestroyAttack()

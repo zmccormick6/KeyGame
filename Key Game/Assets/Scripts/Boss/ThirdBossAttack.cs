@@ -20,24 +20,11 @@ public class ThirdBossAttack : MonoBehaviour
     {
         PureKeyvil = GameObject.Find("Pure Keyvil");
         _centre = new Vector2(0, -1.5f);
-        //StartCoroutine(Move());
         StartCoroutine(Destroy());
     }
 
     void FixedUpdate()
     {
-        /*if (PureKeyvil.GetComponent<PureKeyvilController>().attackThree == true)
-        {
-            move = true;
-
-            if (stop == false)
-            {
-                StartCoroutine(Destroy());
-                stop = true;
-            }
-        }*/
-
-        //if (move == true)
         {
             _angle += RotateSpeed * Time.deltaTime;
 

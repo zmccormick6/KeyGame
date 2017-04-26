@@ -28,6 +28,9 @@ public class TempPlayerController : MonoBehaviour
 
     SpriteRenderer tempSprite;
 
+    private Vector2 _centre;
+    private float _angle;
+
     public bool dodgeCooldown = false;
     public float Speed = 4f;
 
@@ -194,18 +197,14 @@ public class TempPlayerController : MonoBehaviour
 
     public void MovementAnimation()
     {
-        movex = Mathf.Round(Input.GetAxisRaw("Horizontal"));
-        movey = Mathf.Round(Input.GetAxisRaw("Vertical"));
-
-        anglex = Input.GetAxisRaw("Horizontal");
-        angley = Input.GetAxisRaw("Vertical");
-
-        angle = Mathf.Atan2(anglex, angley) * Mathf.Rad2Deg;
-
-        Debug.Log(angle);
+        //movex = Mathf.Round(Input.GetAxisRaw("Horizontal"));
+        //movey = Mathf.Round(Input.GetAxisRaw("Vertical"));
 
         if (anim.GetInteger("Dodge") != 1)
         {
+            movex = Mathf.Round(Input.GetAxisRaw("Horizontal"));
+            movey = Mathf.Round(Input.GetAxisRaw("Vertical"));
+
             //West
             if (movex < 0)
             {
@@ -274,7 +273,7 @@ public class TempPlayerController : MonoBehaviour
     {
         if (GetComponent<Rigidbody2D>().velocity != new Vector2(0, 0))
         {
-            if (Input.GetButton("Fire2"))
+            if (Input.GetButtonDown("Fire2"))
             {
                 if (dodgeReady == true)
                 {
@@ -310,7 +309,20 @@ public class TempPlayerController : MonoBehaviour
     private IEnumerator DodgeMovementIncrease()
     {
         yield return new WaitForSeconds(0.4f);
+        /*anglex = Input.GetAxisRaw("Horizontal");
+        angley = Input.GetAxisRaw("Vertical");
+    
+        float temp = Mathf.Abs(anglex) / Mathf.Abs(angley);
+
+        Debug.Log(temp);
+
+        Vector2 DodgePosition = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
+        GetComponent<TempPlayerController>().transform.position = Vector2.MoveTowards(transform.position, DodgePosition, 0.5f);*/
+
+        //transform.position = _centre + offset;
         GetComponent<TempPlayerController>().Speed = 15;
+        //GetComponent<TempPlayerController>().Speed = 40;
         yield return new WaitForSeconds(0.15f);
         GetComponent<TempPlayerController>().Speed = 4;
     }

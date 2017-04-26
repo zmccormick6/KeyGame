@@ -19,7 +19,7 @@ public class TempPlayerController : MonoBehaviour
     private Collider2D PlayerHitbox;
     private Collider2D Hitbox;
 
-    private int Health = 6;
+    public int Health = 6;
     private float movex = 0f;
     private float movey = 0f;
     private float anglex = 0f;
@@ -85,7 +85,7 @@ public class TempPlayerController : MonoBehaviour
         {
             if (other != PlayerHitbox)
             {
-                if (other.tag != "Door" && other.tag != "Keyvi" && other.tag != "Obstacle" && other.tag != "Water")
+                if (other.tag != "Door" && other.tag != "Keyvi" && other.tag != "Obstacle" && other.tag != "Water" && other.tag != "Health")
                 {
                     Damage.Play();
                     PlayerHealth();
@@ -202,6 +202,8 @@ public class TempPlayerController : MonoBehaviour
 
         angle = Mathf.Atan2(anglex, angley) * Mathf.Rad2Deg;
 
+        Debug.Log(angle);
+
         if (anim.GetInteger("Dodge") != 1)
         {
             //West
@@ -311,6 +313,11 @@ public class TempPlayerController : MonoBehaviour
         GetComponent<TempPlayerController>().Speed = 15;
         yield return new WaitForSeconds(0.15f);
         GetComponent<TempPlayerController>().Speed = 4;
+    }
+
+    public void AddHealth()
+    {
+        Heart.SetInteger("Heart", Health);
     }
 
     public void PlayerHealth()

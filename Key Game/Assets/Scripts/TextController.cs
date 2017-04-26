@@ -27,18 +27,20 @@ public class TextController : MonoBehaviour
 
     //0 Normal, 1 Blush, 2 Shifty, 3 Derp, 4 Flustered Blush, 5 Squidward, 6 
     string[] message = 
-        {"Hiya!  My name's Keyvi! I'm important!", "My evil twin brother Envi", "But you'll probably hit it using the\nRight Trigger or some tutorial garbage.",
-         "Well, that was Key-z!", "I don't know you, get away from me!", "Don't make me call the Dungeon\nPolice.",
-         "In the next room will be...well...a\nbook honestly.", "It will fire magic at you rapidly, so\nmake sure to always be moving.", "Maybe if you're good enough you can\nhit it back at them?",
-         "The water in this dungeon will slow\nyou down if you walk through it.", "Also it'll get a lot of water in your boots,\nso probably don't do that.", "...also you can't walk into lava because\ndeath and stuff.",
-         "Tutorial Garbage #3: Use B to dodge\nover enemies, magic, and obstacles!", "Or you could even...dodge your way\ninto my heart...", "Wait! Um...forget that...uh...bye!",
-         "This is the end of the Demo!", "Thank you for playing, we are\nstill working on the rest of the game.", "This will include more levels and\na boss fight!"};
-    int[] emotion = {0, 0, 0,
-                     0, 2, 3,
-                     0, 0, 3, 
-                     0, 2, 3,
-                     0, 1, 4,
-                     2, 0, 4};
+        {"Hiya! My name's Keyvi!\nI'm important!", "My evil twin brother Envi has taken\nover the dungeon.", "You can hit stuff by pressing the\n'X' button. Follow me!",
+         "Well, that was Key-z!", "If you actually took damage from the\nfirst enemy in this game...there's a\nhealth container over there.", "Press the 'B' button while moving to\ndash over to it, or whatever.",
+         "Walking through water will slow you\ndown.", "My brothers' diaries are guarding\nthe way up ahead.", "To reflect the angst, hit its attacks\nwith your key...sword?",
+         "Where did you get that key..\nsaber anyway?", "It's quite large...", "Have him call me once this is over.\nK?",
+         "Have you ever been inside a lock\nbefore...?", "You could say that I've been tumbled\na few times.", "Why are you giving me that look?\nIt's just a key thing!",
+         "My brothers' room is up ahead, I can\nsense the keyruption from here.", "Low key, he gets real mad when under\nhalf health.", "Hope you don't die! :).",
+         "Oh, guess he's not here?", "Good Keevening...", "Don't you Envi my power!?"};
+    int[] emotion = {0, 2, 0,
+                     3, 0, 0,
+                     3, 0, 2, 
+                     2, 4, 1,
+                     4, 0, 1,
+                     0, 0, 0,
+                     0, 0, 0};
     int counter = 0;
 
     void Start()

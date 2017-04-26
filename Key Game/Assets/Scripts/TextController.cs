@@ -25,7 +25,7 @@ public class TextController : MonoBehaviour
     int talkingTime = 0;
     Color KeyviAlpha;
 
-    //0 Normal, 1 Blush, 2 Shifty, 3 Derp, 4 Flustered Blush
+    //0 Normal, 1 Blush, 2 Shifty, 3 Derp, 4 Flustered Blush, 5 Squidward, 6 
     string[] message = 
         {"Hiya!  My name's Keyvi!", "You should probably be careful, the\nnext room has a Keyse in it.", "But you'll probably hit it using the\nRight Trigger or some tutorial garbage.",
          "Do you just not talk or...?", "I don't know you, get away from me!", "Don't make me call the Dungeon\nPolice.",

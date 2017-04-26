@@ -163,7 +163,7 @@ public class MageController : MonoBehaviour
 
         for (int i = 0; i < 3; i++)
         {
-            var missile = Instantiate(MageAttack, new Vector3(transform.position.x, transform.position.y + 0.5f, -2), Quaternion.identity);
+            var missile = Instantiate(MageAttack, new Vector3(transform.position.x, transform.position.y + 0.3f, -2), Quaternion.identity);
             missile.GetComponent<MageAttack>().MageX = transform.position.x;
             missile.GetComponent<MageAttack>().MageY = transform.position.y - 0.5f;
             yield return new WaitForSeconds(attackTime);

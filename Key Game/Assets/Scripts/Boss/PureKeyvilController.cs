@@ -94,7 +94,7 @@ public class PureKeyvilController : MonoBehaviour
             if (Health <= 20)
             {
                 Debug.Log("Phase Change");
-                StartCoroutine(PhaseChange());
+                //StartCoroutine(ChooseAttack());
                 phaseChangeCheck = true;
             }
         }

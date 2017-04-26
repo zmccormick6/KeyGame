@@ -13,6 +13,7 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGame()
     {
+        PlayerPrefs.SetInt("Level", 0);
         SceneManager.LoadScene(Game);
     }
 

@@ -18,7 +18,8 @@ public class LevelSwitch : MonoBehaviour
     private Vector2 upperPosition = new Vector2(0, 10);
     private Vector2 middlePosition = new Vector2(0, 0);
     private Vector2 lowerPosition = new Vector2(0, -10);
-    public int level = 0;
+    //public int level = 0;
+    int level;
     public bool pause = false;
 
     private bool movement = false;
@@ -34,6 +35,8 @@ public class LevelSwitch : MonoBehaviour
         LevelTransition.enabled = true;
         alpha.a = 0f;
         LevelTransition.color = alpha;
+        Debug.Log(PlayerPrefs.GetInt("Level"));
+        level = PlayerPrefs.GetInt("Level");
     }
 
     void FixedUpdate()
@@ -79,13 +82,6 @@ public class LevelSwitch : MonoBehaviour
         StartCoroutine(NextLevel());
     }
 
-    public void TryAgainLevel()
-    {
-        level--;
-
-        StartCoroutine(NextLevel());
-    }
-
     private IEnumerator NextLevel()
     {
         if (level == 0)
@@ -96,6 +92,7 @@ public class LevelSwitch : MonoBehaviour
         }
         else
         {
+            level = PlayerPrefs.GetInt("Level");
             pause = true;
             currentLevel = GameObject.FindGameObjectWithTag("Current");
             nextLevel = Instantiate(Levels[level], new Vector2(0, 10), Quaternion.identity);
@@ -108,6 +105,7 @@ public class LevelSwitch : MonoBehaviour
         }
 
         level++;
+        PlayerPrefs.SetInt("Level", level);
     }
     private IEnumerator LevelTransitionEffects()
     {

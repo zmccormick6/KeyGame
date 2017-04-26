@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TempPlayerController : MonoBehaviour
 {
@@ -319,7 +320,8 @@ public class TempPlayerController : MonoBehaviour
 
         if (Health <= 0)
         {
-            DeathScreen.SetActive(true);
+            Debug.Log(PlayerPrefs.GetInt("Level"));
+            SceneManager.LoadScene("GameOver");
         }
     }
 }

@@ -155,7 +155,7 @@ public class MageController : MonoBehaviour
 
         transform.position = new Vector3(moveX, moveY, -2);
         animator.SetInteger("Mage", 0);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.45f);
         animator.SetInteger("Mage", 1);
         DropShadow.SetActive(true);
         yield return new WaitForSeconds(1f + attackTime);
@@ -186,7 +186,7 @@ public class MageController : MonoBehaviour
         animator.SetInteger("Mage", 2);
         yield return new WaitForSeconds(1.5f);
         DropShadow.SetActive(false);
-        animator.SetInteger("Mage", 0);
+        //animator.SetInteger("Mage", 0);
         StartCoroutine(Spawn());
     }
 }

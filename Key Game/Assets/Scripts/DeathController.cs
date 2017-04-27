@@ -10,6 +10,7 @@ public class DeathController : MonoBehaviour
 
     public void TryAgain()
     {
+        GameObject.Find("Level").GetComponent<LevelHold>().Level--;
         SceneManager.LoadScene(LoadTryAgainLevel);
     }
 

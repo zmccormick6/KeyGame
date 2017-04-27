@@ -10,7 +10,7 @@ public class KeyviController : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            if (GameObject.Find("Game Manager").GetComponent<DoorSpawn>().enemyCount <= 0)
+            if (GameObject.Find("Game Manager").GetComponent<DoorSpawn>().enemyCount <= 0 || GameObject.Find("Level").GetComponent<LevelHold>().Level == 7)
             {
                 inRange = true;
                 GameObject.Find("Game Manager").GetComponent<TextController>().InGameKeyvi = GameObject.Find("Keyvi");

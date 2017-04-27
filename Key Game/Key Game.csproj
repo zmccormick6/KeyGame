@@ -92,6 +92,7 @@
     <Compile Include="Assets\Scripts\HealthPotion.cs" />
     <Compile Include="Assets\Scripts\InWater.cs" />
     <Compile Include="Assets\Scripts\KeyviController.cs" />
+    <Compile Include="Assets\Scripts\LevelHold.cs" />
     <Compile Include="Assets\Scripts\LevelSwitch.cs" />
     <Compile Include="Assets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\Scripts\MenuCursor.cs" />

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class TextController : MonoBehaviour
 {
     [SerializeField] private GameObject MessageHolder;
+    [SerializeField] private Text SpeakingName;
     [SerializeField] private Text DisplayMessage;
     [SerializeField] private GameObject NextButton;
     [SerializeField] private GameObject EndButton;
@@ -17,6 +18,7 @@ public class TextController : MonoBehaviour
 
     public GameObject InGameKeyvi;
     public bool talkingDone = false;
+    public int startEncounter = 0;
 
     Vector2 KeyviPosition, WhereToGo;
     private Animator KeyviAnim;
@@ -116,28 +118,55 @@ public class TextController : MonoBehaviour
 
         GameObject.Find("Music").GetComponent<AudioSource>().volume = 0.2f;
 
-        for (int i = 0; i < message[counter].Length; i++)
+        if (GameObject.Find("Level").GetComponent<LevelHold>().Level != 7)
         {
-            speedUp = true;
+            for (int i = 0; i < message[counter].Length; i++)
+            {
+                speedUp = true;
 
-            DisplayMessage.text += message[counter][i];
+                DisplayMessage.text += message[counter][i];
 
-            OneTyping.Play();
-            if (message[counter][i] == '.')
-                yield return new WaitForSeconds(dots);
-            else
-                yield return new WaitForSeconds(text);
+                OneTyping.Play();
+                if (message[counter][i] == '.')
+                    yield return new WaitForSeconds(dots);
+                else
+                    yield return new WaitForSeconds(text);
+            }
+        }
+        else
+        {
+            if (startEncounter >= 1)
+            {
+                DisplayMessage.color = Color.red;
+                SpeakingName.text = "Envi";
+                SpeakingName.color = Color.red;
+            }
+
+            for (int i = 0; i < message[counter].Length; i++)
+            {
+                speedUp = true;
+
+                DisplayMessage.text += message[counter][i];
+
+                OneTyping.Play();
+                if (message[counter][i] == '.')
+                    yield return new WaitForSeconds(dots);
+                else
+                    yield return new WaitForSeconds(text);
+            }
+            startEncounter++;
+            GameObject.Find("Pure Keyvil").GetComponent<PureKeyvilController>().MoveToCenter();
+        }
+
+        if (startEncounter >= 3)
+        {
+            GameObject.Find("Pure Keyvil").GetComponent<PureKeyvilController>().StartPhaseOne();
         }
 
         GetComponent<TextController>().counter++;
         GameObject.Find("Keyvi").GetComponent<KeyviController>().stop = false;
 
-        if (counter % 3 == 0)
-        {
-            NextButton.SetActive(true);
-        }
-        else
-            EndButton.SetActive(true);
+        NextButton.SetActive(true);
 
         talking = false;
         talkingTime++;

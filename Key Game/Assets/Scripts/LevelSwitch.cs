@@ -35,8 +35,7 @@ public class LevelSwitch : MonoBehaviour
         LevelTransition.enabled = true;
         alpha.a = 0f;
         LevelTransition.color = alpha;
-        Debug.Log(PlayerPrefs.GetInt("Level"));
-        level = PlayerPrefs.GetInt("Level");
+        level = GameObject.Find("Level").GetComponent<LevelHold>().Level;
     }
 
     void FixedUpdate()
@@ -86,16 +85,18 @@ public class LevelSwitch : MonoBehaviour
     {
         if (level == 0)
         {
-            currentLevel = Instantiate(Levels[level], new Vector2(0, 0), Quaternion.identity);
+            currentLevel = Instantiate(Levels[GameObject.Find("Level").GetComponent<LevelHold>().Level], new Vector2(0, 0), Quaternion.identity);
+            //currentLevel = Instantiate(Levels[6], new Vector2(0, 0), Quaternion.identity);
             currentLevel.transform.SetSiblingIndex(3);
             currentLevel.tag = "Current";
         }
         else
         {
-            level = PlayerPrefs.GetInt("Level");
+            //level = PlayerPrefs.GetInt("Level");
             pause = true;
             currentLevel = GameObject.FindGameObjectWithTag("Current");
-            nextLevel = Instantiate(Levels[level], new Vector2(0, 10), Quaternion.identity);
+            //nextLevel = Instantiate(Levels[level], new Vector2(0, 10), Quaternion.identity);
+            nextLevel = Instantiate(Levels[GameObject.Find("Level").GetComponent<LevelHold>().Level], new Vector2(0, 10), Quaternion.identity);
             nextLevel.transform.SetSiblingIndex(3);
             nextLevel.tag = "Next";
 
@@ -104,8 +105,8 @@ public class LevelSwitch : MonoBehaviour
             pause = false;
         }
 
-        level++;
-        PlayerPrefs.SetInt("Level", level);
+        level = GameObject.Find("Level").GetComponent<LevelHold>().Level++;
+        //PlayerPrefs.SetInt("Level", level);
     }
     private IEnumerator LevelTransitionEffects()
     {

@@ -8,6 +8,8 @@ public class PureKeyvilController : MonoBehaviour
     [SerializeField] private GameObject SecondBossAttack;
     [SerializeField] private GameObject ThirdBossAttack;
     [SerializeField] private GameObject Player;
+    [SerializeField] private GameObject Keese;
+    [SerializeField] private GameObject Mage;
     [SerializeField] private Collider2D BossCollider;
 
     GameObject GameManager;
@@ -31,9 +33,10 @@ public class PureKeyvilController : MonoBehaviour
     Vector2 Middle = new Vector2(0, -1.5f);
 
     public bool attackThree = false;
+    public int temp = 7;
 
     bool phaseChangeCheck = false, sharedHealth = false;
-    int temp = 7, lastTemp, attackChoose, lastChoice;
+    int lastTemp, attackChoose, lastChoice;
     float attackSwitch = 3f;
 
     void Start()
@@ -46,7 +49,8 @@ public class PureKeyvilController : MonoBehaviour
         GameManager = GameObject.Find("Game Manager");
 
         AttackSound = GameObject.Find("Attack").GetComponent<AudioSource>();
-        StartCoroutine(ChooseAttack());
+        //StartCoroutine(PhaseOne());
+        //StartCoroutine(ChooseAttack());
     }
 
     void FixedUpdate()
@@ -85,16 +89,16 @@ public class PureKeyvilController : MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, MiddleLeft, 0.1f);
         }
         else if (temp == 6)
-        {
+       {
             transform.position = Vector2.MoveTowards(transform.position, MiddleRight, 0.1f);
         }
 
         if (phaseChangeCheck == false)
         {
-            if (Health <= 20)
+            if (GameManager.GetComponent<DoorSpawn>().enemyCount <= 0)
             {
-                Debug.Log("Phase Change");
-                //StartCoroutine(ChooseAttack());
+                GameManager.GetComponent<LevelSwitch>().pause = true;
+                StartCoroutine(PhaseChange());
                 phaseChangeCheck = true;
             }
         }
@@ -128,6 +132,11 @@ public class PureKeyvilController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void MoveToCenter()
+    {
+        temp = 4;
     }
 
     public void PureKeyvilHealth()
@@ -186,6 +195,37 @@ public class PureKeyvilController : MonoBehaviour
     public void ChooseAttackPublic()
     {
         StartCoroutine(ChooseAttack());
+    }
+
+    public void StartPhaseOne()
+    {
+        StartCoroutine(PhaseOne());
+    }
+
+    public IEnumerator PhaseOne()
+    {
+        yield return new WaitForSeconds(2f);
+
+        for (int i = 0; i < 3; i++)
+        {
+            Instantiate(Keese, new Vector2(-7, 7), Quaternion.identity);
+            yield return new WaitForSeconds(2f);
+            Instantiate(Keese, new Vector2(7, 7), Quaternion.identity);
+            yield return new WaitForSeconds(4f);
+        }
+
+        Instantiate(Mage, new Vector2(-30, 0), Quaternion.identity);
+    }
+
+    private IEnumerator PhaseChange()
+    {
+        temp = 4;
+
+        yield return new WaitForSeconds(5);
+        //Talking
+        //Change Form
+        StartCoroutine(ChooseAttack());
+        GameManager.GetComponent<LevelSwitch>().pause = false;
     }
 
     private IEnumerator ChooseAttack()
@@ -282,16 +322,5 @@ public class PureKeyvilController : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         StartCoroutine(ChooseAttack());
-    }
-
-    private IEnumerator PhaseChange()
-    {
-        yield return new WaitForSeconds(1f);
-
-        StopAllCoroutines();
-        tempSprite.enabled = true;
-        tempSprite.color = new Color(1f, 1f, 1f, 1f);
-
-        temp = 4;
     }
 }

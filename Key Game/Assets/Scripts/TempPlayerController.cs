@@ -8,6 +8,7 @@ public class TempPlayerController : MonoBehaviour
     [SerializeField] private GameObject GameManager;
     [SerializeField] private AnimationClip Dodge;
     [SerializeField] private GameObject DeathScreen;
+    [SerializeField] private AudioSource Swing;
 
     AudioSource Damage;
 
@@ -103,6 +104,7 @@ public class TempPlayerController : MonoBehaviour
             }
         }
 
+
         if (other.tag == "Door")
         {
             GameManager.GetComponent<DoorSpawn>().CurrentDoor.GetComponent<Collider2D>().enabled = false;
@@ -145,6 +147,9 @@ public class TempPlayerController : MonoBehaviour
         if (anim.GetInteger("Swing") == 1)
         {
             StartCoroutine(SwingStop());
+
+            if  (!Swing.isPlaying)
+                Swing.Play();
         }
 
         if (anim.GetInteger("Dodge") == 1)
@@ -323,12 +328,13 @@ public class TempPlayerController : MonoBehaviour
         //transform.position = _centre + offset;
         GetComponent<TempPlayerController>().Speed = 15;
         //GetComponent<TempPlayerController>().Speed = 40;
-        yield return new WaitForSeconds(0.15f);
+        yield return new WaitForSeconds(0.25f);
         GetComponent<TempPlayerController>().Speed = 4;
     }
 
     public void AddHealth()
     {
+        GameObject.Find("HealthSound").GetComponent<AudioSource>().Play(); ;
         Heart.SetInteger("Heart", Health);
     }
 

@@ -28,7 +28,7 @@ public class TextController : MonoBehaviour
     //0 Normal, 1 Blush, 2 Shifty, 3 Derp, 4 Flustered Blush, 5 Squidward, 6 
     string[] message = 
         {"Hiya! My name's Keyvi!\nI'm important!", "My evil twin brother Envi has taken\nover the dungeon.", "You can hit stuff by pressing the\n'X' button. Follow me!",
-         "Well, that was Key-z!", "If you actually took damage from the\nfirst enemy in this game...there's a\nhealth container over there.", "Press the 'B' button while moving to\ndash over to it, or whatever.",
+         "Well, that was Key-z!", "If you somehow managed to take damage...\nthere's a health container over there.", "Press the 'B' button while moving to\ndash over to it, or whatever.",
          "Walking through water will slow you\ndown.", "My brothers' diaries are guarding\nthe way up ahead.", "To reflect the angst, hit its attacks\nwith your key...sword?",
          "Where did you get that key..\nsaber anyway?", "It's quite large...", "Have him call me once this is over.\nK?",
          "Have you ever been inside a lock\nbefore...?", "You could say that I've been tumbled\na few times.", "Why are you giving me that look?\nIt's just a key thing!",

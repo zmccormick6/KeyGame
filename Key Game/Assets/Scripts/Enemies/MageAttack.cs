@@ -7,6 +7,8 @@ public class MageAttack : MonoBehaviour
     GameObject Player;
     Collider2D SwordHitbox;
 
+    AudioSource Explosion;
+
     Vector2 CurrentPosition, PlayerPosition, StartPosition, ReversePosition;
 
     public float MageX, MageY;
@@ -18,6 +20,8 @@ public class MageAttack : MonoBehaviour
         Player = GameObject.Find("TempPlayer");
         PlayerPosition =  new Vector3(Player.transform.position.x, Player.transform.position.y, -2);
         StartPosition = new Vector3(transform.position.x, transform.position.y, -2);
+
+        Explosion = GameObject.Find("ExplosionSound").GetComponent<AudioSource>();
 
         SwordHitbox = Player.GetComponents<Collider2D>()[0];
 
@@ -35,6 +39,7 @@ public class MageAttack : MonoBehaviour
         {
             if (other.tag == "Player")
             {
+                Explosion.Play();
                 Destroy(gameObject);
             }
         }
@@ -54,10 +59,12 @@ public class MageAttack : MonoBehaviour
 
             if (CurrentPosition == PlayerPosition)
             {
+                Explosion.Play();
                 Destroy(gameObject);
             }
             else if (CurrentPosition == ReversePosition)
             {
+                Explosion.Play();
                 Destroy(gameObject);
             }
         }
@@ -72,6 +79,7 @@ public class MageAttack : MonoBehaviour
     private IEnumerator Destroy()
     {
         yield return new WaitForSeconds(4f);
+        Explosion.Play();
         Destroy(gameObject);
     }
 }

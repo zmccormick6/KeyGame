@@ -78,6 +78,7 @@
     <Compile Include="Assets\Scripts\Audio\ExplosionSound.cs" />
     <Compile Include="Assets\Scripts\Audio\HealthSound.cs" />
     <Compile Include="Assets\Scripts\Boss\BossAttack.cs" />
+    <Compile Include="Assets\Scripts\Boss\PhaseOneBoss.cs" />
     <Compile Include="Assets\Scripts\Boss\PureKeyvilController.cs" />
     <Compile Include="Assets\Scripts\Boss\SecondBossAttack.cs" />
     <Compile Include="Assets\Scripts\Boss\ThirdBossAttack.cs" />

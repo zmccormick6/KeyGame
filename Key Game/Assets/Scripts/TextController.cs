@@ -31,7 +31,7 @@ public class TextController : MonoBehaviour
     string[] message = 
         {"Hiya! My name's Keyvi!\nI'm important!", "My evil twin brother Envi has taken\nover the dungeon.", "You can hit stuff by pressing the\n'X' button. Follow me!",
          "Well, that was Key-z!", "If you somehow managed to take damage...\nthere's a health container over there.", "Press the 'B' button while moving to\ndash over to it, or whatever.",
-         "Walking through water will slow you\ndown.", "My brothers' diaries are guarding\nthe way up ahead.", "To reflect the angst, hit its attacks\nwith your key...sword?",
+         "Walking through water will slow you\ndown.", "My brothers' diaries are guarding\nthe way up ahead.", "To reflect the magic, hit its attacks\nwith your key...sword?",
          "Where did you get that key..\nsaber anyway?", "It's quite large...", "Have him call me once this is over.\nK?",
          "Have you ever been inside a lock\nbefore...?", "You could say that I've been tumbled\na few times.", "Why are you giving me that look?\nIt's just a key thing!",
          "My brothers' room is up ahead, I can\nsense the keyruption from here.", "Low key, he gets real mad when under\nhalf health.", "Hope you don't die! :).",

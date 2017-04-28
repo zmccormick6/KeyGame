@@ -89,7 +89,7 @@ public class TempPlayerController : MonoBehaviour
         {
             if (other != PlayerHitbox)
             {
-                if (other.tag != "Door" && other.tag != "Keyvi" && other.tag != "Obstacle" && other.tag != "Water" && other.tag != "Health")
+                if (other.tag != "Door" && other.tag != "Keyvi" && other.tag != "Obstacle" && other.tag != "Water" && other.tag != "Health" && other.gameObject.name != "Pure Keyvil")
                 {
                     Damage.Play();
                     PlayerHealth();
@@ -313,7 +313,8 @@ public class TempPlayerController : MonoBehaviour
 
     private IEnumerator DodgeMovementIncrease()
     {
-        yield return new WaitForSeconds(0.4f);
+        anim.SetInteger("Dodge", 1);
+        yield return new WaitForSeconds(0.1f);
         /*anglex = Input.GetAxisRaw("Horizontal");
         angley = Input.GetAxisRaw("Vertical");
     

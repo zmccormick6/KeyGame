@@ -36,8 +36,16 @@ public class DoorSpawn : MonoBehaviour
         {
             if (GameObject.Find("Game Manager").GetComponent<TextController>().talkingDone == true)
             {
-                CurrentDoor.GetComponent<Collider2D>().enabled = true;
-                CurrentDoor.GetComponent<Animator>().SetInteger("DoorOpen", 1);
+                if (GameObject.Find("Level").GetComponent<LevelHold>().Level != 7)
+                {
+                    CurrentDoor.GetComponent<Collider2D>().enabled = true;
+                    CurrentDoor.GetComponent<Animator>().SetInteger("DoorOpen", 1);
+                }
+                else
+                {
+                    Debug.Log("Stuff");
+                    GameObject.Find("Pure Keyvil").GetComponent<PureKeyvilController>().ChooseAttackPublic();
+                }
 
                 GameObject.Find("Game Manager").GetComponent<TextController>().talkingDone = false;
             }

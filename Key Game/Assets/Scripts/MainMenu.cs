@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] private GameObject PlayPointer;
     [SerializeField] private string Game;
+    [SerializeField] private GameObject CreditScreen;
 
     AsyncOperation async;
 
@@ -20,6 +21,16 @@ public class MainMenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void OpenCredits()
+    {
+        CreditScreen.SetActive(true);
+    }
+
+    public void CloseCredits()
+    {
+        CreditScreen.SetActive(false);
     }
 
     void Start()

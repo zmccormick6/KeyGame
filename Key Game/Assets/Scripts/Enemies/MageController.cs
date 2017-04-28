@@ -34,6 +34,7 @@ public class MageController : MonoBehaviour
         AttackSound = GameObject.Find("Attack").GetComponent<AudioSource>();
 
         attackTime = Random.Range(1f, 1.5f);
+
         StartCoroutine(StartSpawn());
 
         MageCollider.enabled = false;
@@ -76,9 +77,11 @@ public class MageController : MonoBehaviour
                     transform.position = new Vector2(CurrentPosition.x, CurrentPosition.y - 0.25f);
                 }
             }
+            else
+                return;
         }
 
-        if (other.tag != "Enemy" && other.tag != "Wall" && other.tag != "Keyvi" && other.tag != "Obstacle" && other.tag != "Water" && other.tag != "MageAttack")
+        if (other.tag != "Enemy" && other.tag != "Wall" && other.tag != "Keyvi" && other.tag != "Obstacle" && other.tag != "Water" && other.tag != "MageAttack"  && other.gameObject.name != "Pure Keyvil")
         {
             if (other.tag != "Hitbox")
             {
@@ -158,7 +161,7 @@ public class MageController : MonoBehaviour
         yield return new WaitForSeconds(1.45f);
         animator.SetInteger("Mage", 1);
         DropShadow.SetActive(true);
-        yield return new WaitForSeconds(1f + attackTime);
+        yield return new WaitForSeconds(attackTime);
         attackCount = 0;
 
         for (int i = 0; i < 3; i++)

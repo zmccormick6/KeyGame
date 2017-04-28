@@ -252,6 +252,7 @@ public class PureKeyvilController : MonoBehaviour
     private IEnumerator PhaseChange()
     {
         temp = 4;
+        GetComponent<Animator>().SetInteger("PhaseChange", 2);
         yield return new WaitForSeconds(2f);
 
         //Talking

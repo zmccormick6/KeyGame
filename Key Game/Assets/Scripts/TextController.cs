@@ -72,7 +72,7 @@ public class TextController : MonoBehaviour
 
             KeyviAlpha.a -= Time.deltaTime / 1.25f;
             GameObject.Find("Keyvi").GetComponent<SpriteRenderer>().color = KeyviAlpha;
-            aButton.GetComponent<SpriteRenderer>().color = KeyviAlpha;
+            //aButton.GetComponent<SpriteRenderer>().color = KeyviAlpha;
         }
 
         if (GameObject.Find("Keyvi").GetComponent<KeyviController>().inRange == true)
@@ -123,8 +123,9 @@ public class TextController : MonoBehaviour
         if (transition == true)
         {
             float tempX = Keyvil.transform.position.x + 20f;
+            float center = Screen.width / 2;
 
-            if (Keyvil.transform.position.x <= 280)
+            if (Keyvil.transform.position.x <= center)
             {
                 Keyvil.transform.position = new Vector2(tempX, Keyvi.transform.position.y);
             }
@@ -218,6 +219,7 @@ public class TextController : MonoBehaviour
     private IEnumerator MoveKeyvi()
     {
         GameObject.Find("Keyvi").GetComponent<Collider2D>().enabled = false;
+        GameObject.Find("Keyvi").GetComponent<KeyviController>().AButtonOff();
         yield return new WaitForSeconds(0.75f);
         KeyviAlpha = GameObject.Find("Keyvi").GetComponent<SpriteRenderer>().color;
         startTime = Time.time;

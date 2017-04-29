@@ -5,6 +5,7 @@ using UnityEngine;
 public class KeyviController : MonoBehaviour
 {
     public bool stop = false, inRange = false;
+    [SerializeField] private GameObject AButton;
 
     void OnTriggerStay2D(Collider2D other)
     {
@@ -17,12 +18,24 @@ public class KeyviController : MonoBehaviour
             }
         }
         else
+        {
             inRange = false;
+        }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
         inRange = false;
+    }
+
+    public void AButtoOn()
+    {
+        AButton.SetActive(true);
+    }
+
+    public void AButtonOff()
+    {
+        AButton.SetActive(false);
     }
 
     public void Talking()

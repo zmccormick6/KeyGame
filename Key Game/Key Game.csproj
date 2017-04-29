@@ -82,6 +82,7 @@
     <Compile Include="Assets\Scripts\Boss\PureKeyvilController.cs" />
     <Compile Include="Assets\Scripts\Boss\SecondBossAttack.cs" />
     <Compile Include="Assets\Scripts\Boss\ThirdBossAttack.cs" />
+    <Compile Include="Assets\Scripts\CameraShake.cs" />
     <Compile Include="Assets\Scripts\ColliderDisable.cs" />
     <Compile Include="Assets\Scripts\DeathController.cs" />
     <Compile Include="Assets\Scripts\DoorIdentification.cs" />

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 4d2e42b81531a8045a53a89273b2d171
-timeCreated: 1493271141
+guid: 1ca2ffaf530f27a4780260cc5bd6147f
+timeCreated: 1493500272
 licenseType: Free
 TrueTypeFontImporter:
   serializedVersion: 4
@@ -9,9 +9,9 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: Karma Suture
+  fontName: Small Pixel7
   fontNames:
-  - Karma Suture
+  - Small Pixel7
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

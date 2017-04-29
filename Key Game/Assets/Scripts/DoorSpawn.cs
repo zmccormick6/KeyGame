@@ -34,6 +34,8 @@ public class DoorSpawn : MonoBehaviour
 
         if (enemyCount <= 0)
         {
+            GameObject.Find("Keyvi").GetComponent<KeyviController>().AButtoOn();
+
             if (GameObject.Find("Game Manager").GetComponent<TextController>().talkingDone == true)
             {
                 if (GameObject.Find("Level").GetComponent<LevelHold>().Level != 7)
@@ -47,6 +49,7 @@ public class DoorSpawn : MonoBehaviour
                     //GameObject.Find("Pure Keyvil").GetComponent<PureKeyvilController>().ChooseAttackPublic();
                 }
 
+                GameObject.Find("Keyvi").GetComponent<KeyviController>().AButtonOff();
                 GameObject.Find("Game Manager").GetComponent<TextController>().talkingDone = false;
             }
         }

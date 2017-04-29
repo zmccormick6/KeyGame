@@ -16,6 +16,7 @@ public class DeathController : MonoBehaviour
 
     public void MainMenu()
     {
+        GameObject.Find("Level").GetComponent<LevelHold>().Level = 0;
         SceneManager.LoadScene(LoadMainMenu);
     }
 }

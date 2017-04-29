@@ -38,9 +38,9 @@ public class PureKeyvilController : MonoBehaviour
     public bool attackThree = false;
     public int temp = 7;
 
-    bool phaseChangeCheck = false, sharedHealth = false, startTimer = false, once = false;
+    bool phaseChangeCheck = false, sharedHealth = false, startTimer = false, once = false, phaseTwo = false;
     int lastTemp, attackChoose, lastChoice;
-    float attackSwitch = 3f, moveX = 0, moveY = 0, currentTime = 5f;
+    float attackSwitch = 2f, moveX = 0, moveY = 0, currentTime = 3f;
 
     void Start()
     {
@@ -69,38 +69,52 @@ public class PureKeyvilController : MonoBehaviour
 
         if (temp == 0)
         {
-            //StartCoroutine(Teleport(TopLeft));
-            transform.position = Vector2.MoveTowards(transform.position, TopLeft, 0.2f);
+            if (phaseTwo == true)
+                StartCoroutine(Teleport(TopLeft));
+            else
+                transform.position = Vector2.MoveTowards(transform.position, TopLeft, 0.2f);
         }
         else if (temp == 1)
         {
-            //StartCoroutine(Teleport(TopRight));
-            transform.position = Vector2.MoveTowards(transform.position, TopRight, 0.2f);
+            if (phaseTwo == true)
+                StartCoroutine(Teleport(TopRight));
+            else
+                transform.position = Vector2.MoveTowards(transform.position, TopRight, 0.2f);
         }
         else if (temp == 2)
         {
-            //StartCoroutine(Teleport(BottomRight));
-            transform.position = Vector2.MoveTowards(transform.position, BottomRight, 0.2f);
+            if (phaseTwo == true)
+                StartCoroutine(Teleport(BottomRight));
+            else
+                transform.position = Vector2.MoveTowards(transform.position, BottomRight, 0.2f);
         }
         else if (temp == 3)
         {
-            //StartCoroutine(Teleport(BottomLeft));
-            transform.position = Vector2.MoveTowards(transform.position, BottomLeft, 0.2f);
+            if (phaseTwo == true)
+                StartCoroutine(Teleport(BottomLeft));
+            else
+                transform.position = Vector2.MoveTowards(transform.position, BottomLeft, 0.2f);
         }
         else if (temp == 4)
         {
-            //StartCoroutine(Teleport(Middle));
-            transform.position = Vector2.MoveTowards(transform.position, Middle, 0.2f);
+            if (phaseTwo == true)
+                StartCoroutine(Teleport(Middle));
+            else
+                transform.position = Vector2.MoveTowards(transform.position, Middle, 0.2f);
         }
         else if (temp == 5)
         {
-            //StartCoroutine(Teleport(MiddleLeft));
-            transform.position = Vector2.MoveTowards(transform.position, MiddleLeft, 0.2f);
+            if (phaseTwo == true)
+                StartCoroutine(Teleport(MiddleLeft));
+            else
+                transform.position = Vector2.MoveTowards(transform.position, MiddleLeft, 0.2f);
         }
         else if (temp == 6)
        {
-            //StartCoroutine(Teleport(MiddleRight));
-            transform.position = Vector2.MoveTowards(transform.position, MiddleRight, 0.2f);
+            if (phaseTwo == true)
+                StartCoroutine(Teleport(MiddleRight));
+            else
+                transform.position = Vector2.MoveTowards(transform.position, MiddleRight, 0.2f);
         }
 
         if (startTimer == true)
@@ -264,9 +278,9 @@ public class PureKeyvilController : MonoBehaviour
         for (int i = 0; i < 50; i++)
         {
             Instantiate(Keese, new Vector2(-10, 0), Quaternion.identity);
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(6f);
             Instantiate(Keese, new Vector2(10, 0), Quaternion.identity);
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(6f);
             Instantiate(Mage, new Vector2(-30, 0), Quaternion.identity);
         }
 
@@ -284,7 +298,7 @@ public class PureKeyvilController : MonoBehaviour
         if (currentTime <= 0)
         {
             ChangePositions();
-            currentTime = 5f;
+            currentTime = 3f;
         }
     }
 
@@ -306,10 +320,37 @@ public class PureKeyvilController : MonoBehaviour
         temp = 4;
         GetComponent<Animator>().SetInteger("PhaseChange", 2);
         GameManager.GetComponent<LevelSwitch>().pause = true;
+        StartCoroutine(MovePlayer());
+        GameObject.Find("Main Camera").GetComponent<CameraShake>().ShakeCameraBoss();
         yield return new WaitForSeconds(5f);
         GameManager.GetComponent<LevelSwitch>().pause = false;
         gameObject.GetComponent<Collider2D>().enabled = true;
+        phaseTwo = true;
         StartCoroutine(ChooseAttack());
+    }
+
+    private IEnumerator MovePlayer()
+    {
+        Player.GetComponent<SpriteRenderer>().enabled = true;
+        float elapsed = 0.0f;
+
+        while (elapsed < 2)
+        {
+            elapsed += Time.deltaTime;
+
+            Player.transform.position = Vector2.MoveTowards(Player.transform.position, new Vector2(0, -1.5f), -0.015f);
+
+            if (Player.transform.position.x > 6.5f)
+                break;
+            if (Player.transform.position.x < -6.5f)
+                break;
+            if (Player.transform.position.y > 0f)
+                break;
+            if (Player.transform.position.y < -4f)
+                break;
+        }
+
+        yield return null;
     }
 
     private IEnumerator ChooseAttack()
@@ -386,7 +427,7 @@ public class PureKeyvilController : MonoBehaviour
             }
 
             Missile.GetComponent<SecondBossAttack>().Direction(temp);
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1f);
 
             //Blink.SetActive(false);
         }

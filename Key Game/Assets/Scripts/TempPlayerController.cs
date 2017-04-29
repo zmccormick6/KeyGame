@@ -100,6 +100,8 @@ public class TempPlayerController : MonoBehaviour
                     {
                         other.gameObject.GetComponent<KeeseController>().RunHitPlayer();
                     }
+
+                    GameObject.Find("Main Camera").GetComponent<CameraShake>().ShakeCamera();
                 }
             }
         }

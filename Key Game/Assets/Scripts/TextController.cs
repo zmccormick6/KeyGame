@@ -17,30 +17,33 @@ public class TextController : MonoBehaviour
     GameObject aButton;
 
     public GameObject InGameKeyvi;
-    public bool talkingDone = false;
+    public GameObject Keyvil;
+    public bool talkingDone = false, bossTalk = false;
     public int startEncounter = 0;
 
     Vector2 KeyviPosition, WhereToGo;
     private Animator KeyviAnim;
-    bool move = false, talking = false, speedUp = false;
+    bool move = false, talking = false, speedUp = false, transition = false;
     float startTime, dots, text;
     int talkingTime = 0;
     Color KeyviAlpha;
 
     //0 Normal, 1 Blush, 2 Shifty, 3 Derp, 4 Flustered Blush, 5 Squidward, 6 
     string[] message = 
-        {"Hiya! My name's Keyvi!\nI'm important!", "My evil twin brother Envi has taken\nover the dungeon.", "You can hit stuff by pressing the\n'X' button. Follow me!",
+        {"Hiya! My name's Keyvi!\nI'm important!", "My evil twin brother Keyvil has taken\nover the dungeon.", "You can hit stuff by pressing the\n'X' button. Follow me!",
          "Well, that was Key-z!", "If you somehow managed to take damage...\nthere's a health container over there.", "Press the 'B' button while moving to\ndash over to it, or whatever.",
          "Walking through water will slow you\ndown.", "My brothers' diaries are guarding\nthe way up ahead.", "To reflect the magic, hit its attacks\nwith your key...sword?",
          "Where did you get that key..\nsaber anyway?", "It's quite large...", "Have him call me once this is over.\nK?",
          "Have you ever been inside a lock\nbefore...?", "You could say that I've been tumbled\na few times.", "Why are you giving me that look?\nIt's just a key thing!",
          "My brothers' room is up ahead, I can\nsense the keyruption from here.", "Low key, he gets real mad when under\nhalf health.", "Hope you don't die! :).",
-         "Oh, guess he's not here?", "Good Keevening...", "Don't you Envi my power!?"};
+         "Oh, guess he's not here?", "Good Keevening...", "Someone so weak is foolish to fight me in my own domain!",
+         "Hmph...", "It seems as though you may be worth\nmy time after all!", "I haven't used this form in years..."};
     int[] emotion = {0, 2, 0,
                      3, 0, 0,
                      3, 0, 2, 
                      2, 4, 1,
                      4, 0, 1,
+                     0, 0, 0,
                      0, 0, 0,
                      0, 0, 0};
     int counter = 0;
@@ -52,6 +55,10 @@ public class TextController : MonoBehaviour
 
         dots = 0.5f;
         text = 0.05f;
+
+        counter = GameObject.Find("Level").GetComponent<LevelHold>().Level;
+        counter--;
+        counter = counter * 3;
     }
 
     void FixedUpdate()
@@ -99,6 +106,21 @@ public class TextController : MonoBehaviour
                 text = 0.05f;
             }
         }
+
+        Debug.Log(Keyvi.transform.position + ", " + Keyvil.GetComponent<RectTransform>().transform.position);
+        //Keyvi.transform.position = new Vector2(0, 0);
+
+        if (transition == true)
+        {
+            float tempX = Keyvil.transform.position.x + 20f;
+
+            if (Keyvil.transform.position.x <= 280)
+            {
+                Keyvil.transform.position = new Vector2(tempX, Keyvi.transform.position.y);
+            }
+            else //(Keyvil.transform.position.x >= Keyvi.transform.position.x)
+                Keyvi.transform.position = new Vector2(Keyvi.transform.position.x + 40, Keyvi.transform.position.y);
+        }
     }
 
     public void StartTalking()
@@ -138,8 +160,10 @@ public class TextController : MonoBehaviour
             if (startEncounter >= 1)
             {
                 DisplayMessage.color = Color.red;
-                SpeakingName.text = "Envi";
+                SpeakingName.text = "Keyvil";
                 SpeakingName.color = Color.red;
+
+                transition = true;
             }
 
             for (int i = 0; i < message[counter].Length; i++)
@@ -155,8 +179,9 @@ public class TextController : MonoBehaviour
                     yield return new WaitForSeconds(text);
             }
             startEncounter++;
-            GameObject.Find("Pure Keyvil").GetComponent<PureKeyvilController>().MoveToCenter();
         }
+
+        GameObject.Find("Pure Keyvil").GetComponent<PureKeyvilController>().MoveToCenter();
 
         if (startEncounter >= 3)
         {

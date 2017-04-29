@@ -69,38 +69,38 @@ public class PureKeyvilController : MonoBehaviour
 
         if (temp == 0)
         {
-            StartCoroutine(Teleport(TopLeft));
-            //transform.position = Vector2.MoveTowards(transform.position, TopLeft, 0.2f);
+            //StartCoroutine(Teleport(TopLeft));
+            transform.position = Vector2.MoveTowards(transform.position, TopLeft, 0.2f);
         }
         else if (temp == 1)
         {
-            StartCoroutine(Teleport(TopRight));
-            //transform.position = Vector2.MoveTowards(transform.position, TopRight, 0.2f);
+            //StartCoroutine(Teleport(TopRight));
+            transform.position = Vector2.MoveTowards(transform.position, TopRight, 0.2f);
         }
         else if (temp == 2)
         {
-            StartCoroutine(Teleport(BottomRight));
-            //transform.position = Vector2.MoveTowards(transform.position, BottomRight, 0.2f);
+            //StartCoroutine(Teleport(BottomRight));
+            transform.position = Vector2.MoveTowards(transform.position, BottomRight, 0.2f);
         }
         else if (temp == 3)
         {
-            StartCoroutine(Teleport(BottomLeft));
-            //transform.position = Vector2.MoveTowards(transform.position, BottomLeft, 0.2f);
+            //StartCoroutine(Teleport(BottomLeft));
+            transform.position = Vector2.MoveTowards(transform.position, BottomLeft, 0.2f);
         }
         else if (temp == 4)
         {
-            StartCoroutine(Teleport(Middle));
-            //transform.position = Vector2.MoveTowards(transform.position, Middle, 0.2f);
+            //StartCoroutine(Teleport(Middle));
+            transform.position = Vector2.MoveTowards(transform.position, Middle, 0.2f);
         }
         else if (temp == 5)
         {
-            StartCoroutine(Teleport(MiddleLeft));
-            //transform.position = Vector2.MoveTowards(transform.position, MiddleLeft, 0.2f);
+            //StartCoroutine(Teleport(MiddleLeft));
+            transform.position = Vector2.MoveTowards(transform.position, MiddleLeft, 0.2f);
         }
         else if (temp == 6)
        {
-            StartCoroutine(Teleport(MiddleRight));
-            //transform.position = Vector2.MoveTowards(transform.position, MiddleRight, 0.2f);
+            //StartCoroutine(Teleport(MiddleRight));
+            transform.position = Vector2.MoveTowards(transform.position, MiddleRight, 0.2f);
         }
 
         if (Health <= 0)
@@ -108,8 +108,11 @@ public class PureKeyvilController : MonoBehaviour
             CurrentDoor.GetComponent<Animator>().SetInteger("DoorOpen", 1);
             Destroy(gameObject);
         }
+    }
 
-        Debug.Log(temp);
+    private IEnumerator OneMove()
+    {
+        yield return new WaitForSeconds();
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -251,14 +254,15 @@ public class PureKeyvilController : MonoBehaviour
 
     private IEnumerator PhaseChange()
     {
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
         temp = 4;
         GetComponent<Animator>().SetInteger("PhaseChange", 2);
-        yield return new WaitForSeconds(2f);
-
+        GameManager.GetComponent<LevelSwitch>().pause = true;
+        yield return new WaitForSeconds(5f);
+        GameManager.GetComponent<LevelSwitch>().pause = false;
         //Talking
         //Change Form
         gameObject.GetComponent<Collider2D>().enabled = true;
-        gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
         StartCoroutine(ChooseAttack());
     }
 

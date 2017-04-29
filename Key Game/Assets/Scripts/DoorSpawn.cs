@@ -44,7 +44,7 @@ public class DoorSpawn : MonoBehaviour
                 else
                 {
                     Debug.Log("Stuff");
-                    GameObject.Find("Pure Keyvil").GetComponent<PureKeyvilController>().ChooseAttackPublic();
+                    //GameObject.Find("Pure Keyvil").GetComponent<PureKeyvilController>().ChooseAttackPublic();
                 }
 
                 GameObject.Find("Game Manager").GetComponent<TextController>().talkingDone = false;

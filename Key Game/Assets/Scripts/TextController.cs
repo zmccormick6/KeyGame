@@ -63,6 +63,8 @@ public class TextController : MonoBehaviour
 
     void FixedUpdate()
     {
+        Debug.Log(startEncounter);
+
         if (move == true)
         {
             InGameKeyvi.transform.position = Vector2.Lerp(KeyviPosition, WhereToGo, ((Time.time - startTime) / 4));
@@ -86,7 +88,18 @@ public class TextController : MonoBehaviour
                         StartTalking();
                     }
                     else
+                    {
                         EndTalking();
+
+                        if (GameObject.Find("Level").GetComponent<LevelHold>().Level == 7)
+                        {
+                            if (startEncounter == 3)
+                            {
+                                Debug.Log("Start Phase One");
+                                GameObject.Find("Pure Keyvil").GetComponent<PureKeyvilController>().StartPhaseOne();
+                            }
+                        }
+                    }
 
                     talking = true;
                 }
@@ -106,9 +119,6 @@ public class TextController : MonoBehaviour
                 text = 0.05f;
             }
         }
-
-        Debug.Log(Keyvi.transform.position + ", " + Keyvil.GetComponent<RectTransform>().transform.position);
-        //Keyvi.transform.position = new Vector2(0, 0);
 
         if (transition == true)
         {
@@ -166,6 +176,11 @@ public class TextController : MonoBehaviour
                 transition = true;
             }
 
+            if (startEncounter == 1)
+            {
+                GameObject.Find("Pure Keyvil").GetComponent<PureKeyvilController>().MoveToCenter();
+            }
+
             for (int i = 0; i < message[counter].Length; i++)
             {
                 speedUp = true;
@@ -181,11 +196,9 @@ public class TextController : MonoBehaviour
             startEncounter++;
         }
 
-        GameObject.Find("Pure Keyvil").GetComponent<PureKeyvilController>().MoveToCenter();
-
         if (startEncounter >= 3)
         {
-            GameObject.Find("Pure Keyvil").GetComponent<PureKeyvilController>().StartPhaseOne();
+            //GameObject.Find("Pure Keyvil").GetComponent<PureKeyvilController>().StartPhaseOne();
         }
 
         GetComponent<TextController>().counter++;

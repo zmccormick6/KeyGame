@@ -81,7 +81,7 @@ public class MageController : MonoBehaviour
                 return;
         }
 
-        if (other.tag != "Enemy" && other.tag != "Wall" && other.tag != "Keyvi" && other.tag != "Obstacle" && other.tag != "Water" && other.tag != "MageAttack"  && other.gameObject.name != "Pure Keyvil")
+        if (other.tag != "Boss" && other.tag != "Enemy" && other.tag != "Wall" && other.tag != "Keyvi" && other.tag != "Obstacle" && other.tag != "Water" && other.tag != "MageAttack"  && other.gameObject.name != "Pure Keyvil")
         {
             if (other.tag != "Hitbox")
             {

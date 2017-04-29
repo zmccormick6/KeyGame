@@ -11,11 +11,6 @@ public class MenuCursor : MonoBehaviour
 
     int position = 0;
 
-    void FixedUpdate()
-    {
-        Debug.Log(Mathf.Round(Input.GetAxisRaw("Vertical")));
-    }
-
     public void FirstArea()
     {
         position = 1;

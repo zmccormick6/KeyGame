@@ -92,7 +92,7 @@ public class KeeseController : MonoBehaviour
             }
         }
 
-        if (other.tag != "Enemy" && other.tag != "Wall" && other.tag != "Keyvi" && other.tag != "Obstacle" && other.tag != "Water" && other.tag != "Right" && other.tag != "Left"  && other.tag != "MageAttack" && other.gameObject.name != "Pure Keyvil")
+        if (other.tag != "Boss" && other.tag != "Enemy" && other.tag != "Wall" && other.tag != "Keyvi" && other.tag != "Obstacle" && other.tag != "Water" && other.tag != "Right" && other.tag != "Left"  && other.tag != "MageAttack" && other.gameObject.name != "Pure Keyvil")
         {
             if (other.tag != "Hitbox")
             {

@@ -22,7 +22,7 @@ public class PureKeyvilController : MonoBehaviour
 
     private Collider2D PlayerCollider;
     private Animator animator;
-    public int Health = 20;
+    public int Health = 40;
 
     Vector2 CurrentPosition;
     Vector2 PlayerPosition;
@@ -38,9 +38,9 @@ public class PureKeyvilController : MonoBehaviour
     public bool attackThree = false;
     public int temp = 7;
 
-    bool phaseChangeCheck = false, sharedHealth = false;
+    bool phaseChangeCheck = false, sharedHealth = false, startTimer = false, once = false;
     int lastTemp, attackChoose, lastChoice;
-    float attackSwitch = 3f, moveX = 0, moveY = 0;
+    float attackSwitch = 3f, moveX = 0, moveY = 0, currentTime = 5f;
 
     void Start()
     {
@@ -103,6 +103,25 @@ public class PureKeyvilController : MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, MiddleRight, 0.2f);
         }
 
+        if (startTimer == true)
+        {
+            Timer();
+        }
+
+        if (Health == 20)
+        {
+            if (once == false)
+            {
+                startTimer = false;
+                StopAllCoroutines();
+                gameObject.GetComponent<Collider2D>().enabled = false;
+                tempSprite.enabled = true;
+                StartCoroutine(PhaseChange());
+
+                once = true;
+            }
+        }
+
         if (Health <= 0)
         {
             CurrentDoor.GetComponent<Animator>().SetInteger("DoorOpen", 1);
@@ -112,7 +131,7 @@ public class PureKeyvilController : MonoBehaviour
 
     private IEnumerator OneMove()
     {
-        yield return new WaitForSeconds();
+        yield return new WaitForSeconds(3);
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -234,34 +253,61 @@ public class PureKeyvilController : MonoBehaviour
             Instantiate(ThirdBossAttack, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
         }*/
 
-        gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.4f);
+        //gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.4f);
 
-        gameObject.GetComponent<Collider2D>().enabled = false;
-        yield return new WaitForSeconds(2f);
+        //gameObject.GetComponent<Collider2D>().enabled = false;
 
+        //ChangePositions();
+        startTimer = true;
         Instantiate(Mage, new Vector2(-30, 0), Quaternion.identity);
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 50; i++)
         {
-            Instantiate(Keese, new Vector2(-7, 7), Quaternion.identity);
-            yield return new WaitForSeconds(2f);
-            Instantiate(Keese, new Vector2(7, 7), Quaternion.identity);
+            Instantiate(Keese, new Vector2(-10, 0), Quaternion.identity);
             yield return new WaitForSeconds(4f);
+            Instantiate(Keese, new Vector2(10, 0), Quaternion.identity);
+            yield return new WaitForSeconds(4f);
+            Instantiate(Mage, new Vector2(-30, 0), Quaternion.identity);
         }
 
-        Instantiate(Mage, new Vector2(-30, 0), Quaternion.identity);
+        //Instantiate(Mage, new Vector2(-30, 0), Quaternion.identity);
+    }
+
+    public void ChangePlaces()
+    {
+        ChangePositions();
+    }
+    public void Timer()
+    {
+        currentTime -= Time.deltaTime;
+
+        if (currentTime <= 0)
+        {
+            ChangePositions();
+            currentTime = 5f;
+        }
     }
 
     private IEnumerator PhaseChange()
     {
+        GameObject[] Mages;
+
+        Mages = GameObject.FindGameObjectsWithTag("Enemy");
+
+        for (int i = 0; i < Mages.Length; i++)
+        {
+            if (Mages[i].name == "Mage(Clone)")
+                Destroy(Mages[i]);
+            else if (Mages[i].name == "Keese(Clone)")
+                Destroy(Mages[i]);
+        }
+
         gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
         temp = 4;
         GetComponent<Animator>().SetInteger("PhaseChange", 2);
         GameManager.GetComponent<LevelSwitch>().pause = true;
         yield return new WaitForSeconds(5f);
         GameManager.GetComponent<LevelSwitch>().pause = false;
-        //Talking
-        //Change Form
         gameObject.GetComponent<Collider2D>().enabled = true;
         StartCoroutine(ChooseAttack());
     }

@@ -12,6 +12,8 @@ public class PureKeyvilController : MonoBehaviour
     [SerializeField] private GameObject Keese;
     [SerializeField] private GameObject Mage;
     [SerializeField] private GameObject CurrentDoor;
+    [SerializeField] private GameObject BossHealthBar;
+    [SerializeField] private GameObject BossHealth;
     //[SerializeField] private GameObject Blink;
     [SerializeField] private Collider2D BossCollider;
 
@@ -38,9 +40,9 @@ public class PureKeyvilController : MonoBehaviour
     public bool attackThree = false;
     public int temp = 7;
 
-    bool phaseChangeCheck = false, sharedHealth = false, startTimer = false, once = false, phaseTwo = false;
+    bool phaseChangeCheck = false, sharedHealth = false, startTimer = false, once = false, phaseTwo = false, limit = true;
     int lastTemp, attackChoose, lastChoice;
-    float attackSwitch = 2f, moveX = 0, moveY = 0, currentTime = 3f;
+    float attackSwitch = 2f, moveX = 0, moveY = 0, currentTime = 3f, bossHealth = 1;
 
     void Start()
     {
@@ -52,6 +54,12 @@ public class PureKeyvilController : MonoBehaviour
         GameManager = GameObject.Find("Game Manager");
 
         AttackSound = GameObject.Find("Attack").GetComponent<AudioSource>();
+
+        BossHealthBar = GameObject.Find("BossBar");
+        BossHealth = GameObject.Find("BossHealth");
+
+        BossHealthBar.SetActive(false);
+        BossHealth.SetActive(false);
         //StartCoroutine(PhaseOne());
         //StartCoroutine(ChooseAttack());
     }
@@ -69,51 +77,37 @@ public class PureKeyvilController : MonoBehaviour
 
         if (temp == 0)
         {
-            if (phaseTwo == true)
-                StartCoroutine(Teleport(TopLeft));
-            else
+            if (limit == true)
                 transform.position = Vector2.MoveTowards(transform.position, TopLeft, 0.2f);
         }
         else if (temp == 1)
         {
-            if (phaseTwo == true)
-                StartCoroutine(Teleport(TopRight));
-            else
+            if (limit == true)
                 transform.position = Vector2.MoveTowards(transform.position, TopRight, 0.2f);
         }
         else if (temp == 2)
         {
-            if (phaseTwo == true)
-                StartCoroutine(Teleport(BottomRight));
-            else
+            if (limit == true)
                 transform.position = Vector2.MoveTowards(transform.position, BottomRight, 0.2f);
         }
         else if (temp == 3)
         {
-            if (phaseTwo == true)
-                StartCoroutine(Teleport(BottomLeft));
-            else
+            if (limit == true)
                 transform.position = Vector2.MoveTowards(transform.position, BottomLeft, 0.2f);
         }
         else if (temp == 4)
         {
-            if (phaseTwo == true)
-                StartCoroutine(Teleport(Middle));
-            else
+            if (limit == true)
                 transform.position = Vector2.MoveTowards(transform.position, Middle, 0.2f);
         }
         else if (temp == 5)
         {
-            if (phaseTwo == true)
-                StartCoroutine(Teleport(MiddleLeft));
-            else
+            if (limit == true)
                 transform.position = Vector2.MoveTowards(transform.position, MiddleLeft, 0.2f);
         }
         else if (temp == 6)
        {
-            if (phaseTwo == true)
-                StartCoroutine(Teleport(MiddleRight));
-            else
+            if (limit == true)
                 transform.position = Vector2.MoveTowards(transform.position, MiddleRight, 0.2f);
         }
 
@@ -138,9 +132,32 @@ public class PureKeyvilController : MonoBehaviour
 
         if (Health <= 0)
         {
-            CurrentDoor.GetComponent<Animator>().SetInteger("DoorOpen", 1);
-            Destroy(gameObject);
+            if (once == true)
+            {
+                StopAllCoroutines();
+                StartCoroutine(Death());
+                once = false;
+            }
         }
+    }
+
+    private IEnumerator Death()
+    {
+        //StopAllCoroutines();
+        gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        tempSprite.color = new Color(1f, 1f, 1f, 1f);
+        temp = 4;
+        StartCoroutine(Teleport());
+        GameManager.GetComponent<LevelSwitch>().pause = true;
+        StartCoroutine(MovePlayer());
+        yield return new WaitForSeconds(1);
+        animator.SetInteger("Death", 1);
+        yield return new WaitForSeconds(5);
+        BossHealthBar.SetActive(false);
+        BossHealth.SetActive(false);
+        Destroy(gameObject);
+        GameManager.GetComponent<LevelSwitch>().pause = false;
+        CurrentDoor.GetComponent<Animator>().SetInteger("DoorOpen", 1);
     }
 
     private IEnumerator OneMove()
@@ -173,10 +190,46 @@ public class PureKeyvilController : MonoBehaviour
         }
     }
 
-    private IEnumerator Teleport(Vector2 Position)
+    private IEnumerator Teleport()
     {
-        yield return new WaitForSeconds(0f);
+        Vector2 Position = Middle;
+
+        limit = false;
+        animator.SetInteger("Teleport", 1);
+        yield return new WaitForSeconds(0.7f);
+
+        if (temp == 0)
+        {
+            Position = TopLeft;
+        }
+        else if (temp == 1)
+        {
+            Position = TopRight;
+        }
+        else if (temp == 2)
+        {
+            Position = BottomRight;
+        }
+        else if (temp == 3)
+        {
+            Position = BottomLeft;
+        }
+        else if (temp == 4)
+        {
+            Position = Middle;
+        }
+        else if (temp == 5)
+        {
+            Position = MiddleLeft;
+        }
+        else if (temp == 6)
+        {
+            Position = MiddleRight;
+        }
+
         transform.position = Position;
+        animator.SetInteger("Teleport", 0);
+        limit = true;
         //yield return new WaitForSeconds(1f);
     }
 
@@ -200,6 +253,8 @@ public class PureKeyvilController : MonoBehaviour
     public void PureKeyvilHealth()
     {
         Health--;
+        bossHealth -= 0.05f;
+        BossHealth.GetComponent<RectTransform>().localScale = new Vector3(bossHealth, 1, 1);
         StartCoroutine(HitFlashing());
     }
 
@@ -273,14 +328,18 @@ public class PureKeyvilController : MonoBehaviour
 
         //ChangePositions();
         startTimer = true;
+
+        BossHealthBar.SetActive(true);
+        BossHealth.SetActive(true);
+
         Instantiate(Mage, new Vector2(-30, 0), Quaternion.identity);
 
         for (int i = 0; i < 50; i++)
         {
             Instantiate(Keese, new Vector2(-10, 0), Quaternion.identity);
-            yield return new WaitForSeconds(6f);
+            yield return new WaitForSeconds(4f);
             Instantiate(Keese, new Vector2(10, 0), Quaternion.identity);
-            yield return new WaitForSeconds(6f);
+            yield return new WaitForSeconds(4f);
             Instantiate(Mage, new Vector2(-30, 0), Quaternion.identity);
         }
 
@@ -323,6 +382,8 @@ public class PureKeyvilController : MonoBehaviour
         StartCoroutine(MovePlayer());
         GameObject.Find("Main Camera").GetComponent<CameraShake>().ShakeCameraBoss();
         yield return new WaitForSeconds(5f);
+        bossHealth = 1;
+        BossHealthBar.GetComponent<Animator>().SetInteger("PhaseTwo", 1);
         GameManager.GetComponent<LevelSwitch>().pause = false;
         gameObject.GetComponent<Collider2D>().enabled = true;
         phaseTwo = true;
@@ -385,6 +446,7 @@ public class PureKeyvilController : MonoBehaviour
     private IEnumerator Attack()
     {
         ChangePositions();
+        StartCoroutine(Teleport());
 
         yield return new WaitForSeconds(attackSwitch);
 
@@ -406,6 +468,7 @@ public class PureKeyvilController : MonoBehaviour
     private IEnumerator SecondAttack()
     {
         temp = Random.Range(5, 7);
+        StartCoroutine(Teleport());
 
         yield return new WaitForSeconds(attackSwitch);
 
@@ -442,6 +505,7 @@ public class PureKeyvilController : MonoBehaviour
         //attackThree = false;
 
         temp = 4;
+        StartCoroutine(Teleport());
 
         yield return new WaitForSeconds(attackSwitch);
 

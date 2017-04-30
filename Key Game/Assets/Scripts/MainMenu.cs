@@ -10,6 +10,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private string Game;
     [SerializeField] private GameObject CreditScreen;
 
+    int screen = 0;
+
     AsyncOperation async;
 
     public void PlayGame()
@@ -25,7 +27,12 @@ public class MainMenu : MonoBehaviour
 
     public void OpenCredits()
     {
-        CreditScreen.SetActive(true);
+        if (screen % 2 == 0)
+            CreditScreen.SetActive(true);
+        else
+            CreditScreen.SetActive(false);
+
+        screen++;
     }
 
     public void CloseCredits()
@@ -53,8 +60,8 @@ public class MainMenu : MonoBehaviour
             {
                 async.allowSceneActivation = true;
             }
-            else
-                QuitGame();
+            //else
+              //  QuitGame();
         }
     }
 }

@@ -28,24 +28,23 @@ public class TextController : MonoBehaviour
     int talkingTime = 0;
     Color KeyviAlpha;
 
-    //0 Normal, 1 Blush, 2 Shifty, 3 Derp, 4 Flustered Blush, 5 Squidward, 6 
+    //0 Normal, 1 Blush, 2 Shifty, 3 Derp, 4 Flustered Blush, 5 Unsure
     string[] message = 
         {"Hiya! My name's Keyvi!\nI'm important!", "My evil twin brother Keyvil has taken\nover the dungeon.", "You can hit stuff by pressing the\n'X' button. Follow me!",
          "Well, that was Key-z!", "If you somehow managed to take damage...\nthere's a health container over there.", "Press the 'B' button while moving to\ndash over to it, or whatever.",
          "Walking through water will slow you\ndown.", "My brothers' diaries are guarding\nthe way up ahead.", "To reflect the magic, hit its attacks\nwith your key...sword?",
-         "Where did you get that key..\nsaber anyway?", "It's quite large...", "Have him call me once this is over.\nK?",
+         "Where did you get that key...\nsaber anyway?", "It's quite large...", "Have him call me once this is over.\nK?",
          "Have you ever been inside a lock\nbefore...?", "You could say that I've been tumbled\na few times.", "Why are you giving me that look?\nIt's just a key thing!",
-         "My brothers' room is up ahead, I can\nsense the keyruption from here.", "Low key, he gets real mad when under\nhalf health.", "Hope you don't die! :).",
+         "My brothers' room is up ahead, I can\nsense the keyruption from here.", "Low key, he gets real mad when under\nhalf health.", "Hope you don't die!",
          "Oh, guess he's not here?", "Good Keevening...", "Someone so weak is foolish to fight me in my own domain!",
-         "Hmph...", "It seems as though you may be worth\nmy time after all!", "I haven't used this form in years..."};
     int[] emotion = {0, 2, 0,
                      3, 0, 0,
                      3, 0, 2, 
                      2, 4, 1,
                      4, 0, 1,
                      0, 0, 0,
-                     0, 0, 0,
-                     0, 0, 0};
+                     5, 0, 0,
+                     2, 0, 0};
     int counter = 0;
 
     void Start()
@@ -122,7 +121,7 @@ public class TextController : MonoBehaviour
 
         if (transition == true)
         {
-            float tempX = Keyvil.transform.position.x + 20f;
+            float tempX = Keyvil.transform.position.x + 50f;
             float center = Screen.width / 2;
 
             if (Keyvil.transform.position.x <= center)
@@ -130,7 +129,25 @@ public class TextController : MonoBehaviour
                 Keyvil.transform.position = new Vector2(tempX, Keyvi.transform.position.y);
             }
             else //(Keyvil.transform.position.x >= Keyvi.transform.position.x)
-                Keyvi.transform.position = new Vector2(Keyvi.transform.position.x + 40, Keyvi.transform.position.y);
+            {
+                if (Keyvi.transform.position.x < 5000)
+                {
+                    Keyvi.transform.position = new Vector2(Keyvi.transform.position.x + 25, Keyvi.transform.position.y + 10);
+                    Keyvi.transform.Rotate(Vector3.forward * -30);
+                }
+            }
+        }
+
+        if (GameObject.Find("Keyvi").GetComponent<KeyviController>().dead == true)
+        {
+            DisplayMessage.color = Color.white;
+            SpeakingName.text = "Keyvi";
+            SpeakingName.color = Color.white;
+
+            transition = false;
+            Keyvi.transform.position = new Vector2(Screen.width / 2, Screen.height / 2);
+            Keyvi.transform.rotation = new Quaternion(0, 0, 0, 0);
+            Keyvil.SetActive(false);
         }
     }
 
@@ -234,14 +251,28 @@ public class TextController : MonoBehaviour
 
     public void EndTalking()
     {
-        StartCoroutine(MoveKeyvi());
-        MessageHolder.SetActive(false);
-        DisplayMessage.text = null;
-        talking = false;
-        GameObject.Find("Game Manager").GetComponent<LevelSwitch>().pause = false;
-        talkingTime = 0;
-        talkingDone = true;
-        InGameKeyvi.GetComponent<KeyviController>().inRange = false;
-        GameObject.Find("Game Manager").GetComponent<DoorSpawn>().EnemyCheck();
+        if (InGameKeyvi.GetComponent<KeyviController>().dead != true)
+        {
+            StartCoroutine(MoveKeyvi());
+            MessageHolder.SetActive(false);
+            DisplayMessage.text = null;
+            talking = false;
+            GameObject.Find("Game Manager").GetComponent<LevelSwitch>().pause = false;
+            talkingTime = 0;
+            talkingDone = true;
+            InGameKeyvi.GetComponent<KeyviController>().inRange = false;
+            GameObject.Find("Game Manager").GetComponent<DoorSpawn>().EnemyCheck();
+        }
+        else
+        {
+            MessageHolder.SetActive(false);
+            DisplayMessage.text = null;
+            talking = false;
+            GameObject.Find("Game Manager").GetComponent<LevelSwitch>().pause = false;
+            talkingTime = 0;
+            talkingDone = true;
+            InGameKeyvi.GetComponent<KeyviController>().inRange = false;
+            GameObject.Find("Keyvi").GetComponent<KeyviController>().AButtonOff();
+        }
     }
 }

@@ -37,7 +37,7 @@ public class PureKeyvilController : MonoBehaviour
     Vector2 BottomLeft = new Vector2(-6, -4);
     Vector2 Middle = new Vector2(0, -1.5f);
 
-    public bool attackThree = false;
+    public bool attackThree = false, spawnHealth = false;
     public int temp = 7;
 
     bool phaseChangeCheck = false, sharedHealth = false, startTimer = false, once = false, phaseTwo = false, limit = true;
@@ -57,11 +57,6 @@ public class PureKeyvilController : MonoBehaviour
 
         BossHealthBar = GameObject.Find("BossBar");
         BossHealth = GameObject.Find("BossHealth");
-
-        BossHealthBar.SetActive(false);
-        BossHealth.SetActive(false);
-        //StartCoroutine(PhaseOne());
-        //StartCoroutine(ChooseAttack());
     }
 
     void FixedUpdate()
@@ -144,6 +139,14 @@ public class PureKeyvilController : MonoBehaviour
     private IEnumerator Death()
     {
         //StopAllCoroutines();
+
+        GameObject[] Attacks = GameObject.FindGameObjectsWithTag("MageAttack");
+
+        for (int i = 0; i < Attacks.Length; i++)
+        {
+            Destroy(Attacks[i]);
+        }
+
         gameObject.GetComponent<SpriteRenderer>().enabled = true;
         tempSprite.color = new Color(1f, 1f, 1f, 1f);
         temp = 4;
@@ -152,11 +155,13 @@ public class PureKeyvilController : MonoBehaviour
         StartCoroutine(MovePlayer());
         yield return new WaitForSeconds(1);
         animator.SetInteger("Death", 1);
+        GameObject.Find("Main Camera").GetComponent<CameraShake>().ShakeCameraBoss();
         yield return new WaitForSeconds(5);
         BossHealthBar.SetActive(false);
         BossHealth.SetActive(false);
         Destroy(gameObject);
         GameManager.GetComponent<LevelSwitch>().pause = false;
+        GameObject.Find("Keyvi").GetComponent<KeyviController>().dead = true;
         CurrentDoor.GetComponent<Animator>().SetInteger("DoorOpen", 1);
     }
 
@@ -313,6 +318,7 @@ public class PureKeyvilController : MonoBehaviour
     public void StartPhaseOne()
     {
         StartCoroutine(PhaseOne());
+        spawnHealth = true;
     }
 
     public IEnumerator PhaseOne()
@@ -329,17 +335,17 @@ public class PureKeyvilController : MonoBehaviour
         //ChangePositions();
         startTimer = true;
 
-        BossHealthBar.SetActive(true);
-        BossHealth.SetActive(true);
+        //BossHealthBar.SetActive(true);
+        //BossHealth.SetActive(true);
 
         Instantiate(Mage, new Vector2(-30, 0), Quaternion.identity);
 
         for (int i = 0; i < 50; i++)
         {
             Instantiate(Keese, new Vector2(-10, 0), Quaternion.identity);
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(5.5f);
             Instantiate(Keese, new Vector2(10, 0), Quaternion.identity);
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(5.5f);
             Instantiate(Mage, new Vector2(-30, 0), Quaternion.identity);
         }
 
@@ -383,6 +389,7 @@ public class PureKeyvilController : MonoBehaviour
         GameObject.Find("Main Camera").GetComponent<CameraShake>().ShakeCameraBoss();
         yield return new WaitForSeconds(5f);
         bossHealth = 1;
+        BossHealth.GetComponent<RectTransform>().localScale = new Vector3(bossHealth, 1, 1);
         BossHealthBar.GetComponent<Animator>().SetInteger("PhaseTwo", 1);
         GameManager.GetComponent<LevelSwitch>().pause = false;
         gameObject.GetComponent<Collider2D>().enabled = true;
@@ -480,7 +487,7 @@ public class PureKeyvilController : MonoBehaviour
 
             if (i % 2 == 0)
             {
-                Missile = Instantiate(SecondBossAttack, new Vector3(transform.position.x, transform.position.y - 2, 0), Quaternion.identity);
+                Missile = Instantiate(SecondBossAttack, new Vector3(transform.position.x, transform.position.y - 2.5f, 0), Quaternion.identity);
                 Missile.GetComponent<SecondBossAttack>().yPosition(i);
             }
             else

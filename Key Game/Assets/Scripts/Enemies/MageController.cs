@@ -47,6 +47,7 @@ public class MageController : MonoBehaviour
 
         if (Health <= 0)
         {
+            StopAllCoroutines();
             GameObject.Find("Game Manager").GetComponent<DoorSpawn>().EnemyCheck();
             Destroy(gameObject);
         }

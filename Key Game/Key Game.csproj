@@ -80,6 +80,7 @@
     <Compile Include="Assets\Scripts\Boss\BossAttack.cs" />
     <Compile Include="Assets\Scripts\Boss\PhaseOneBoss.cs" />
     <Compile Include="Assets\Scripts\Boss\PureKeyvilController.cs" />
+    <Compile Include="Assets\Scripts\Boss\Rotate.cs" />
     <Compile Include="Assets\Scripts\Boss\SecondBossAttack.cs" />
     <Compile Include="Assets\Scripts\Boss\ThirdBossAttack.cs" />
     <Compile Include="Assets\Scripts\CameraShake.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Assets\Scripts\LevelSwitch.cs" />
     <Compile Include="Assets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\Scripts\MenuCursor.cs" />
+    <Compile Include="Assets\Scripts\OpenHealthBar.cs" />
     <Compile Include="Assets\Scripts\PauseController.cs" />
     <Compile Include="Assets\Scripts\PlayerWallHitbox.cs" />
     <Compile Include="Assets\Scripts\TempPlayerController.cs" />

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class LevelSwitch : MonoBehaviour
 {
@@ -21,6 +22,9 @@ public class LevelSwitch : MonoBehaviour
     //public int level = 0;
     int level;
     public bool pause = false;
+
+    GameObject BossHealth;
+    GameObject BossBar;
 
     private bool movement = false;
     private bool transition = false;
@@ -89,6 +93,11 @@ public class LevelSwitch : MonoBehaviour
             //currentLevel = Instantiate(Levels[6], new Vector2(0, 0), Quaternion.identity);
             currentLevel.transform.SetSiblingIndex(3);
             currentLevel.tag = "Current";
+        }
+        else if (GameObject.Find("Keyvi").GetComponent<KeyviController>().dead == true)
+        {
+            GameObject.Find("Level").GetComponent<LevelHold>().Level = 0;
+            SceneManager.LoadScene("MainMenu");
         }
         else
         {

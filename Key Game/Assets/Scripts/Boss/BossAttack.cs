@@ -6,16 +6,21 @@ public class BossAttack : MonoBehaviour
 {
     GameObject Player;
     float moveX, moveY, attackSpeed = 0.1f;
+    bool start = false;
 
     void Start()
     {
         Player = GameObject.Find("TempPlayer");
+        StartCoroutine(StartAttack());
         StartCoroutine(DestroyAttack());
     }
 
     void FixedUpdate()
     {
-        transform.position = new Vector2(transform.position.x + moveX, transform.position.y + moveY);
+        if (start == true)
+            transform.position = new Vector2(transform.position.x + moveX, transform.position.y + moveY);
+
+        transform.Rotate(Vector3.forward * -5);
     }
 
     public void AttackDirection(int direction)
@@ -66,9 +71,15 @@ public class BossAttack : MonoBehaviour
         }
     }
 
+    private IEnumerator StartAttack()
+    {
+        yield return new WaitForSeconds(0.75f);
+        start = true;
+    }
+
     private IEnumerator DestroyAttack()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(4f);
         Destroy(gameObject);
     }
 }

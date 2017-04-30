@@ -30,6 +30,8 @@ public class ThirdBossAttack : MonoBehaviour
 
             var offset = new Vector2(Mathf.Sin(_angle), Mathf.Cos(_angle)) * Radius;
             transform.position = _centre + offset;
+
+            transform.Rotate(Vector3.forward * -5);
         }
     }
 

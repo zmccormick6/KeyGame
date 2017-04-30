@@ -138,15 +138,37 @@ public class TempPlayerController : MonoBehaviour
     void FixedUpdate()
     {
         MovementAnimation();
-        SwingAnimation();
+        //SwingAnimation();
         PlayerMovement();
 
-        if (Input.GetButtonDown("Fire2"))
+        if (stopSwing == false)
         {
-            if (dodgeReady == true)
+            if (Input.GetButton("Fire1"))
             {
-                StartCoroutine(DodgeMovementIncrease());
-                StartCoroutine(DodgeHitbox());
+                stopSwing = true;
+                anim.SetInteger("Swing", 1);
+                StartCoroutine(SwingStop());
+            }
+            else
+            {
+                anim.SetInteger("Swing", 0);
+            }
+        }
+        else
+            anim.SetInteger("Swing", 0);
+
+        movex = Mathf.Round(Input.GetAxisRaw("Horizontal"));
+        movey = Mathf.Round(Input.GetAxisRaw("Vertical"));
+
+        if (movex != 0 || movey != 0)
+        {
+            if (Input.GetButton("Fire2"))
+            {
+                if (dodgeReady == true)
+                {
+                    StartCoroutine(DodgeMovementIncrease());
+                    StartCoroutine(DodgeHitbox());
+                }
             }
         }
 
@@ -251,7 +273,23 @@ public class TempPlayerController : MonoBehaviour
 
     public void SwingAnimation()
     {
-        if (Input.GetButton("Fire1"))
+        if (stopSwing == false)
+        {
+            if (Input.GetButton("Fire1"))
+            {
+                stopSwing = true;
+                anim.SetInteger("Swing", 1);
+                StartCoroutine(SwingStop());
+            }
+            else
+            {
+                anim.SetInteger("Swing", 0);
+            }
+        }
+        else
+            anim.SetInteger("Swing", 0);
+
+        /*if (Input.GetButton("Fire1"))
         {
             if (stopSwing == false)
             {
@@ -263,7 +301,7 @@ public class TempPlayerController : MonoBehaviour
         else
         {
             anim.SetInteger("Swing", 0);
-        }
+        }*/
     }
 
     public void DodgeTime()
@@ -288,11 +326,11 @@ public class TempPlayerController : MonoBehaviour
 
     public void DodgeAnimation()
     {
-        if (GetComponent<Rigidbody2D>().velocity != new Vector2(0, 0))
+        if (anim.GetInteger("Direction") != 0)
         {
-            if (Input.GetButtonDown("Fire2"))
+            if (dodgeReady == true)
             {
-                if (dodgeReady == true)
+                if (Input.GetButtonDown("Fire2"))
                 {
                     anim.SetInteger("Dodge", 1);
                 }
@@ -311,9 +349,10 @@ public class TempPlayerController : MonoBehaviour
     private IEnumerator SwingStop()
     {
         GetComponent<TempPlayerController>().Speed = 1.5f;
-        yield return new WaitForSeconds(0.25f);
-        GetComponent<TempPlayerController>().Speed = 4;
+        yield return new WaitForSeconds(0.15f);
         stopSwing = false;
+        yield return new WaitForSeconds(0.1f);
+        GetComponent<TempPlayerController>().Speed = 4;
     }
 
     private IEnumerator DodgeHitbox()

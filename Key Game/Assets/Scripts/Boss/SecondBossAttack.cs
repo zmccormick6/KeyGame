@@ -5,6 +5,7 @@ using UnityEngine;
 public class SecondBossAttack : MonoBehaviour
 {
     GameObject Player;
+    GameObject[] Stuff;
     float moveX, moveY, attackSpeed = 0.1f;
     bool yPos = false, start = false;
 
@@ -20,7 +21,7 @@ public class SecondBossAttack : MonoBehaviour
         if (start == true)
         {
             if (yPos == true)
-                transform.position = new Vector2(transform.position.x - attackSpeed, -3.5f);
+                transform.position = new Vector2(transform.position.x - attackSpeed, -4f);
             else
                 transform.position = new Vector2(transform.position.x - attackSpeed, -1.5f);
         }

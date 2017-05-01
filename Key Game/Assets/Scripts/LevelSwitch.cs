@@ -37,7 +37,7 @@ public class LevelSwitch : MonoBehaviour
         StartCoroutine(NextLevel());
         GameObject.Find("Game Manager").GetComponent<DoorSpawn>().EnemyCount(currentLevel);
         LevelTransition.enabled = true;
-        alpha.a = 0f;
+        alpha.a = 1f;
         LevelTransition.color = alpha;
         level = GameObject.Find("Level").GetComponent<LevelHold>().Level;
     }
@@ -102,6 +102,7 @@ public class LevelSwitch : MonoBehaviour
         }
         else if (GameObject.Find("Keyvi").GetComponent<KeyviController>().dead == true)
         {
+            transition = true;
             GameObject.Find("Level").GetComponent<LevelHold>().Level = 0;
             SceneManager.LoadScene("MainMenu");
         }

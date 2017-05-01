@@ -253,7 +253,7 @@ public class PureKeyvilController : MonoBehaviour
     private IEnumerator Invincibility()
     {
         gameObject.GetComponent<Collider2D>().enabled = false;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.35f);
         gameObject.GetComponent<Collider2D>().enabled = true;
     }
 
@@ -416,7 +416,14 @@ public class PureKeyvilController : MonoBehaviour
         finished.Play();
         finishedTwo.Play();
         yield return new WaitForSeconds(5f);
-        bossHealth = 1;
+
+        for (float i = 0; i < 1.05; i += 0.05f)
+        {
+            bossHealth = i;
+            yield return new WaitForSeconds(0.25f);
+        }
+
+        //bossHealth = 1;
         //BossHealth.GetComponent<RectTransform>().localScale = new Vector3(bossHealth, 1, 1);
         BossHealth.GetComponent<RectTransform>().localScale = new Vector3(1, bossHealth, 1);
         BossHealthBar.GetComponent<Animator>().SetInteger("PhaseTwo", 1);

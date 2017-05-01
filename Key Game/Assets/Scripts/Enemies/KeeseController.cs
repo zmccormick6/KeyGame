@@ -64,31 +64,34 @@ public class KeeseController : MonoBehaviour
     {
         if (other.tag == "MageAttack")
         {
-            if (other.GetComponent<MageAttack>().reverse == true)
+            if (other.name != "BossAttack(Clone)")
             {
-                Attack.Play();
-                KeeseHealth();
+                if (other.GetComponent<MageAttack>().reverse == true)
+                {
+                    Attack.Play();
+                    KeeseHealth();
 
-                if (CurrentPosition.x < PlayerPosition.x)
-                {
-                    if (CurrentPosition.y > PlayerPosition.y)
+                    if (CurrentPosition.x < PlayerPosition.x)
                     {
-                        transform.position = new Vector2(CurrentPosition.x - 1.25f, CurrentPosition.y + 1.25f);
+                        if (CurrentPosition.y > PlayerPosition.y)
+                        {
+                            transform.position = new Vector2(CurrentPosition.x - 1.25f, CurrentPosition.y + 1.25f);
+                        }
+                        else
+                        {
+                            transform.position = new Vector2(CurrentPosition.x - 1.25f, CurrentPosition.y - 1.25f);
+                        }
                     }
-                    else
+                    else if (CurrentPosition.x > PlayerPosition.x)
                     {
-                        transform.position = new Vector2(CurrentPosition.x - 1.25f, CurrentPosition.y - 1.25f);
-                    }
-                }
-                else if (CurrentPosition.x > PlayerPosition.x)
-                {
-                    if (CurrentPosition.y > PlayerPosition.y)
-                    {
-                        transform.position = new Vector2(CurrentPosition.x + 1.25f, CurrentPosition.y + 1.25f);
-                    }
-                    else
-                    {
-                        transform.position = new Vector2(CurrentPosition.x + 1.25f, CurrentPosition.y - 1.25f);
+                        if (CurrentPosition.y > PlayerPosition.y)
+                        {
+                            transform.position = new Vector2(CurrentPosition.x + 1.25f, CurrentPosition.y + 1.25f);
+                        }
+                        else
+                        {
+                            transform.position = new Vector2(CurrentPosition.x + 1.25f, CurrentPosition.y - 1.25f);
+                        }
                     }
                 }
             }

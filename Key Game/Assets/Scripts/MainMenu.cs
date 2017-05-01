@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    [SerializeField] private AudioSource Select;
+    [SerializeField] private AudioSource StartGame;
     [SerializeField] private GameObject PlayPointer;
     [SerializeField] private string Game;
     [SerializeField] private GameObject CreditScreen;
@@ -58,7 +60,14 @@ public class MainMenu : MonoBehaviour
         {
             if (PlayPointer.activeSelf == true)
             {
+                StartGame.Play();
                 async.allowSceneActivation = true;
+            }
+
+            if (!Select.isPlaying)
+            {
+                if (!StartGame.isPlaying)
+                    Select.Play();
             }
             //else
               //  QuitGame();

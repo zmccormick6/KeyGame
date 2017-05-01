@@ -5,6 +5,9 @@ using UnityEngine;
 public class ThirdBossAttack : MonoBehaviour
 {
     //Circle code from http://answers.unity3d.com/questions/1164022/move-a-2d-item-in-a-circle-around-a-fixed-point.html
+    [SerializeField] private ParticleSystem Finished;
+    [SerializeField] private ParticleSystem Finished2;
+
 
     private float RotateSpeed = 2f;
     private float Radius;
@@ -49,7 +52,11 @@ public class ThirdBossAttack : MonoBehaviour
 
     private IEnumerator Destroy()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(4f);
+        var finished = Instantiate(Finished, transform.position, transform.rotation);
+        var finishedTwo = Instantiate(Finished2, transform.position, transform.rotation);
+        finished.Play();
+        finishedTwo.Play();
         Destroy(gameObject);
     }
 }

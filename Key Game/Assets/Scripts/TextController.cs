@@ -63,8 +63,6 @@ public class TextController : MonoBehaviour
 
     void FixedUpdate()
     {
-        Debug.Log(startEncounter);
-
         if (move == true)
         {
             InGameKeyvi.transform.position = Vector2.Lerp(KeyviPosition, WhereToGo, ((Time.time - startTime) / 4));
@@ -167,7 +165,7 @@ public class TextController : MonoBehaviour
         NextButton.SetActive(false);
         EndButton.SetActive(false);
 
-        GameObject.Find("Music").GetComponent<AudioSource>().volume = 0.2f;
+        GameObject.Find("LevelMusic").GetComponent<AudioSource>().volume = 0.2f;
 
         if (GameObject.Find("Level").GetComponent<LevelHold>().Level != 7)
         {
@@ -228,7 +226,7 @@ public class TextController : MonoBehaviour
         talking = false;
         talkingTime++;
         Typing.Stop();
-        GameObject.Find("Music").GetComponent<AudioSource>().volume = 0.6f;
+        GameObject.Find("LevelMusic").GetComponent<AudioSource>().volume = 0.6f;
         speedUp = false;
         dots = 0.5f;
         text = 0.05f;

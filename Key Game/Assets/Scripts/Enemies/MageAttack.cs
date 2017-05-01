@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class MageAttack : MonoBehaviour
 {
+    [SerializeField] private ParticleSystem Finished;
+    [SerializeField] private ParticleSystem Finished2;
+
     GameObject Player;
     Collider2D SwordHitbox;
 
     AudioSource Explosion;
+    AudioSource Reflect;
 
     Vector2 CurrentPosition, PlayerPosition, StartPosition, ReversePosition;
 
@@ -22,6 +26,7 @@ public class MageAttack : MonoBehaviour
         StartPosition = new Vector3(transform.position.x, transform.position.y, -2);
 
         Explosion = GameObject.Find("ExplosionSound").GetComponent<AudioSource>();
+        Reflect = GameObject.Find("Reflect").GetComponent<AudioSource>();
 
         SwordHitbox = Player.GetComponents<Collider2D>()[0];
 
@@ -34,12 +39,24 @@ public class MageAttack : MonoBehaviour
         if (other == SwordHitbox)
         {
             reverse = true;
+            Reflect.Play();
         }
         else
         {
             if (other.tag == "Player")
             {
                 Explosion.Play();
+                Particles();
+                Destroy(gameObject);
+            }
+        }
+
+        if (reverse == true)
+        {
+            if (other.tag == "Enemy")
+            {
+                Explosion.Play();
+                Particles();
                 Destroy(gameObject);
             }
         }
@@ -60,11 +77,16 @@ public class MageAttack : MonoBehaviour
             if (CurrentPosition == PlayerPosition)
             {
                 Explosion.Play();
+                Particles();
                 Destroy(gameObject);
             }
             else if (CurrentPosition == ReversePosition)
             {
                 Explosion.Play();
+                var finished = Instantiate(Finished, ReversePosition, transform.rotation);
+                var finishedTwo = Instantiate(Finished2, ReversePosition, transform.rotation);
+                finished.Play();
+                finishedTwo.Play();
                 Destroy(gameObject);
             }
         }
@@ -80,6 +102,15 @@ public class MageAttack : MonoBehaviour
     {
         yield return new WaitForSeconds(4f);
         Explosion.Play();
+        Particles();
         Destroy(gameObject);
+    }
+
+    public void Particles()
+    {
+        var finished = Instantiate(Finished, transform.position, transform.rotation);
+        var finishedTwo = Instantiate(Finished2, transform.position, transform.rotation);
+        finished.Play();
+        finishedTwo.Play();
     }
 }

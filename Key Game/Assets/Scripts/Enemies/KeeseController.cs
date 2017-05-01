@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class KeeseController : MonoBehaviour
 {
+    [SerializeField] private ParticleSystem Finished;
+    [SerializeField] private ParticleSystem Finished2;
     [SerializeField] private GameObject Player;
 
     private Vector2 TopRight = new Vector2(5.5f, 0f);
@@ -160,8 +162,12 @@ public class KeeseController : MonoBehaviour
 
         if (Health <= 0)
         {
-            Destroy(gameObject);
+            var finished = Instantiate(Finished, transform.position, transform.rotation);
+            var finishedTwo = Instantiate(Finished2, transform.position, transform.rotation);
+            finished.Play();
+            finishedTwo.Play();
             GameObject.Find("Game Manager").GetComponent<DoorSpawn>().EnemyCheck();
+            Destroy(gameObject);
         }
     }
 

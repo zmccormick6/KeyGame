@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MageController : MonoBehaviour
 {
+    [SerializeField] private ParticleSystem Finished;
+    [SerializeField] private ParticleSystem Finished2;
     [SerializeField] private GameObject MageAttack;
     [SerializeField] private GameObject Player;
     [SerializeField] private Collider2D MageCollider;
@@ -37,7 +39,7 @@ public class MageController : MonoBehaviour
 
         StartCoroutine(StartSpawn());
 
-        MageCollider.enabled = false;
+        //MageCollider.enabled = false;
     }
 
     void FixedUpdate()
@@ -49,6 +51,10 @@ public class MageController : MonoBehaviour
         {
             StopAllCoroutines();
             GameObject.Find("Game Manager").GetComponent<DoorSpawn>().EnemyCheck();
+            var finished = Instantiate(Finished, transform.position, transform.rotation);
+            var finishedTwo = Instantiate(Finished2, transform.position, transform.rotation);
+            finished.Play();
+            finishedTwo.Play();
             Destroy(gameObject);
         }
 
@@ -66,6 +72,7 @@ public class MageController : MonoBehaviour
         {
             if (other.GetComponent<MageAttack>().reverse == true)
             {
+                gameObject.GetComponent<Collider2D>().enabled = false;
                 AttackSound.Play();
                 MageHealth();
 
@@ -82,27 +89,27 @@ public class MageController : MonoBehaviour
                 return;
         }
 
-        if (other.tag != "Boss" && other.tag != "Enemy" && other.tag != "Wall" && other.tag != "Keyvi" && other.tag != "Obstacle" && other.tag != "Water" && other.tag != "MageAttack"  && other.gameObject.name != "Pure Keyvil")
+        if (other.tag != "Boss" && other.tag != "Enemy" && other.tag != "Wall" && other.tag != "Keyvi" && other.tag != "Obstacle" && other.tag != "Water" && other.tag != "MageAttack"  && other.gameObject.name != "Pure Keyvil" && other.tag != "Health")
         {
             if (other.tag != "Hitbox")
             {
                 if (other != PlayerCollider)
                 {
-                    StopAllCoroutines();
+                        StopAllCoroutines();
 
-                    if (CurrentPosition.y > PlayerPosition.y)
-                    {
-                        transform.position = new Vector2(CurrentPosition.x, CurrentPosition.y + 0.75f);
-                    }
-                    else if (CurrentPosition.y < PlayerPosition.y)
-                    {
-                        transform.position = new Vector2(CurrentPosition.x, CurrentPosition.y - 0.75f);
-                    }
+                        if (CurrentPosition.y > PlayerPosition.y)
+                        {
+                            transform.position = new Vector2(CurrentPosition.x, CurrentPosition.y + 0.75f);
+                        }
+                        else if (CurrentPosition.y < PlayerPosition.y)
+                        {
+                            transform.position = new Vector2(CurrentPosition.x, CurrentPosition.y - 0.75f);
+                        }
 
-                    AttackSound.Play();
-                    MageHealth();
+                        AttackSound.Play();
+                        MageHealth();
 
-                    StartCoroutine(HitSpawn());
+                        StartCoroutine(HitSpawn());
                 }
             }
         }
@@ -112,11 +119,12 @@ public class MageController : MonoBehaviour
     {
         Health--;
         StartCoroutine(HitFlashing());
+        MageCollider.enabled = false;
     }
 
     private IEnumerator StartSpawn()
     {
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(2f);
         StartCoroutine(Spawn());
     }
 
@@ -148,7 +156,7 @@ public class MageController : MonoBehaviour
     private IEnumerator SlightInvincibility()
     {
         MageCollider.enabled = false;
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(0.5f);
         MageCollider.enabled = true;
     }
 
@@ -160,6 +168,7 @@ public class MageController : MonoBehaviour
         transform.position = new Vector3(moveX, moveY, -2);
         animator.SetInteger("Mage", 0);
         yield return new WaitForSeconds(1.45f);
+        MageCollider.enabled = true;
         animator.SetInteger("Mage", 1);
         DropShadow.SetActive(true);
         yield return new WaitForSeconds(attackTime);

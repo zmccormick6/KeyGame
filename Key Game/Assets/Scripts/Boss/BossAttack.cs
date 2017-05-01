@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class BossAttack : MonoBehaviour
 {
+    [SerializeField] private ParticleSystem Finished;
+    [SerializeField] private ParticleSystem Finished2;
+
     GameObject Player;
     float moveX, moveY, attackSpeed = 0.1f;
     bool start = false;
@@ -79,7 +82,11 @@ public class BossAttack : MonoBehaviour
 
     private IEnumerator DestroyAttack()
     {
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(3f);
+        var finished = Instantiate(Finished, transform.position, transform.rotation);
+        var finishedTwo = Instantiate(Finished2, transform.position, transform.rotation);
+        finished.Play();
+        finishedTwo.Play();
         Destroy(gameObject);
     }
 }

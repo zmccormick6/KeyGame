@@ -57,12 +57,15 @@ public class LevelSwitch : MonoBehaviour
 
             if (alpha.a < 1f)
             {
-                alpha.a += 1.5f * Time.deltaTime;
+                alpha.a += 2f * Time.deltaTime;
             }
 
-            if (MainMusic.volume > 0.3f)
+            if (GameObject.Find("Level").GetComponent<LevelHold>().Level < 6)
             {
-                MainMusic.volume -= 0.05f;
+                if (MainMusic.volume > 0.3f)
+                {
+                    MainMusic.volume -= 0.05f;
+                }
             }
         }
         else
@@ -73,9 +76,12 @@ public class LevelSwitch : MonoBehaviour
                 alpha.a -= 1f * Time.deltaTime;
             }
 
-            if (MainMusic.volume < 0.6f && pause == false)
+            if (GameObject.Find("Level").GetComponent<LevelHold>().Level < 6)
             {
-                MainMusic.volume += 0.025f;
+                if (MainMusic.volume < 0.6f && pause == false)
+                {
+                    MainMusic.volume += 0.025f;
+                }
             }
         }
     }

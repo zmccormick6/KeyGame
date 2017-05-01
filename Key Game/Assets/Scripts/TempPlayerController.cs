@@ -9,6 +9,8 @@ public class TempPlayerController : MonoBehaviour
     [SerializeField] private AnimationClip Dodge;
     [SerializeField] private GameObject DeathScreen;
     [SerializeField] private AudioSource Swing;
+    [SerializeField] private AudioSource HalfHeart;
+    [SerializeField] private AudioSource Death;
 
     AudioSource Damage;
 
@@ -29,11 +31,13 @@ public class TempPlayerController : MonoBehaviour
 
     SpriteRenderer tempSprite;
 
+    Vector2 Joystick;
+
     private Vector2 _centre;
     private float _angle;
 
     public bool dodgeCooldown = false;
-    public float Speed = 4f;
+    public float Speed = 5.5f;
 
     float currentTime, previousTime;
     int dodge = 0;
@@ -131,7 +135,7 @@ public class TempPlayerController : MonoBehaviour
     {
         if (other.tag == "Water")
         {
-            GetComponent<TempPlayerController>().Speed = 4f;
+            GetComponent<TempPlayerController>().Speed = 5.5f;
         }
     }
 
@@ -228,7 +232,10 @@ public class TempPlayerController : MonoBehaviour
                 GetComponent<Rigidbody2D>().position = new Vector2(-6.49f, 0.96f);
             }
 
-            GetComponent<Rigidbody2D>().velocity = new Vector2(movex * Speed, movey * Speed);
+            Joystick = new Vector2(movex, movey);
+            Joystick.Normalize();
+
+            GetComponent<Rigidbody2D>().velocity = new Vector2(Joystick.x * Speed, Joystick.y * Speed);
         }
         else
             GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
@@ -352,7 +359,7 @@ public class TempPlayerController : MonoBehaviour
         yield return new WaitForSeconds(0.15f);
         stopSwing = false;
         yield return new WaitForSeconds(0.1f);
-        GetComponent<TempPlayerController>().Speed = 4;
+        GetComponent<TempPlayerController>().Speed = 5.5f;
     }
 
     private IEnumerator DodgeHitbox()
@@ -382,7 +389,7 @@ public class TempPlayerController : MonoBehaviour
         //GetComponent<TempPlayerController>().Speed = 40;
         yield return new WaitForSeconds(0.25f);
         anim.SetInteger("Dodge", 0);
-        GetComponent<TempPlayerController>().Speed = 4;
+        GetComponent<TempPlayerController>().Speed = 5.5f;
     }
 
     public void AddHealth()
@@ -396,8 +403,14 @@ public class TempPlayerController : MonoBehaviour
         Health--;
         Heart.SetInteger("Heart", Health);
 
+        if (Health == 1)
+        {
+            HalfHeart.Play();
+        }
+
         if (Health <= 0)
         {
+            Death.Play();
             Debug.Log(PlayerPrefs.GetInt("Level"));
             SceneManager.LoadScene("GameOver");
         }

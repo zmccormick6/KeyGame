@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class TextController : MonoBehaviour
 {
+    [SerializeField] private AudioSource KeyviSpeak;
     [SerializeField] private GameObject MessageHolder;
     [SerializeField] private Text SpeakingName;
     [SerializeField] private Text DisplayMessage;
@@ -23,7 +24,8 @@ public class TextController : MonoBehaviour
 
     Vector2 KeyviPosition, WhereToGo;
     private Animator KeyviAnim;
-    bool move = false, talking = false, speedUp = false, transition = false;
+    public bool transition = false;
+    bool move = false, talking = false, speedUp = false, once = false;
     float startTime, dots, text;
     int talkingTime = 0;
     Color KeyviAlpha;
@@ -33,7 +35,7 @@ public class TextController : MonoBehaviour
         {"Hiya! My name's Keyvi!\nI'm important!", "My evil twin brother Keyvil has taken\nover the dungeon.", "You can hit stuff by pressing the\n'X' button. Follow me!",
          "Well, that was Key-z!", "If you somehow managed to take damage...\nthere's a health container over there.", "Press the 'B' button while moving to\ndash over to it, or whatever.",
          "Walking through water will slow you\ndown.", "My brothers' diaries are guarding\nthe way up ahead.", "To reflect the magic, hit its attacks\nwith your key...sword?",
-         "Where did you get that key...\nsaber anyway?", "It's quite large...", "Have him call me once this is over.\nK?",
+         "Where did you get that key\nthingy anyway?", "It's quite large...", "Have him call me once this is over.\nK?",
          "Have you ever been inside a lock\nbefore...?", "You could say that I've been tumbled\na few times.", "Why are you giving me that look?\nIt's just a key thing!",
          "My brothers' room is up ahead, I can\nsense the keyruption from here.", "Low key, he gets real mad when under\nhalf health.", "Hope you don't die!",
          "Oh, guess he's not here?", "Good Keevening...", "Someone so weak is foolish to fight me in my own domain!",
@@ -129,6 +131,8 @@ public class TextController : MonoBehaviour
             }
             else //(Keyvil.transform.position.x >= Keyvi.transform.position.x)
             {
+                StartCoroutine(KeyvilHit());
+
                 if (Keyvi.transform.position.x < 5000)
                 {
                     Keyvi.transform.position = new Vector2(Keyvi.transform.position.x + 25, Keyvi.transform.position.y + 10);
@@ -150,8 +154,24 @@ public class TextController : MonoBehaviour
         }
     }
 
+    private IEnumerator KeyvilHit()
+    {
+        if (once == false)
+        {
+            GameObject.Find("Attack").GetComponent<AudioSource>().Play();
+            once = true;
+        }
+
+        yield return null;
+    }
+
     public void StartTalking()
     {
+        if ((counter + 3) % 3 == 0)
+        {
+            KeyviSpeak.Play();
+        }
+
         MessageHolder.SetActive(true);
         DisplayMessage.text = null;
         StartCoroutine(TypingOverTime(message, counter));

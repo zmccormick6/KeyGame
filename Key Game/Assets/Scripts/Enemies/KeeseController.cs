@@ -64,7 +64,7 @@ public class KeeseController : MonoBehaviour
     {
         if (other.tag == "MageAttack")
         {
-            if (other.name != "BossAttack(Clone)")
+            if (other.name != "BossAttack(Clone)" && other.name != "ThirdBossAttack(Clone)")
             {
                 if (other.GetComponent<MageAttack>().reverse == true)
                 {

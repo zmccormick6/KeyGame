@@ -6,6 +6,7 @@ public class SoundController : MonoBehaviour
 {
     [SerializeField] private AudioSource MainMusic;
     [SerializeField] private AudioSource BossMusic;
+    [SerializeField] private AudioSource EndMusic;
 
     void FixedUpdate()
     {
@@ -16,6 +17,16 @@ public class SoundController : MonoBehaviour
     public void TurnOffMusic()
     {
         StartCoroutine(MusicStop());
+    }
+
+    public void BossOff()
+    {
+        BossMusic.volume = 0;
+    }
+
+    public void BossMusicOff()
+    {
+        BossMusic.enabled = false;
     }
 
     private IEnumerator MusicStop()
@@ -46,5 +57,10 @@ public class SoundController : MonoBehaviour
             BossMusic.volume = i;
             yield return new WaitForSeconds(0.25f);
         }
+    }
+
+    public void PlayEndMusic()
+    {
+        EndMusic.Play();
     }
 }

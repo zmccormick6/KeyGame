@@ -7,6 +7,8 @@ public class PureKeyvilController : MonoBehaviour
     [SerializeField] private ParticleSystem Finished;
     [SerializeField] private ParticleSystem Finished2;
 
+    [SerializeField] private AudioSource BossHealthGain;
+
     [SerializeField] private GameObject BossAttack;
     [SerializeField] private GameObject SecondBossAttack;
     [SerializeField] private GameObject ThirdBossAttack;
@@ -159,16 +161,31 @@ public class PureKeyvilController : MonoBehaviour
         yield return new WaitForSeconds(1);
         animator.SetInteger("Death", 1);
         GameObject.Find("Main Camera").GetComponent<CameraShake>().ShakeCameraBoss();
+        GameManager.GetComponent<SoundController>().BossMusicOff();
         gameObject.GetComponent<AudioSource>().Play();
-        var finished = Instantiate(Finished, transform.position, transform.rotation);
-        var finishedTwo = Instantiate(Finished2, transform.position, transform.rotation);
+        var finished = Instantiate(Finished, new Vector2(0, 6), transform.rotation);
+        var finishedTwo = Instantiate(Finished2, new Vector2(0, 6), transform.rotation);
         finished.Play();
         finishedTwo.Play();
+
+        GameObject[] Mages;
+
+        Mages = GameObject.FindGameObjectsWithTag("Enemy");
+
+        for (int i = 0; i < Mages.Length; i++)
+        {
+            if (Mages[i].name == "Mage(Clone)")
+                Destroy(Mages[i]);
+            else if (Mages[i].name == "Keese(Clone)")
+                Destroy(Mages[i]);
+        }
+
         yield return new WaitForSeconds(5);
         finished.Stop();
         finishedTwo.Stop();
         BossHealthBar.SetActive(false);
         BossHealth.SetActive(false);
+        GameManager.GetComponent<SoundController>().PlayEndMusic();
         Destroy(gameObject);
         GameManager.GetComponent<LevelSwitch>().pause = false;
         GameObject.Find("Keyvi").GetComponent<KeyviController>().dead = true;
@@ -286,6 +303,12 @@ public class PureKeyvilController : MonoBehaviour
         }
     }
 
+    public void Scale()
+    {
+        BossHealth.GetComponent<RectTransform>().localScale = new Vector3(0, 0, 1);
+        BossHealthBar.GetComponent<RectTransform>().localScale = new Vector3(0, 0, 1);
+    }
+
     private IEnumerator HitFlashing()
     {
         tempSprite.color = new Color(1f, 1f, 1f, 0.5f);
@@ -394,8 +417,10 @@ public class PureKeyvilController : MonoBehaviour
     private IEnumerator PhaseChange()
     {
         GameObject[] Mages;
+        GameObject[] Attacks;
 
         Mages = GameObject.FindGameObjectsWithTag("Enemy");
+        Attacks = GameObject.FindGameObjectsWithTag("MageAttack");
 
         for (int i = 0; i < Mages.Length; i++)
         {
@@ -403,6 +428,12 @@ public class PureKeyvilController : MonoBehaviour
                 Destroy(Mages[i]);
             else if (Mages[i].name == "Keese(Clone)")
                 Destroy(Mages[i]);
+        }
+
+        for (int i = 0; i < Attacks.Length; i++)
+        {
+            if (Attacks[i].name == "MageAttack(Clone)")
+                Destroy(Attacks[i]);
         }
 
         gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
@@ -415,23 +446,32 @@ public class PureKeyvilController : MonoBehaviour
         var finishedTwo = Instantiate(Finished2, new Vector2(0, 6), transform.rotation);
         finished.Play();
         finishedTwo.Play();
+        StartCoroutine(RefillHealth());
+        Instantiate(BossHealthGain, transform.position, transform.rotation);
+        BossHealthGain.Play();
         yield return new WaitForSeconds(5f);
-
-        for (float i = 0; i < 1.05; i += 0.05f)
-        {
-            bossHealth = i;
-            yield return new WaitForSeconds(0.25f);
-        }
 
         //bossHealth = 1;
         //BossHealth.GetComponent<RectTransform>().localScale = new Vector3(bossHealth, 1, 1);
-        BossHealth.GetComponent<RectTransform>().localScale = new Vector3(1, bossHealth, 1);
+        //BossHealth.GetComponent<RectTransform>().localScale = new Vector3(1, bossHealth, 1);
         BossHealthBar.GetComponent<Animator>().SetInteger("PhaseTwo", 1);
         GameManager.GetComponent<LevelSwitch>().pause = false;
         gameObject.GetComponent<Collider2D>().enabled = true;
         phaseTwo = true;
+        finished.Stop();
+        finishedTwo.Stop();
         StartCoroutine(PhaseTwoSpawn());
         StartCoroutine(ChooseAttack());
+    }
+
+    private IEnumerator RefillHealth()
+    {
+        for (float i = 0; i < 1.05; i += 0.05f)
+        {
+            bossHealth = i;
+            BossHealth.GetComponent<RectTransform>().localScale = new Vector3(1, bossHealth, 1);
+            yield return new WaitForSeconds(0.25f);
+        }
     }
 
     private IEnumerator MovePlayer()

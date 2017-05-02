@@ -56,7 +56,7 @@ public class MainMenu : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Speed"))
+        if (Input.GetButtonDown("Speed") || Input.GetButtonDown("Fire2"))
         {
             if (PlayPointer.activeSelf == true)
             {

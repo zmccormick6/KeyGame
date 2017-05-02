@@ -10,6 +10,7 @@ public class LevelSwitch : MonoBehaviour
     [SerializeField] private GameObject Player;
     [SerializeField] private Image LevelTransition;
     [SerializeField] private AudioSource MainMusic;
+    [SerializeField] private AudioSource EndMusic;
 
     private GameObject[] Levels;
     public GameObject currentLevel;
@@ -27,7 +28,7 @@ public class LevelSwitch : MonoBehaviour
     GameObject BossBar;
 
     private bool movement = false;
-    private bool transition = false;
+    public bool transition = false;
     Color alpha;
     float startTime;
 
@@ -103,7 +104,8 @@ public class LevelSwitch : MonoBehaviour
         else if (GameObject.Find("Keyvi").GetComponent<KeyviController>().dead == true)
         {
             transition = true;
-            GameObject.Find("Level").GetComponent<LevelHold>().Level = 0;
+            yield return new WaitForSeconds(0.65f);
+            GameObject.Find("Level").GetComponent<LevelHold>().Level = -1;
             SceneManager.LoadScene("MainMenu");
         }
         else
@@ -132,7 +134,6 @@ public class LevelSwitch : MonoBehaviour
         GameObject.Find("Game Manager").GetComponent<TextController>().InGameKeyvi = GameObject.Find("Keyvi");
     }
 
-
     private IEnumerator MoveLevel()
     {
         startTime = Time.time;
@@ -147,5 +148,10 @@ public class LevelSwitch : MonoBehaviour
         currentLevel.tag = "Current";
         GameObject.Find("Game Manager").GetComponent<DoorSpawn>().enemyCount = 0;
         GameObject.Find("Game Manager").GetComponent<DoorSpawn>().EnemyCount(currentLevel);
+    }
+
+    public void PlayEndMusic()
+    {
+        EndMusic.Play();
     }
 }

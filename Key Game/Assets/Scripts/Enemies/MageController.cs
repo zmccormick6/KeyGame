@@ -12,6 +12,7 @@ public class MageController : MonoBehaviour
     [SerializeField] private GameObject DropShadow;
 
     AudioSource AttackSound;
+    AudioSource ShootAttack;
     SpriteRenderer tempSprite;
 
     private Collider2D PlayerCollider;
@@ -34,6 +35,7 @@ public class MageController : MonoBehaviour
         animator = GetComponent<Animator>();
         tempSprite = gameObject.GetComponent<SpriteRenderer>();
         AttackSound = GameObject.Find("Attack").GetComponent<AudioSource>();
+        ShootAttack = GameObject.Find("MageAttack").GetComponent<AudioSource>();
 
         attackTime = Random.Range(1f, 1.5f);
 
@@ -179,7 +181,9 @@ public class MageController : MonoBehaviour
             var missile = Instantiate(MageAttack, new Vector3(transform.position.x, transform.position.y + 0.3f, -2), Quaternion.identity);
             missile.GetComponent<MageAttack>().MageX = transform.position.x;
             missile.GetComponent<MageAttack>().MageY = transform.position.y - 0.5f;
-            yield return new WaitForSeconds(attackTime);
+            yield return new WaitForSeconds(0.35f);
+            ShootAttack.Play();
+            yield return new WaitForSeconds(attackTime - 0.35f);
         }
 
         StartCoroutine(DeSpawn());

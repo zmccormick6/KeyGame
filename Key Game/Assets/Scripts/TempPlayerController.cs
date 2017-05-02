@@ -11,6 +11,7 @@ public class TempPlayerController : MonoBehaviour
     [SerializeField] private AudioSource Swing;
     [SerializeField] private AudioSource HalfHeart;
     [SerializeField] private AudioSource Death;
+    [SerializeField] private AudioSource Dash;
 
     AudioSource Damage;
 
@@ -127,7 +128,8 @@ public class TempPlayerController : MonoBehaviour
     {
         if (other.tag == "Water")
         {
-            GetComponent<TempPlayerController>().Speed = 2f;
+            if (SwordHitbox.enabled == false)
+                GetComponent<TempPlayerController>().Speed = 2f;
         }
     }
 
@@ -151,6 +153,8 @@ public class TempPlayerController : MonoBehaviour
             {
                 stopSwing = true;
                 anim.SetInteger("Swing", 1);
+               //wing.Play();
+                StartCoroutine(SwingSword());
                 StartCoroutine(SwingStop());
             }
             else
@@ -170,6 +174,7 @@ public class TempPlayerController : MonoBehaviour
             {
                 if (dodgeReady == true)
                 {
+                    StartCoroutine(DashSound());
                     StartCoroutine(DodgeMovementIncrease());
                     StartCoroutine(DodgeHitbox());
                 }
@@ -180,15 +185,33 @@ public class TempPlayerController : MonoBehaviour
         DodgeTime();
     }
 
+    private IEnumerator DashSound()
+    {
+        yield return new WaitForSeconds(0.05f);
+        if (!Dash.isPlaying)
+            Dash.Play();
+    }
+
+    private IEnumerator SwingSword()
+    {
+        if (!Swing.isPlaying)
+        {
+            Swing.Stop();
+            Swing.Play();
+        }
+
+        yield return null;
+    }
+
     public void PlayerMovement()
     {
-        if (anim.GetInteger("Swing") == 1)
+        /*if (anim.GetInteger("Swing") == 1)
         {
             StartCoroutine(SwingStop());
 
             if  (!Swing.isPlaying)
                 Swing.Play();
-        }
+        }*/
 
         /*if (anim.GetInteger("Dodge") == 1)
         {
@@ -410,9 +433,25 @@ public class TempPlayerController : MonoBehaviour
 
         if (Health <= 0)
         {
-            Death.Play();
+            /*Death.Play();
             Debug.Log(PlayerPrefs.GetInt("Level"));
-            SceneManager.LoadScene("GameOver");
+            SceneManager.LoadScene("GameOver");*/
+
+            StartCoroutine(DeathStuff());
         }
+    }
+
+    private IEnumerator DeathStuff()
+    {
+        Death.Play();
+        GameManager.GetComponent<LevelSwitch>().pause = true;
+        GameManager.GetComponent<LevelSwitch>().transition = true;
+
+        if (GameObject.Find("Pure Keyvil"))
+            GameObject.Find("Pure Keyvil").GetComponent<PureKeyvilController>().Scale();
+
+        GameManager.GetComponent<SoundController>().BossOff();
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene("GameOver");
     }
 }

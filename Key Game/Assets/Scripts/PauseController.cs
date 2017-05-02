@@ -32,6 +32,17 @@ public class PauseController : MonoBehaviour
         {
             PauseActivate();
         }
+
+        if (Input.GetButtonDown("Fire2"))
+        {
+            if (PauseMenu.active == true)
+            {
+                PauseMenu.SetActive(false);
+                GameObject.Find("Game Manager").GetComponent<LevelSwitch>().pause = false;
+                activate = true;
+                PauseOff.Play();
+            }
+        }
     }
 
     public void PauseActivate()

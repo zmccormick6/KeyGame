@@ -114,8 +114,11 @@ public class TempPlayerController : MonoBehaviour
 
         if (other.tag == "Door")
         {
-            GameManager.GetComponent<DoorSpawn>().CurrentDoor.GetComponent<Collider2D>().enabled = false;
-            GameManager.GetComponent<LevelSwitch>().RunNextLevel();
+            if (SwordHitbox.enabled == false)
+            {
+                GameManager.GetComponent<DoorSpawn>().CurrentDoor.GetComponent<Collider2D>().enabled = false;
+                GameManager.GetComponent<LevelSwitch>().RunNextLevel();
+            }
         }
 
         if (other.tag == "Water")

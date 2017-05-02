@@ -52,6 +52,7 @@ public class PauseController : MonoBehaviour
             if (GameObject.Find("Game Manager").GetComponent<LevelSwitch>().pause == false)
             {
                 PauseMenu.SetActive(true);
+                Event.SetSelectedGameObject(RestartGame);
                 GameObject.Find("Game Manager").GetComponent<LevelSwitch>().pause = true;
                 activate = false;
             }

@@ -193,7 +193,7 @@ public class MageController : MonoBehaviour
     {
         animator.SetInteger("Mage", 2);
         yield return new WaitForSeconds(1.5f);
-        DropShadow.SetActive(false);
+        //DropShadow.SetActive(false);
         StartCoroutine(Spawn());
     }
 
@@ -202,7 +202,7 @@ public class MageController : MonoBehaviour
         yield return new WaitForSeconds(2f);
         animator.SetInteger("Mage", 2);
         yield return new WaitForSeconds(1.5f);
-        DropShadow.SetActive(false);
+        //DropShadow.SetActive(false);
         //animator.SetInteger("Mage", 0);
         StartCoroutine(Spawn());
     }

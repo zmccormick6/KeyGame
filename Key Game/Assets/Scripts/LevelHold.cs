@@ -9,5 +9,6 @@ public class LevelHold : MonoBehaviour
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
+        Cursor.visible = false;
     }
 }

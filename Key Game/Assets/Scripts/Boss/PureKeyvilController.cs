@@ -390,9 +390,9 @@ public class PureKeyvilController : MonoBehaviour
         for (int i = 0; i < 200; i++)
         {
             Instantiate(Keese, new Vector2(-10, 0), Quaternion.identity);
-            yield return new WaitForSeconds(5.5f);
+            yield return new WaitForSeconds(6.25f);
             Instantiate(Keese, new Vector2(10, 0), Quaternion.identity);
-            yield return new WaitForSeconds(5.5f);
+            yield return new WaitForSeconds(6.25f);
             Instantiate(Mage, new Vector2(-30, 0), Quaternion.identity);
         }
 
@@ -447,10 +447,12 @@ public class PureKeyvilController : MonoBehaviour
         finished.Play();
         finishedTwo.Play();
         StartCoroutine(RefillHealth());
-        Instantiate(BossHealthGain, transform.position, transform.rotation);
-        BossHealthGain.Play();
+        var whatever = Instantiate(BossHealthGain, transform.position, transform.rotation);
+        whatever.Play();
+
         yield return new WaitForSeconds(5f);
 
+        Destroy(whatever);
         //bossHealth = 1;
         //BossHealth.GetComponent<RectTransform>().localScale = new Vector3(bossHealth, 1, 1);
         //BossHealth.GetComponent<RectTransform>().localScale = new Vector3(1, bossHealth, 1);
@@ -532,7 +534,7 @@ public class PureKeyvilController : MonoBehaviour
         for (int i = 0; i < 200; i++)
         {
             Instantiate(Keese, new Vector2(-20, 0), Quaternion.identity);
-            yield return new WaitForSeconds(8f);
+            yield return new WaitForSeconds(10f);
         }
     }
 

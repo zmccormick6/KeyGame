@@ -84,6 +84,7 @@ public class TempPlayerController : MonoBehaviour
     private IEnumerator PlayerInvincibility()
     {
         PlayerHitbox.enabled = false;
+        water = false;
         yield return new WaitForSeconds(2);
         PlayerHitbox.enabled = true;
     }
@@ -134,6 +135,9 @@ public class TempPlayerController : MonoBehaviour
             if (SwordHitbox.enabled == false)
                 GetComponent<TempPlayerController>().Speed = 2f;
         }
+
+        if (water == false)
+            GetComponent<TempPlayerController>().Speed = 5.5f;
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -165,8 +169,8 @@ public class TempPlayerController : MonoBehaviour
                 anim.SetInteger("Swing", 0);
             }
         }
-        else
-            anim.SetInteger("Swing", 0);
+        /*else
+            anim.SetInteger("Swing", 0);*/
 
         movex = Mathf.Round(Input.GetAxisRaw("Horizontal"));
         movey = Mathf.Round(Input.GetAxisRaw("Vertical"));

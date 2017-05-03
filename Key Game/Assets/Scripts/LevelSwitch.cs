@@ -77,7 +77,7 @@ public class LevelSwitch : MonoBehaviour
                 alpha.a -= 1f * Time.deltaTime;
             }
 
-            if (GameObject.Find("Level").GetComponent<LevelHold>().Level < 6)
+            if (GameObject.Find("Level").GetComponent<LevelHold>().Level < 7)
             {
                 if (MainMusic.volume < 0.6f && pause == false)
                 {

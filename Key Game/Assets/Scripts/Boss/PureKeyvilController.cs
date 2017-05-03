@@ -365,6 +365,7 @@ public class PureKeyvilController : MonoBehaviour
     {
         StartCoroutine(PhaseOne());
         spawnHealth = true;
+        ChangePlaces();
     }
 
     public IEnumerator PhaseOne()

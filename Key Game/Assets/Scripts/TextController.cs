@@ -39,7 +39,7 @@ public class TextController : MonoBehaviour
          "Have you ever been inside a lock\nbefore...?", "You could say that I've been tumbled\na few times.", "Why are you giving me that look?\nIt's just a key thing!",
          "My brothers' room is up ahead, I can\nsense the keyruption from here.", "Low key, he gets real mad when under\nhalf health.", "Hope you don't die!",
          "Oh, guess he's not here?", "Good Keevening...", "Someone so weak is foolish to fight me in my own domain!",
-         "Well...that was something. Good\nwork getting through it!", "Finally! The dungeon is mine!", "Thank you for playing the game!\nMake sure to grab your Keyvi keychain!"};
+         "Well...that was something. Good\nwork getting through it!", "Finally! The dungeon is mine!", "Thank you for playing the game!"};
     int[] emotion = {0, 2, 0,
                      3, 0, 0,
                      3, 0, 2, 

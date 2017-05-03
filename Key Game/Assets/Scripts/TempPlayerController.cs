@@ -150,6 +150,8 @@ public class TempPlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        Heart.SetInteger("Heart", Health);
+
         MovementAnimation();
         //SwingAnimation();
         PlayerMovement();

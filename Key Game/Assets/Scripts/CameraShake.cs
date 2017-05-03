@@ -12,6 +12,8 @@ public class CameraShake : MonoBehaviour
 
     public void ShakeCamera()
     {
+        duration = 0.25f;
+            magnitude = 0.025f;
         StartCoroutine(Shake());
     }
 

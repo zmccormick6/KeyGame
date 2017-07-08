@@ -27,7 +27,7 @@ public class TextController : MonoBehaviour
     public bool transition = false;
     bool move = false, talking = false, speedUp = false, once = false;
     float startTime, dots, text;
-    int talkingTime = 0;
+    int talkingTime = 0, displayTextSize, nameTextSize;
     Color KeyviAlpha;
 
     //0 Normal, 1 Blush, 2 Shifty, 3 Derp, 4 Flustered Blush, 5 Unsure
@@ -61,6 +61,9 @@ public class TextController : MonoBehaviour
         counter = GameObject.Find("Level").GetComponent<LevelHold>().Level;
         counter--;
         counter = counter * 3;
+
+        displayTextSize = (int) Screen.currentResolution.height / 20;
+        nameTextSize    = (int)Screen.currentResolution.height  / 77;
     }
 
     void FixedUpdate()
@@ -174,6 +177,9 @@ public class TextController : MonoBehaviour
 
         MessageHolder.SetActive(true);
         DisplayMessage.text = null;
+        DisplayMessage.GetComponent<Text>().fontSize = displayTextSize;
+        SpeakingName.GetComponent<Text>().fontSize   = nameTextSize;
+        Debug.Log(displayTextSize);
         StartCoroutine(TypingOverTime(message, counter));
     }
 

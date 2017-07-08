@@ -391,9 +391,9 @@ public class PureKeyvilController : MonoBehaviour
         for (int i = 0; i < 200; i++)
         {
             Instantiate(Keese, new Vector2(-10, 0), Quaternion.identity);
-            yield return new WaitForSeconds(6.25f);
+            yield return new WaitForSeconds(6.5f);
             Instantiate(Keese, new Vector2(10, 0), Quaternion.identity);
-            yield return new WaitForSeconds(6.25f);
+            yield return new WaitForSeconds(6.5f);
             Instantiate(Mage, new Vector2(-30, 0), Quaternion.identity);
         }
 
@@ -535,7 +535,7 @@ public class PureKeyvilController : MonoBehaviour
         for (int i = 0; i < 200; i++)
         {
             Instantiate(Keese, new Vector2(-20, 0), Quaternion.identity);
-            yield return new WaitForSeconds(10f);
+            yield return new WaitForSeconds(10.5f);
         }
     }
 

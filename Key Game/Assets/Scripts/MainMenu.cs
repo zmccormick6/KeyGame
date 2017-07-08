@@ -56,7 +56,7 @@ public class MainMenu : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Speed"))
+        if (Input.GetButtonDown("Speed") || Input.GetButtonDown("Fire1"))
         {
             if (PlayPointer.activeSelf == true)
             {
@@ -73,7 +73,7 @@ public class MainMenu : MonoBehaviour
               //  QuitGame();
         }
 
-        if (Input.GetButtonDown("Fire2"))
+        if (Input.GetButtonDown("Fire2") || Input.GetButtonDown("Fire1"))
         {
             if (CreditScreen.active == true)
             {

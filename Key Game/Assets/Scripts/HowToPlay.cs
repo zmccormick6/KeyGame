@@ -12,7 +12,7 @@ public class HowToPlay : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Input.GetButton("Speed"))
+        if (Input.GetButton("Speed") || Input.GetButton("Fire1"))
         {
             gameObject.SetActive(false);
         }

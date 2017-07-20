@@ -33,7 +33,7 @@ public class PauseController : MonoBehaviour
             PauseActivate();
         }
 
-        if (Input.GetButtonDown("Fire2"))
+        if (Input.GetButtonDown("Fire2") || Input.GetButtonDown("Fire1"))
         {
             if (PauseMenu.active == true)
             {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class MainMenu : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject PlayPointer;
     [SerializeField] private string Game;
     [SerializeField] private GameObject CreditScreen;
+    [SerializeField] private GameObject CreditButton;
+    [SerializeField] private EventSystem Event;
 
     int screen = 0;
 
@@ -34,6 +37,8 @@ public class MainMenu : MonoBehaviour
         else
             CreditScreen.SetActive(false);
 
+        Event.SetSelectedGameObject(CreditButton);
+
         screen++;
     }
 
@@ -56,7 +61,7 @@ public class MainMenu : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Speed") || Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Speed") || Input.GetButtonDown("Submit"))
         {
             if (PlayPointer.activeSelf == true)
             {
@@ -69,12 +74,12 @@ public class MainMenu : MonoBehaviour
                 if (!StartGame.isPlaying)
                     Select.Play();
             }
-            //else
-              //  QuitGame();
         }
 
-        if (Input.GetButtonDown("Fire2") || Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire2") || Input.GetButtonDown("Submit"))
         {
+            Event.SetSelectedGameObject(CreditButton);
+
             if (CreditScreen.active == true)
             {
                 CloseCredits();
